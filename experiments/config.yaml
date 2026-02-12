@@ -1,0 +1,48 @@
+# 데이터/전처리 관련 (선택)
+data:
+  # zero prevalence cutoff 후보들 (데이터 차원/분포가 바뀌므로 비용 큼)
+  zero_prevalence_cutoff: [0.0, 0.1]
+  # latent를 HDBSCAN 전에 표준화할지 (z를 featurewise 표준화)
+  standardize_latent: [true, false]
+  tensor_path: "D:/졸업 후 연구/LatentGEE/Data/hivrc_tensor_scene2.pt"
+
+search_space:
+  model:
+    n_layers: [1, 6]                     # int range (inclusive)
+    latent_dim: [8, 64]                  # int range
+    base_dim: [256, 512, 768]            # categorical
+    strategy: ["constant", "halve", "double"]
+    activation: ["relu", "leaky_relu", "gelu"]
+    dropout_rate: [0.0, 0.5]             # float range (uniform)
+    # ▼ 추가 추천 튜닝 항목
+    beta_kl: [0.1, 4.0]                  # β-VAE (KL 가중치)
+    kl_warmup_epochs: [0, 40]            # KL warmup(선형 또는 cosine)
+    norm: ["none", "batchnorm", "layernorm"]   # 층 정규화 선택
+    init: ["xavier_uniform", "xavier_normal", "kaiming_uniform"]  # 가중치 초기화
+
+  training:
+    epochs: [50, 80, 120, 200]           # categorical
+    batch_size: [128, 256, 512, 1024]    # categorical
+    # 학습률/가중감쇠는 로그스케일로 뽑도록 명시
+    learning_rate: {loguniform: [1.0e-5, 1.0e-3]}
+    weight_decay:  {loguniform: [1.0e-8, 1.0e-3]}
+    optimizer: ["adam", "adamw"]         # 옵티마이저 선택
+    amp: [true, false]                   # 혼합정밀 on/off
+    grad_clip_norm: [0.5, 2.0]           # 그래디언트 클리핑 max_norm
+    scheduler: ["none", "cosine", "plateau", "onecycle"]
+    warmup_epochs: [0, 10]               # 스케줄러 warmup 단계
+
+  clustering:
+    min_cluster_size: [3, 50]            # int range
+    min_samples: ["None", 5, 10, 20]     # categorical (문자열 "None" → 파이썬 None 매핑)
+    metric: ["euclidean", "manhattan", "braycurtis", "canberra"]
+    cluster_selection_method: ["eom", "leaf"]
+    allow_single_cluster: [true, false]  # HDBSCAN 옵션 (필요시)
+
+  evaluation:
+    silhouette_metric: ["braycurtis",  "manhattan", "canberra"]  # silhouette 계산용 거리
+    noise_handling: ["exclude", "global", "self"]              # 평가 시 노이즈 처리 방식
+
+safeguards:
+  eps: 1.0e-8                # ZILN/로그/분모 안전용 epsilon
+  max_oom_retries: 1         # OOM 났을 때 재시도 횟수
