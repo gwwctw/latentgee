@@ -1,0 +1,15 @@
+[project]
+name = "latentgee"
+version = "0.1.0"
+description = "LatentGEE: Latent-space GEE-based batch correction"
+dependencies = [
+    "torch",
+    "numpy",
+    "scikit-learn",
+    "optuna",
+    "pyyaml"
+]
+
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
