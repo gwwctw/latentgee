@@ -386,9 +386,9 @@ def evaluate_latentgee(
 
     return labels, float(sil)
 
-# --------------------------------------------------
+# ----------------------------------------------------------------------------------
 # 3. train_vae() 에서 ZILN 손실 사용
-# --------------------------------------------------
+# ----------------------------------------------------------------------------------
 def train_vae(model, data_tensor, epochs=50, lr=1e-3,  device="cpu", batch_size=256):
     # 0) 타입 체크
     # Ensure model is an instance of nn.Module and data_tensor is a torch.Tensor before using .to(device)

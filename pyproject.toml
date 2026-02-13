@@ -13,3 +13,6 @@ dependencies = [
 [build-system]
 requires = ["setuptools"]
 build-backend = "setuptools.build_meta"
+
+[project.optional-dependencies]
+pipeline = ["optuna", "scikit-learn", "hdbscan", "pyyaml"]
