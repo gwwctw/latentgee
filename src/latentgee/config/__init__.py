@@ -1,13 +1,29 @@
-from .core import (
-    VAE,
-    gee_latent_residual,
-    decode_batch_corrected_latent,
+from .schema import (
+    DataConfig,
+    ModelConfig,
+    TrainConfig,
+    EvalConfig,
+    TuningConfig,
+    TrainingSearchSpace,
+    ClusteringSearchSpace,
+    EvaluationConfig,
+    SafeguardsConfig,
+    FullConfig,
 )
 
-from .pipeline import LatentGEEPipeline
+from .loader import load_cfg, suggest_auto
 
 __all__ = [
-    "VAE",
-    "gee_latent_residual",
-    "LatentGEEPipeline",
+    "DataConfig",
+    "ModelConfig",
+    "TrainConfig",
+    "EvalConfig",
+    "TuningConfig",
+    "TrainingSearchSpace",
+    "ClusteringSearchSpace",
+    "EvaluationConfig",
+    "SafeguardsConfig",
+    "FullConfig",
+    "load_cfg",
+    "suggest_auto",
 ]
