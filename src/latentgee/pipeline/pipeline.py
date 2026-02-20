@@ -1,3 +1,64 @@
+import numpy as np
+import torch
+from typing import Dict, Any, Optional
+from latentgee.config.schema import ModelConfig, TrainConfig, EvalConfig
+
+# -----------------------
+# Evaluator (silhouette / PERMANOVA R²)
+# -----------------------
+class BatchEffectEvaluator:
+    def __init__(self, eval_cfg: EvalConfig):
+        self.cfg = eval_cfg
+
+    @torch.no_grad()
+    def silhouette_from_model(self, model: LatentGEEModule, X: np.ndarray) -> Tuple[np.ndarray, float]:
+        X_tensor = torch.tensor(X, dtype=torch.float32)
+        labels, sil = evaluate_latentgee_u(
+            model=model.vae,
+            X_tensor=X_tensor,
+            min_cluster_size=self.cfg.hdb_min_cluster_size,
+            min_samples=self.cfg.hdb_min_samples,
+            allow_noise=self.cfg.allow_noise,
+            metric=self.cfg.hdb_metric,
+        )
+        return labels, float(sil)
+
+    def permanova_r2_from_matrix(self, X: np.ndarray, labels: np.ndarray) -> Tuple[Any, float]:
+        X_std = StandardScaler().fit_transform(X)
+        res, r2 = permanova_r2(
+            X_std,
+            grouping=labels,
+            metric=self.cfg.permanova_metric,
+            permutations=self.cfg.permanova_permutations,
+        )
+        return res, float(r2)
+    
+# -----------------------
+# Corrector (latent GEE residual → decode)
+# -----------------------
+class BatchCorrector:
+    @torch.no_grad()
+    def correct_and_decode(
+        self,
+        model: LatentGEEModule,
+        X: np.ndarray,
+        labels: np.ndarray,                    # ← 반드시 외부에서 라벨을 받아옴 (pseudo-batch or real batch)
+        save_path: Optional[str] = None
+    ) -> np.ndarray:
+        # 1) encode μ
+        X_tensor = torch.tensor(X, dtype=torch.float32)
+        mu = model.encode_mu(X_tensor)                        # torch.Tensor
+        mu_np = mu.detach().cpu().numpy().astype("float32")   # np.ndarray (N,k)
+
+        # 2) residualize (labels는 np.ndarray)
+        z_tilde = gee_latent_residual(mu_np, labels)          # np.ndarray (N,k)
+
+        # 3) decode
+        x_corr = model.decode_from_latent(z_tilde)            # np.ndarray (N,D)
+        if save_path:
+            np.save(save_path, x_corr)
+        return x_corr
+
 class LatentGEEPipeline:
     def __init__(self, X: np.ndarray, model_cfg: ModelConfig, train_cfg: TrainConfig, eval_cfg: EvalConfig):
         self.X = X
@@ -172,3 +233,59 @@ class LatentGEEPipeline:
             "after_bio":    after_bio,
             "X_corr":       X_corr,
         }
+        
+
+# =========================
+# Helper: retrain → residualize → decode → save
+# Optuna 결과를 최종 적용해서 “공식 corrected 데이터셋” 을 뽑을 때 필요한 함수
+# 그냥 파이프라인 내부에서 학습하고 바로 평가만 한다면 → 불필요 (중복 기능).
+# 최종 논문/실험에서 “best_params로 retrain 후 결과 저장” 프로세스를 쓸 거라면 그대로 두는 게 맞음
+# =========================
+def retrain_encode_residual_decode_save(
+    X: np.ndarray,
+    best_params: Dict[str, Any],
+    eval_cfg: EvalConfig,
+    save_path: str = "X_corrected.npy",
+):
+    # 1) 모델 구성
+    model = VAE(
+        input_dim=X.shape[1],
+        latent_dim=best_params.get("latent_dim", 16),
+        n_layers=best_params.get("n_layers", 2),
+        base_dim=best_params.get("base_dim", 128),
+        strategy=best_params.get("strategy", "constant"),
+        dropout_rate=best_params.get("dropout", 0.0),
+        activation=best_params.get("activation", "relu"),
+    )
+
+    # 2) 학습 (ZILN NLL + KL)
+    device = "cuda" if torch.cuda.is_available() else "cpu"
+    _ = train_vae(
+        model,
+        torch.tensor(X, dtype=torch.float32),
+        epochs=best_params.get("epochs", 50),
+        lr=best_params.get("lr", 1e-3),
+        device=device,
+        batch_size=best_params.get("batch_size", 256),
+    )
+
+    # 3) μ 인코딩
+    model.eval()
+    with torch.no_grad():
+        mu, _ = model.encode(torch.tensor(X, dtype=torch.float32, device=next(model.parameters()).device))
+    mu_np = mu.detach().cpu().numpy().astype("float32")
+
+    # 4) 라벨 추정 → residualize
+    labels, _ = evaluate_latentgee_u(
+        model=model,
+        X_tensor=torch.tensor(X, dtype=torch.float32),
+        min_cluster_size=eval_cfg.hdb_min_cluster_size,
+        min_samples=eval_cfg.hdb_min_samples,
+        allow_noise=True,
+        metric=eval_cfg.hdb_metric,
+    )
+    z_tilde = gee_latent_residual(mu_np, labels)  # np.ndarray (N,k)
+
+    # 5) 디코드 + 저장
+    x_corrected = decode_batch_corrected_latent(model, z_tilde, save_path=save_path)
+    return x_corrected, labels

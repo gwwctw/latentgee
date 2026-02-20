@@ -4,6 +4,11 @@ import pandas as pd
 import optuna
 import os
 
+from statsmodels.genmod.generalized_estimating_equations import GEE
+from statsmodels.genmod.families import Gaussian
+from statsmodels.genmod.cov_struct import Exchangeable
+
+
 # --------------------------------------------------
 # 2. ZILN 음의 log-우도 함수
 # --------------------------------------------------

@@ -1,3 +1,12 @@
+import numpy as np
+import torch
+from sklearn.preprocessing import StandardScaler
+from sklearn.metrics import silhouette_score
+from hdbscan import HDBSCAN
+from sklearn.cluster import KMeans
+from skbio.stats.distance import DistanceMatrix
+from skbio.stats.distance import permanova
+
 
 def permanova_r2(
     X: np.ndarray,
@@ -193,7 +202,7 @@ class BatchEffectEvaluator:
     @torch.no_grad()
     def silhouette_from_model(self, model: LatentGEEModule, X: np.ndarray) -> Tuple[np.ndarray, float]:
         X_tensor = torch.tensor(X, dtype=torch.float32)
-        labels, sil = evaluate_latentgee_u(
+        labels, sil = evaluate_latentgee(
             model=model.vae,
             X_tensor=X_tensor,
             min_cluster_size=self.cfg.hdb_min_cluster_size,

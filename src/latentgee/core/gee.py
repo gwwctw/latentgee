@@ -1,11 +1,18 @@
 import yaml
+import os
 import numpy as np
 import pandas as pd
 import optuna
-import os
+import torch
+import torch.nn as nn
 import warnings
 
+from hdbscan import HDBSCAN
+from sklearn.preprocessing import StandardScaler
+from sklearn.cluster import KMeans
+from sklearn.metrics import silhouette_score
 
+    
 def gee_residual(
     z_tensor: torch.Tensor,
     min_cluster_size: int = 10,
@@ -64,24 +71,3 @@ def gee_residual(
             z_tilde[idx] -= mean_vec
 
     return z_tilde, labels
-
-# --- 1. 함수 정의: prevalence cutoff에 따른 zero 비율 계산 ---
-def compute_zero_proportion_by_prevalence(otu_df, cutoffs):
-    n_samples = otu_df.shape[0]
-    proportions = []
-
-    for cutoff in cutoffs:
-        # prevalence 계산: 각 OTU의 nonzero 비율
-        prevalence = (otu_df > 0).sum(axis=0) / n_samples
-
-        # cutoff 미만인 OTU 제거
-        filtered_df = otu_df.loc[:, prevalence >= cutoff]
-
-        # 전체 zero 비율 계산
-        zero_count = (filtered_df == 0).sum().sum()
-        total_count = filtered_df.size
-        zero_proportion = zero_count / total_count
-
-        proportions.append(zero_proportion)
-
-    return proportions

@@ -1,8 +1,11 @@
-import yaml
-import numpy as np
-import pandas as pd
-import optuna
+
 import os
+import torch
+import torch.nn as nn
+
+from torch.utils.data import DataLoader, TensorDataset
+from torch.cuda.amp import autocast, GradScaler
+from .losses import ziln_nll
 
 def train_vae(model, data_tensor, epochs=50, lr=1e-3,  device="cpu", batch_size=256):
     # 0) 타입 체크

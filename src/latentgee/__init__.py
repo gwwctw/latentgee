@@ -1,13 +1,13 @@
-from .core import (
-    VAE,
-    gee_latent_residual,
-    decode_batch_corrected_latent,
-)
-
-from .pipeline import LatentGEEPipeline
+from .core.vae import VAE
+from .pipeline.pipeline import LatentGEEPipeline
+from .pipeline.tuner import OptunaTuner
+from .config.schema import ModelConfig, TrainConfig, EvalConfig
 
 __all__ = [
     "VAE",
-    "gee_latent_residual",
     "LatentGEEPipeline",
+    "OptunaTuner",
+    "ModelConfig",
+    "TrainConfig",
+    "EvalConfig",
 ]
