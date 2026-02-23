@@ -139,6 +139,18 @@ Dependencies are listed in `requirements.txt`.
 
 ---
 
+## Reproducibility
+
+All experiments were run with:
+- Python 3.10
+- Torch 2.1.0
+- CUDA 12.1
+
+To reproduce:
+1. Install dependencies from requirements.txt
+2. Set seed in config.yaml
+3. Run experiments/run_scene2.py
+
 ## 💾 Model Saving & Loading
 
 ```python

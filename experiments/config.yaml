@@ -26,7 +26,7 @@ search_space:
     # 학습률/가중감쇠는 로그스케일로 뽑도록 명시
     learning_rate: {loguniform: [1.0e-5, 1.0e-3]}
     weight_decay:  {loguniform: [1.0e-8, 1.0e-3]}
-    optimizer: ["adam", "adamw"]         # 옵티마이저 선택
+    optimizer: ["adam"]         # 옵티마이저 선택
     amp: [true, false]                   # 혼합정밀 on/off
     grad_clip_norm: [0.5, 2.0]           # 그래디언트 클리핑 max_norm
     scheduler: ["none", "cosine", "plateau", "onecycle"]
