@@ -8,3 +8,4 @@ __all__ = [
     "TrainConfig",
     "EvalConfig",
 ]
+__version__ = "0.1.0"

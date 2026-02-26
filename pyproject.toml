@@ -1,18 +1,20 @@
+[build-system]
+requires = ["setuptools", "wheel"]
+build-backend = "setuptools.build_meta"
+
 [project]
 name = "latentgee"
 version = "0.1.0"
-description = "LatentGEE: Latent-space GEE-based batch correction"
+description = "LatentGEE: latent space batch correction with GEE"
+authors = [{name = "Seungrin Yang"}]
+requires-python = ">=3.8"
 dependencies = [
-    "torch",
     "numpy",
-    "scikit-learn",
+    "torch",
     "optuna",
-    "pyyaml"
+    "scikit-learn",
+    "hdbscan",
 ]
 
-[build-system]
-requires = ["setuptools"]
-build-backend = "setuptools.build_meta"
-
-[project.optional-dependencies]
-pipeline = ["optuna", "scikit-learn", "hdbscan", "pyyaml"]
+[tool.setuptools.packages.find]
+where = ["src"]

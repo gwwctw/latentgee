@@ -3,21 +3,20 @@ from .schema import (
     ModelConfig,
     TrainConfig,
     EvalConfig,
-    TuningConfig
-    
-)
+    TuningConfig,
+    )
 
 from .loader import (
     load_cfg, 
     _as_none, 
-    suggest_auto
+    suggest_auto,
 )
 
 
 from .searchspace import (
     ModelSearchSpace,
     TrainingSearchSpace,
-    ClusteringSearchSpace
+    ClusteringSearchSpace,
 )
 
 __all__ = [
@@ -32,4 +31,4 @@ __all__ = [
     "ModelSearchSpace",
     "TrainingSearchSpace",
     "ClusteringSearchSpace"
-)
+]

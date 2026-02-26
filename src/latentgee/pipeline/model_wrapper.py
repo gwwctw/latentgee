@@ -1,3 +1,9 @@
+import numpy as np
+import torch
+import torch.nn as nn
+from typing import Optional
+from latentgee.config import ModelConfig, TrainConfig
+
 
 # =========================
 # LatentGEEModule (Model + Train loop)
@@ -21,12 +27,25 @@ class LatentGEEModule(nn.Module):
         VAE forward 호출 (encode -> reparameterize -> decode)
         """
         return self.vae(x)
-
+    
+    
+    def fit(self, X_tensor:torch.Tensor, train_cfg: TrainConfig) -> float: 
+        loader = make_dataloader(
+            X_tensor,
+            batch_size = train_cfg.batch_size,
+            suffle = True,
+            num_workers = getattr(train_cfg, "num_workers", 0),
+            pin_memory = (train_cfg.device == "cuda"),
+        )
+        
+        return self.fit(loader, train_cfg)
+            
+    """
     def fit(self, loader: DataLoader, train_cfg: TrainConfig) -> float:
-        """
-        주어진 DataLoader로 VAE 학습 수행 (ZILN NLL + KL 손실).
-        마지막 배치의 loss(float)를 반환.
-        """
+        
+        # 주어진 DataLoader로 VAE 학습 수행 (ZILN NLL + KL 손실).
+        # 마지막 배치의 loss(float)를 반환.
+        
         device = train_cfg.device
         self.to(device)
         self.train()
@@ -57,7 +76,9 @@ class LatentGEEModule(nn.Module):
                 last_loss = float(loss.detach().cpu().item())
 
         return last_loss
-
+    """
+    
+    
     @torch.no_grad()
     def encode_mu(self, X_tensor: torch.Tensor, device: Optional[str] = None) -> torch.Tensor:
         """입력 X를 μ(latent mean)으로 인코딩."""

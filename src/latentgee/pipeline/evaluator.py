@@ -106,3 +106,29 @@ def evaluate_batch_effect_pipeline(
             sil = -1.0
 
     return labels, float(sil)
+
+
+# NEW
+class BatchEvaluator:
+    def estimate_pseudo_batch(
+        self,
+        Z: np.ndarray
+    ) -> np.ndarray:
+        """Return cluster labels"""
+        labels = ...
+        return labels
+
+    def evaluate_batch_effect(
+        self,
+        X: np.ndarray,
+        labels: np.ndarray
+    ) -> dict:
+        """Return silhouette, r2, etc."""
+        sil = ...
+        r2 = ...
+        return {
+            "silhouette": sil,
+            "r2": r2
+        }
+        
+  
