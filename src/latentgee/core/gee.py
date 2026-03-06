@@ -12,7 +12,9 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.cluster import KMeans
 from sklearn.metrics import silhouette_score
 
-    
+
+
+# note
 def gee_residual(
     z_tensor: torch.Tensor,
     min_cluster_size: int = 10,

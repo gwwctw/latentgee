@@ -11,12 +11,25 @@ from statsmodels.genmod.families import Gaussian
 from statsmodels.genmod.cov_struct import Exchangeable
 
 
-def gee_latent_residual(z_np, pseudo_batch):
-    df = pd.DataFrame(z_np, columns=[f"z{i}" for i in range(z_np.shape[1])])
-    df["cluster"] = pseudo_batch
+def gee_latent_residual(Z: np.ndarray, 
+                        pseudo_batch: np.ndarray, 
+                        covariates: Optional[list] = None):
+    df = pd.DataFrame(Z, columns=[f"z{i}" for i in range(Z.shape[1])])
+    df["pseudo_batch"] = pseudo_batch
     residuals = []
+    if covariates is None:        
+        indep = f"pseudo_batch"
+    else:
+        if length(covariates) == 1:
+            indep = f"{covariates} + pseudo_batch"
+        
+        else:
+            cov = " + ".join(covariates)
+            indep = f"{cov} + pseudo_batch"
+
     for col in df.columns[:-1]:
-        model = GEE.from_formula(f"{col} ~ cluster", groups="cluster", data=df, family=Gaussian(), cov_struct=Exchangeable())
+        
+        model = GEE.from_formula(f"{col} ~ {indep}", groups="pseudo_batch", data=df, family=Gaussian(), cov_struct=Exchangeable())
         result = model.fit()
         resid = df[col] - result.fittedvalues
         residuals.append(resid)
