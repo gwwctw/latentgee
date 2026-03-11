@@ -207,7 +207,7 @@ def find_best_k_silhouette(z_np, max_k=10):
 
     파이
 # Silhouette-based evaluation function
-def evaluate_latentgee_u(
+def evaluate_latentgee(
         model: nn.Module,
         X_tensor: torch.Tensor,
         min_cluster_size: int = 10,
