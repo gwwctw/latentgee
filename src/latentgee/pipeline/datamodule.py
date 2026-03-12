@@ -1,9 +1,8 @@
 # src/latentgee/pipeline/datamodule.py
-from __future__ import annotations
-
 from typing import Optional
 import numpy as np
 import torch
+
 from torch.utils.data import DataLoader, TensorDataset
 
 from latentgee.config.schemas import TrainConfig

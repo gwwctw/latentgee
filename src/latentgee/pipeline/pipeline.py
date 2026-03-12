@@ -1,8 +1,6 @@
 # src/latentgee/pipeline/runner.py
-from __future__ import annotations
-
 from dataclasses import dataclass
-from typing import Any, Dict, Optional
+from typing import Dict, Optional, Tuple
 
 import numpy as np
 
@@ -10,8 +8,9 @@ from latentgee.config.schemas import TrainConfig, EvalConfig
 from latentgee.core.model import BaseLatentModel
 from latentgee.pipeline.datamodule import DataModule
 from latentgee.pipeline.evaluator import BaseEvaluator
-from latentgee.pipeline.corrector import BaseCorrector
 
+# from latentgee.pipeline.evaluator import HDBSCANBatchEvaluator
+from latentgee.pipeline.corrector import BaseCorrector
 
 @dataclass
 class RunOutputs:

@@ -1,5 +1,11 @@
+# src/latentgee/config/io.py
+import yaml
 import optuna
+import numpy as np
+from typing import Optional
+from torch.utils.data import DataLoader
 
+from latentgee.config.schemas import TrainConfig
 
 # ====== 1) YAML 헬퍼 ======    
 def load_cfg(path: str) -> dict:

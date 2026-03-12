@@ -1,4 +1,7 @@
+import optuna
+import numpy as np
 
+from latentgee.config.schemas import ModelConfig, TrainConfig, EvalConfig
 
 # -----------------------
 # Optuna Tuner
@@ -52,9 +55,9 @@ class OptunaTuner:
         return study, study.best_params
 """
     def objective_multi(self, trial: optuna.Trial, y_bio: np.ndarray) -> Tuple[float, float, float, float]:
-        """
-        Multi-objective: (sil_batch ↓, r2_batch ↓, sil_bio ↑, r2_bio ↑)
-        """
+        
+        # Multi-objective: (sil_batch ↓, r2_batch ↓, sil_bio ↑, r2_bio ↑)
+    
         model_cfg = self._suggest(trial)
         dm = DataModule(self.X, self.train_cfg)
         loader = dm.make_loader()

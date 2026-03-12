@@ -1,11 +1,8 @@
-import os
 import numpy as np
 import pandas as pd
-import optuna
 import torch
 import torch.nn as nn
-import warnings
-
+from typing import Optional
 from statsmodels.genmod.generalized_estimating_equations import GEE
 from statsmodels.genmod.families import Gaussian
 from statsmodels.genmod.cov_struct import Exchangeable

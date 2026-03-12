@@ -1,14 +1,20 @@
-from .runner import LatentGEEPipeline, RunOutputs
-from .evaluator import HDBSCANBatchEvaluator, BaseEvaluator
+from .checkpoint import save_model, load_model
 from .corrector import GEECorrector, BaseCorrector
 from .datamodule import DataModule
+from .evaluator import BaseEvaluator, HDBSCANBatchEvaluator
+from .pipeline import LatentGEEPipeline, RunOutputs
+from .tuner import OptunaTuner
 
 __all__ = [
-    "LatentGEEPipeline",
-    "RunOutputs",
-    "HDBSCANBatchEvaluator",
-    "BaseEvaluator",
+    "save_model",
+    "load_model",
     "GEECorrector",
     "BaseCorrector",
     "DataModule",
+    "BaseEvaluator",
+    "HDBSCANBatchEvaluator",
+    "LatentGEEModule",
+    "LatentGEEPipeline",
+    "RunOutputs",
+    "OptunaTuner"
 ]

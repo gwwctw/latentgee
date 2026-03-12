@@ -1,15 +1,11 @@
 # src/latentgee/pipeline/evaluator.py
-from __future__ import annotations
-
-from typing import Dict, Optional, Tuple, Any
-
 import numpy as np
+from typing import Tuple, Dict
+
 from sklearn.preprocessing import StandardScaler
-from sklearn.metrics import silhouette_score
 
 from latentgee.config.schemas import EvalConfig
-from latentgee.utils.metrics import safe_silhouette
-from latentgee.core.stats import permanova_r2
+from latentgee.utils.matrics import safe_silhouette, permanova_r2
 
 try:
     import hdbscan

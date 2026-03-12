@@ -1,13 +1,6 @@
-import yaml
 import numpy as np
 import pandas as pd
-import optuna
 import os
-
-from statsmodels.genmod.generalized_estimating_equations import GEE
-from statsmodels.genmod.families import Gaussian
-from statsmodels.genmod.cov_struct import Exchangeable
-
 
 # --------------------------------------------------
 # 2. ZILN 음의 log-우도 함수
@@ -36,26 +29,3 @@ def ziln_nll(x, pi, mu, logσ, eps=1e-8):
     nll_pos  = -pos_mask * (torch.log(1 - pi + eps) + log_pdf)
 
     return (nll_zero + nll_pos).mean() # mean over samples & features
-
-def gee_latent_residual(z_np, pseudo_batch):
-    df = pd.DataFrame(z_np, columns=[f"z{i}" for i in range(z_np.shape[1])])
-    df["cluster"] = pseudo_batch
-    residuals = []
-    for col in df.columns[:-1]:
-        model = GEE.from_formula(f"{col} ~ cluster", groups="cluster", data=df, family=Gaussian(), cov_struct=Exchangeable())
-        result = model.fit()
-        resid = df[col] - result.fittedvalues
-        residuals.append(resid)
-    return np.vstack(residuals).T
-
-
-def gee_latent_residual(z_np, pseudo_batch):
-    df = pd.DataFrame(z_np, columns=[f"z{i}" for i in range(z_np.shape[1])])
-    df["cluster"] = pseudo_batch
-    residuals = []
-    for col in df.columns[:-1]:
-        model = GEE.from_formula(f"{col} ~ cluster", groups="cluster", data=df, family=Gaussian(), cov_struct=Exchangeable())
-        result = model.fit()
-        resid = df[col] - result.fittedvalues
-        residuals.append(resid)
-    return np.vstack(residuals).T

@@ -1,7 +1,7 @@
 # 데이터/전처리 관련 (선택)
 data:
   # zero prevalence cutoff 후보들 (데이터 차원/분포가 바뀌므로 비용 큼)
-  zero_prevalence_cutoff: [0.0, 0.1]
+  zero_prevalence_cutoff: [0.0, 0.1005, 0.005]
   # latent를 HDBSCAN 전에 표준화할지 (z를 featurewise 표준화)
   standardize_latent: [true, false]
   tensor_path: "D:/졸업 후 연구/LatentGEE/Data/hivrc_tensor_scene2.pt"
