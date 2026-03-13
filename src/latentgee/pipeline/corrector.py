@@ -12,9 +12,9 @@ from latentgee.core.latent_correction import gee_latent_residual
 class BaseCorrector:
     def correct(self, 
                 Z: np.ndarray,
-                grourps: np.ndarray,
+                groups: np.ndarray,
                 covariates: Optional[np.ndarray] = None) -> np.ndarray:
-        raise NoneImplementedError
+        raise NotImplementedError
     
 
 class GEECorrector(BaseCorrector):

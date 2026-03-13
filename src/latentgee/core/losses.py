@@ -2,15 +2,18 @@ import numpy as np
 import pandas as pd
 import os
 
+import torch
+
+
 # --------------------------------------------------
 # 2. ZILN 음의 log-우도 함수
 # --------------------------------------------------
-def ziln_nll(x, pi, mu, logσ, eps=1e-8):
+def ziln_nll(x, pi, mu, log_sigma, eps=1e-8):
     """
     x      : (N, D)  원 데이터 (양수 또는 0)
     pi     : P(x==0)  (N, D)
     mu     : 로그-정규 평균
-    logσ   : 로그-정규 log-std
+    log_sigma: 로그-정규 log-std
     """
     # ① x == 0 부분
     device = x.device  # 모든 연산을 이 device에서 진행
@@ -24,8 +27,8 @@ def ziln_nll(x, pi, mu, logσ, eps=1e-8):
     # ② x > 0 부분 (LogNormal pdf)
     pos_mask = (x > 0).float()
     log_x    = torch.log(x + eps)
-    sigma= logσ.exp()
-    log_pdf  = -0.5 * (((log_x - mu) / sigma) ** 2) - logσ - 0.5 * log2pi
+    sigma= log_sigma.exp()
+    log_pdf  = -0.5 * (((log_x - mu) / sigma) ** 2) - log_sigma - 0.5 * log2pi
     nll_pos  = -pos_mask * (torch.log(1 - pi + eps) + log_pdf)
 
     return (nll_zero + nll_pos).mean() # mean over samples & features

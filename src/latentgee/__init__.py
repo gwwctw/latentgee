@@ -1,5 +1,5 @@
 # config
-from .config.loader import load_cfg, _as_none, suggest_auto, LatentGEEDataModule
+from .config.loader import load_cfg, _as_none, suggest_auto
 from .config.schemas import ModelConfig, TrainConfig, EvalConfig, TuningConfig
 from .config.searchspace import ModelSearchSpace, TrainingSearchSpace, ClusteringSearchSpace
 
@@ -14,13 +14,13 @@ from .core.vae import FlexibleMLP, VAE
 # pipeline
 from .pipeline.checkpoint import save_model, load_model
 from .pipeline.corrector import GEECorrector, BaseCorrector
-from .pipeline.datamodule import DataModule
+from .pipeline.datamodule import DataModule, LatentGEEDataModule
 from .pipeline.evaluator import BaseEvaluator, HDBSCANBatchEvaluator
 from .pipeline.pipeline import LatentGEEPipeline, RunOutputs
 from .pipeline.tuner import OptunaTuner
 
 # utils
-from .utils.dataset_cache import get_dataset_for_cutoff
+from ...experiments.hivrc.dataset_cache import get_dataset_for_cutoff
 from .utils.matrics import safe_silhouette, permanova_r2, adonis2_permanova_r2_via_rscript, evaluate_latentgee, BatchEffectEvaluator
 
 __all__ = [

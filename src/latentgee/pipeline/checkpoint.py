@@ -1,3 +1,6 @@
+
+import torch
+
 # 베스트 모델 저장/재현
 def save_model(model, path="best_model.pt"):
     torch.save(model.state_dict(), path)

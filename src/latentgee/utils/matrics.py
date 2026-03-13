@@ -1,5 +1,7 @@
-# src/latentgee/utils/metrics.py
+# src/latentgee/utils/matrics.py
 import numpy as np
+import pandas as pd
+import subprocess, tempfile, pathlib
 
 import torch
 from sklearn.preprocessing import StandardScaler
@@ -79,7 +81,6 @@ def permanova_r2(
 
     return res, r2
 
-import pandas as pd, numpy as np, subprocess, tempfile, pathlib, shutil
 
 def adonis2_permanova_r2_via_rscript(X: np.ndarray, grouping, metric="braycurtis", permutations=999):
     X = pd.DataFrame(np.asarray(X, float))
