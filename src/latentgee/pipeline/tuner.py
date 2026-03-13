@@ -1,7 +1,7 @@
 import optuna
 import numpy as np
 
-from latentgee.config.schemas import ModelConfig, TrainConfig, EvalConfig
+from latentgee.config.schemas import ModelConfig, TrainConfig, EvalConfig, TuningConfig
 
 # -----------------------
 # Optuna Tuner
@@ -12,7 +12,7 @@ class OptunaTuner:
         self.base_model_cfg = base_model_cfg
         self.train_cfg = train_cfg
         self.eval_cfg = eval_cfg
-
+    """
     def _suggest(self, trial: optuna.Trial) -> ModelConfig:
         # 예시: latent_dim, base_dim, n_layers, dropout, activation 탐색
         latent_dim = trial.suggest_int("latent_dim", 8, 64, step=8)
@@ -30,6 +30,7 @@ class OptunaTuner:
             dropout=dropout,
             activation=activation,
         )
+    """
     
     def objective(self, trial: optuna.Trial) -> float:
         # 단일 목표: pseudo-batch silhouette (↓)

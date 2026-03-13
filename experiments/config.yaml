@@ -38,6 +38,22 @@ search_space:
     metric: ["euclidean", "manhattan", "braycurtis", "canberra"]
     cluster_selection_method: ["eom", "leaf"]
     allow_single_cluster: [true, false]  # HDBSCAN 옵션 (필요시)
+  tuning:
+    n_trials: 50
+    timeout: null        # seconds, null이면 제한 없음
+
+    pruner: true
+    pruner_type: median
+    pruner_startup_trials: 5
+    pruner_warmup_steps: 0
+    pruner_interval_steps: 1
+
+    sampler: tpe
+    seed: 42
+
+    study_name: latentgee_optuna
+    storage: null        # sqlite:///optuna.db 가능
+    load_if_exists: false
 
   evaluation:
     silhouette_metric: ["braycurtis",  "manhattan", "canberra"]  # silhouette 계산용 거리

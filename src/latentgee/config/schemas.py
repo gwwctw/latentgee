@@ -1,5 +1,4 @@
 # src/latentgee/config/schemas.py
-from __future__ import annotations
 from dataclasses import dataclass, field
 from typing import Optional
 import os
@@ -35,3 +34,19 @@ class EvalConfig:
     allow_noise: bool = True
     permanova_metric: str = "braycurtis"
     permanova_permutations: int = 999
+    
+@dataclass
+class TuningConfig:
+    n_trials: int = 50
+    timeout : Optional[int] = None
+    
+    pruner: bool = True
+    pruner_type: str = "median"
+    pruner_startup_trials: int = 5
+    pruner_warmup_steps: int = 0
+    pruner_interval_steps: int = 1
+    
+    sampler: str = "tpe"
+    seed: int = 42
+    
+    study_name: str = "latentgee_optuna"
