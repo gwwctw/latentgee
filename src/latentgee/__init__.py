@@ -20,9 +20,9 @@ from .pipeline.pipeline import LatentGEEPipeline, RunOutputs
 from .pipeline.tuner import OptunaTuner
 
 # utils
-from ...experiments.hivrc.dataset_cache import get_dataset_for_cutoff
 from .utils.matrics import safe_silhouette, permanova_r2, adonis2_permanova_r2_via_rscript, evaluate_latentgee, BatchEffectEvaluator
 
+from .api import LatentGEE
 __all__ = [
     # config
     "load_cfg", "_as_none", "suggest_auto",
@@ -47,5 +47,7 @@ __all__ = [
     
     # utils
     "get_dataset_for_cutoff",
-    "safe_silhouette", "permanova_r2", "adonis2_permanova_r2_via_rscript", "evaluate_latentgee", "BatchEffectEvaluator"
+    "safe_silhouette", "permanova_r2", "adonis2_permanova_r2_via_rscript", "evaluate_latentgee", "BatchEffectEvaluator",
+    
+    "LatentGEE"
     ]

@@ -13,7 +13,7 @@ search_space:
     base_dim: [256, 512, 768]            # categorical
     strategy: ["constant", "halve", "double"]
     activation: ["relu", "leaky_relu", "gelu"]
-    dropout_rate: [0.0, 0.5]             # float range (uniform)
+    dropout_rate: [0.0, 0.1, 0.2, 0.3, 0.4, 0.5]             # float range (uniform)
     # ▼ 추가 추천 튜닝 항목
     beta_kl: [0.1, 4.0]                  # β-VAE (KL 가중치)
     kl_warmup_epochs: [0, 40]            # KL warmup(선형 또는 cosine)
@@ -34,8 +34,8 @@ search_space:
 
   clustering:
     min_cluster_size: [3, 50]            # int range
-    min_samples: ["None", 5, 10, 20]     # categorical (문자열 "None" → 파이썬 None 매핑)
-    metric: ["euclidean", "manhattan", "braycurtis", "canberra"]
+    min_samples: ["null", 5, 10, 20]     # categorical (문자열 "None" → 파이썬 None 매핑)
+    metric: ["euclidean"]
     cluster_selection_method: ["eom", "leaf"]
     allow_single_cluster: [true, false]  # HDBSCAN 옵션 (필요시)
   tuning:
