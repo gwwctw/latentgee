@@ -23,7 +23,6 @@ from sklearn.preprocessing import StandardScaler
 from torch.utils.data import DataLoader, TensorDataset
 
 from skbio.stats.distance import DistanceMatrix, permanova
-from skbio.stats.composition import clr, multiplicative_replacement
 
 from statsmodels.genmod.generalized_estimating_equations import GEE
 from statsmodels.genmod.cov_struct import Exchangeable
