@@ -1,10 +1,7 @@
-
-import sys
+import os
 import yaml
 import numpy as np
 import pandas as pd
-import seaborn as sns
-import tqdm
 import optuna
 import sklearn
 import random
@@ -12,7 +9,6 @@ import random
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
-from functools import partial
 from pathlib import Path
 from datetime import datetime
 
@@ -23,6 +19,8 @@ from sklearn.decomposition import PCA
 from sklearn.manifold import MDS
 from sklearn.metrics import silhouette_score, pairwise_distances
 from sklearn.preprocessing import StandardScaler
+
+from torch.utils.data import DataLoader, TensorDataset
 
 from skbio.stats.distance import DistanceMatrix, permanova
 from skbio.stats.composition import clr, multiplicative_replacement
@@ -40,7 +38,7 @@ print("torch ==", getattr(torch, "__version__", None))
 print("numpy ==", getattr(np, "__version__", None))
 print("scikit-learn ==", getattr(sklearn, "__version__", None))
 print("optuna ==", getattr(optuna, "__version__", None))
-print("hdbscan ==", hdbscan.__version__)
+#print("hdbscan ==", hdbscan.__version__)
 
 
 def set_seed(seed: int = 42):
@@ -121,7 +119,7 @@ class FlexibleMLP(nn.Module):
         return self.net(x)
 
 # Network architecture generator
-def build_layer_dims(input_dim, output_dim, n_layers, base_dim, strategy='constant'):
+def build_layer_dims(input_dim, base_dim, output_dim, n_layers,  strategy='constant'):
     dims = [input_dim]
     current_dim = base_dim
     for _ in range(n_layers):
@@ -143,17 +141,17 @@ class VAE(nn.Module):
                  strategy='constant', dropout_rate=0.0, activation='relu'):
         super().__init__()
         # ---------- Encoder ----------
-        enc_dims = build_layer_dims(input_dim, base_dim, n_layers, latent_dim, strategy)
-        self.enc_net = FlexibleMLP(enc_dims, dropout_rate, activation)
-        self.fc_mu     = nn.Linear(enc_dims[-1], latent_dim)
-        self.fc_logvar = nn.Linear(enc_dims[-1], latent_dim)
+        enc_dims = build_layer_dims(input_dim, base_dim, latent_dim,  n_layers, strategy)
+        self.enc_net = FlexibleMLP(enc_dims[:-1], dropout_rate, activation)
+        self.fc_mu     = nn.Linear(enc_dims[-2], latent_dim)
+        self.fc_logvar = nn.Linear(enc_dims[-2], latent_dim)
 
         # ---------- Decoder ----------
-        dec_dims = build_layer_dims(latent_dim, base_dim, n_layers, input_dim, strategy)
-        self.dec_net   = FlexibleMLP(dec_dims, dropout_rate, activation)
-        self.dec_pi    = nn.Linear(dec_dims[-1], input_dim)   # zero prob
-        self.dec_mu    = nn.Linear(dec_dims[-1], input_dim)   # log-normal μ
-        self.dec_log_sigma  = nn.Linear(dec_dims[-1], input_dim)   # log-normal _sigma
+        dec_dims = build_layer_dims(latent_dim, base_dim, input_dim, n_layers, strategy)
+        self.dec_net   = FlexibleMLP(dec_dims[:-1], dropout_rate, activation)
+        self.dec_pi    = nn.Linear(dec_dims[-2], input_dim)   # zero prob
+        self.dec_mu    = nn.Linear(dec_dims[-2], input_dim)   # log-normal μ
+        self.dec_log_sigma  = nn.Linear(dec_dims[-2], input_dim)   # log-normal _sigma
 
     def encode(self, x):
         h = self.enc_net(x)
@@ -210,9 +208,8 @@ def pseudo_clustering(z_tensor,
     ▣ 역할
         1. HDBSCAN → pseudo-batch 라벨 생성
     """
-    if z_tensor.requires_grad:
-        z_tensor = z_tensor.detach()
-        z_cpu = z_tensor.detach().cpu().numpy()
+    
+    z_cpu = z_tensor.detach().cpu().numpy()
 
     # ── 1. Pseudo-batch 탐색 ─────────────────────────────
     hdb = HDBSCAN(
@@ -263,6 +260,8 @@ def gee_latent_residual(z_np,
         )
 
         result = model.fit()
+        if not result.converged:
+            raise ValueError("GEE did not converge")
         resid = df[col] - result.fittedvalues
         residuals.append(resid.values)
 
@@ -275,6 +274,7 @@ def evaluate_latentgee(
         min_cluster_size: int = 10,
         min_samples: int | None = None,
         metric: str = "euclidean",
+        cluster_selection_method: str = "eom"
     ) -> tuple[np.ndarray, float]:
 
     """
@@ -300,7 +300,8 @@ def evaluate_latentgee(
         z,
         min_cluster_size=min_cluster_size,
         min_samples=min_samples,
-        metric = metric
+        metric = metric,
+        cluster_selection_method = cluster_selection_method,
     )
 
     # ---- remove noise samples ----
@@ -308,7 +309,7 @@ def evaluate_latentgee(
 
     n_valid = np.unique(labels[mask]).size
     if n_valid < 2 or mask.sum() < 3:
-        raise optuna.TrialPruned()
+        raise ValueError("no. of valid cluster < 2")
 
     z_used = z_np[mask]
     lbl_used = labels[mask]
@@ -316,7 +317,7 @@ def evaluate_latentgee(
 
     # ---- covariate subset ----
     if covariates_df is not None:
-        cov_used = covariates_df.iloc[mask]
+        cov_used = covariates_df[mask]
     else:
         cov_used = None
 
@@ -335,22 +336,51 @@ def evaluate_latentgee(
 # --------------------------------------------------
 # 3. train_vae() 에서 ZILN 손실 사용
 # --------------------------------------------------
-def train_vae(model, data_tensor, epochs=50, lr=1e-3):
-    opt = torch.optim.Adam(model.parameters(), lr=lr)
+def train_vae(model, data_tensor, 
+              beta = 0.1, 
+              epochs=50, 
+              lr=1e-3, 
+              batch_size=64,
+              weight_decay = 0.0,
+              grad_clip_norm = 0.5):
+    dataset = TensorDataset(data_tensor)
+    loader  = DataLoader(dataset, batch_size=batch_size, shuffle=True)
+    
+    opt = torch.optim.Adam(model.parameters(), lr=lr, weight_decay=weight_decay)
+    
     for ep in range(epochs):
         model.train()
-        (pi, mu_x, log_sigma_x), mu_z, logvar_z, _ = model(data_tensor)
+        epoch_recon = 0.0
+        epoch_kl = 0.0
+        n_batches = 0
+        
+        for (x_batch,) in loader:
+            
+            (pi, mu_x, log_sigma_x), mu_z, logvar_z, _ = model(x_batch)
 
-        recon_nll = ziln_nll(data_tensor, pi, mu_x, log_sigma_x) # negative log likelihood 
-        kl = -0.5 * torch.mean(1 + logvar_z - mu_z.pow(2) - logvar_z.exp())
-        loss = recon_nll + kl
-
-        if torch.isnan(loss):
-            raise optuna.TrialPruned()
-
-        opt.zero_grad(); loss.backward(); opt.step()
+            recon_nll = ziln_nll(x_batch, pi, mu_x, log_sigma_x) # negative log likelihood 
+            kl = -0.5 * torch.mean(1 + logvar_z - mu_z.pow(2) - logvar_z.exp())
+            loss = recon_nll + beta * kl
+        
+        
+        
+            if torch.isnan(loss):
+                raise ValueError("NaN loss detected")
+        
+            opt.zero_grad()
+            loss.backward()
+            torch.nn.utils.clip_grad_norm_(model.parameters(), max_norm=grad_clip)            
+            opt.step()
+            
+            epoch_recon += recon_nll.item()
+            epoch_kl += kl.item()
+            n_batches += 1
+            
+            
         if (ep + 1) % 10 == 0:
-            print(f"[{ep+1}/{epochs}] ZILN-NLL {recon_nll:.4f}  KL {kl:.4f}")
+            print(f"[{ep+1}/{epochs}] "
+                  f"ZILN-NLL {epoch_recon/n_batches:.4f}  "
+                  f"KL {epoch_kl/n_batches:.4f}")
     return loss.item()
 
 # ---------------------------------------------------------
@@ -358,55 +388,87 @@ def train_vae(model, data_tensor, epochs=50, lr=1e-3):
 def objective(trial: optuna.Trial,
               config: dict,
               X_tensor: torch.Tensor,
-              log_file: str = "optuna_trial_log.csv") -> float:
+              log_file) -> float:
     input_dim = X_tensor.shape[1]
+    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
     # ── ① 파라미터 샘플링 ─────────────────────────
+    beta          = trial.suggest_float("beta_kl",
+                        *config["search_space"]["model"]["beta_kl"])
     strategy      = trial.suggest_categorical("strategy",
                         config["search_space"]["model"]["strategy"])
     n_layers      = trial.suggest_int("n_layers",
                         *config["search_space"]["model"]["n_layers"])
-    base_dim = trial.suggest_categorical("base_dim",
-                                         config["search_space"]["model"]["base_dim"])
+    base_dim      = trial.suggest_categorical("base_dim",
+                        config["search_space"]["model"]["base_dim"])
     latent_dim    = trial.suggest_int("latent_dim",
                         *config["search_space"]["model"]["latent_dim"])
     activation    = trial.suggest_categorical("activation",
                         config["search_space"]["model"]["activation"])
-    dropout_rate  = trial.suggest_float("dropout_rate",
-                        *config["search_space"]["model"]["dropout_rate"])
+    dropout_rate  = trial.suggest_categorical("dropout_rate",
+                        config["search_space"]["model"]["dropout_rate"])
+    
     epochs        = trial.suggest_categorical("epochs",
                         config["search_space"]["training"]["epochs"])
+    batch_size    = trial.suggest_categorical("batch_size",
+                        config["search_space"]["training"]["batch_size"])
+    weight_decay  = trial.suggest_float("weight_decay",
+                        config["search_space"]["training"]["weight_decay"]["loguniform"][0],
+                        config["search_space"]["training"]["weight_decay"]["loguniform"][1],
+                        log=True)
+    learning_rate = trial.suggest_float("learning_rate", 
+                        config["search_space"]["training"]["learning_rate"]["loguniform"][0],
+                        config["search_space"]["training"]["learning_rate"]["loguniform"][1],
+                        log=True)
     
-    lr_low, lr_high = sorted(map(float,config["search_space"]["training"]["learning_rate"]["loguniform"]))
-    learning_rate = trial.suggest_float("learning_rate", lr_low, lr_high, log=True)
-
+    grad_clip_norm  = trial.suggest_float("grad_clip_norm",
+                        *config["search_space"]["training"]["grad_clip_norm"])
+    csm             = trial.suggest_categorical("cluster_selection_method",
+                        config["search_space"]["clustering"]["cluster_selection_method"])
     # HDBSCAN
     mcs_low, mcs_high   = config["search_space"]["clustering"]["min_cluster_size"]
     min_cluster_size    = trial.suggest_int("min_cluster_size", mcs_low, mcs_high)
     min_samples_token   = trial.suggest_categorical("min_samples_token",config["search_space"]["clustering"]["min_samples"])
-    min_samples         = None if (min_samples_token in ["None", None]) else int(min_samples_token)
+    
+    min_samples         = None if min_samples_token in (None, "null") else int(min_samples_token)
     metric              = trial.suggest_categorical("metric", config["search_space"]["clustering"]["metric"])
 
 
     
     # ── ② 모델 구성 & 학습 ──────────────────────── 
-
     model = VAE(input_dim=input_dim,
                 latent_dim=latent_dim,
                 n_layers=n_layers,
                 base_dim=base_dim,
                 strategy=strategy,
                 dropout_rate=dropout_rate,
-                activation=activation)
-    try:
-        last_loss = train_vae(model, X_tensor, epochs=epochs, lr=learning_rate)
-        last_loss = float(last_loss)           # Tensor → python scalar
+                activation=activation).to(device)
+    X_tensor = X_tensor.to(device)
     
+    last_loss = float("nan") #초기화
+    
+    
+    try:
+        last_loss = train_vae(model, 
+                              X_tensor, 
+                              beta=beta, 
+                              epochs=epochs, 
+                              lr=learning_rate, 
+                              batch_size=batch_size, 
+                              weight_decay=weight_decay, 
+                              grad_clip_norm=grad_clip_norm)
+        last_loss = float(last_loss)
     except RuntimeError as e:
         if "out of memory" in str(e):
             raise optuna.TrialPruned()
         else:
             raise
+    except ValueError as e:
+        if "NaN" in str(e):
+            raise optuna.TrialPruned()
+        else:
+            raise
+        
 
     # ── ③ 평가 ───────────────────────────────────
     try:
@@ -414,7 +476,8 @@ def objective(trial: optuna.Trial,
             model, X_tensor,
             min_cluster_size=min_cluster_size,
             min_samples=min_samples,
-            metric=metric
+            metric=metric,
+            cluster_selection_method=csm
         )
     except ValueError:                         # 실루엣 계산 실패
         raise optuna.TrialPruned()
@@ -437,12 +500,24 @@ def objective(trial: optuna.Trial,
         "loss":          [last_loss],
         "silhouette":    [score],
         "n_clusters":    [n_clusters],
-        "noise_ratio":   [noise_ratio]
+        "noise_ratio":   [noise_ratio],
+        "beta_kl":       [beta],          # 추가
+        "weight_decay":  [weight_decay],  # 추가
+        "grad_clip":     [grad_clip_norm],     # 추가
+        "csm":           [csm],           # 추가
     })
-    mode, header = ("w", True) if trial.number == 0 else ("a", False)
+    
+    file_exists = os.path.exists(log_file)
+    mode   = "a" if file_exists else "w"
+    header = not file_exists
+        
     res_df.to_csv(log_file, mode=mode, index=False, header=header)
 
     print(f"Trial {trial.number:3d} | sil={score:+.4f} | k={n_clusters}")
+    
+    del model
+    torch.cuda.empty_cache()
+    
 
     # ── ⑤ Optuna가 최대화할 스코어 반환 ───────────
     return score
@@ -472,11 +547,15 @@ def main():
     
     # ── seed 고정
     set_seed()
+    
+    # ── logfile생성
+    log_file = save_dated_filename("optuna_trials", ".csv")
+    
     # ── Device 설정 ────────────────────────
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     
     # ---- 1. YAML 로드 ----
-    with open("config.yaml") as f:
+    with open("C:/Users/KOBIC/Documents/latentgee/examples/config.yaml") as f:
         cfg = yaml.safe_load(f)
         
     # ---- 2. data load ----
@@ -484,13 +563,22 @@ def main():
     X_tensor = torch.tensor(X_raw.values, dtype=torch.float32).to(device)
     
     # ---- 3. Optuna 실행 ----
+    tuning_cfg = cfg["tuning"]
+    pruner = optuna.pruners.MedianPruner(
+        n_startup_trials = tuning_cfg["pruner_startup_trials"],
+        n_warmup_steps   = tuning_cfg["pruner_warmup_steps"],
+        interval_steps   = tuning_cfg["pruner_interval_steps"],
+    ) if tuning_cfg["pruner"] else optuna.pruners.NopPruner()
+
     study = optuna.create_study(
-        direction="maximize",
-        sampler=optuna.samplers.TPESampler(seed=42)
+        direction  = "maximize",
+        sampler    = optuna.samplers.TPESampler(seed=tuning_cfg["seed"]),
+        pruner     = pruner,
+        study_name = tuning_cfg["study_name"],
     )
     study.optimize(
-        lambda tr: objective(tr, cfg, X_tensor),   # ← 기존 objective 그대로
-        n_trials=1000,
+        lambda tr: objective(tr, cfg, X_tensor, log_file=log_file),   # ← 기존 objective 그대로
+        n_trials=tuning_cfg["n_trials"],
     )
         
     # ---- 4. Best hyper-parameter
@@ -502,16 +590,22 @@ def main():
 
     # ── 4-1. 파라미터 꺼내기 ───────────────────────────
     input_dim    = X_tensor.shape[1]
-    base_dim = best_params["base_dim"]
+    base_dim     = best_params["base_dim"]
     latent_dim   = best_params["latent_dim"]
     n_layers     = best_params["n_layers"]
     strategy     = best_params["strategy"]
     dropout_rate = best_params["dropout_rate"]
     activation   = best_params["activation"]
-    epochs       = best_params["epochs"]          # 30 · 50 · 80 · 100 중 하나
+    epochs       = best_params["epochs"]      
+    batch_size   = best_params["batch_size"]
     lr           = best_params["learning_rate"]
     min_cs       = best_params["min_cluster_size"]
-    min_samples  = None                           # search space가 "None" 뿐이므로
+    beta_kl      = best_params["beta_kl"]
+    weight_decay = best_params["weight_decay"]
+    grad_clip_norm    = best_params["grad_clip_norm"]
+    
+    
+    min_samples  = None # search space가 "None" 뿐이므로
 
     # ── 4-2. 모델 인스턴스 ─────────────────────────────
     best_model = VAE(
@@ -523,8 +617,14 @@ def main():
         dropout_rate= dropout_rate,
         activation  = activation,
     ).to(device)
-    train_vae(best_model, X_tensor, epochs=epochs, lr=lr)
     
+    train_vae(best_model, X_tensor,
+              beta        = beta_kl,
+              epochs      = epochs,
+              lr          = lr,
+              batch_size  = batch_size,
+              weight_decay= weight_decay,
+              grad_clip_norm   = grad_clip_norm)
     # ── 4-3. encode → reparameterize → decode
     best_model.eval()
     with torch.no_grad():
@@ -550,15 +650,14 @@ def main():
 
     # 5) save to disk
     save_recon_path = save_dated_filename("X_reconstructed_ZILN", ".csv")
-    recon_df.to_csv(save_recon_path) 
+    recon_df.to_csv(save_recon_path)
 
     print(f"Reconstruction complete — written to {save_recon_path}")
     
     # ─── best model 저장 ───────────────────────────────────────────
     save_path = save_dated_filename("best_model", ".pt")
     torch.save(best_model.state_dict(), save_path)
-    print(f"✓ 모델 가중치를 {save_path} 로 저장했습니다.")
-  
-    
+    print(f"✓ 모델 가중치를 {save_path} 로 저장했습니다.")  
+
 if __name__ == "__main__":
     main()

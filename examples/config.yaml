@@ -8,7 +8,7 @@ data:
 
 search_space:
   model:
-    n_layers: [1, 6]                     # int range (inclusive)
+    n_layers: [1, 4]                     # int range (inclusive)
     latent_dim: [8, 64]                  # int range
     base_dim: [256, 512, 768]            # categorical
     strategy: ["constant", "halve", "double"]
@@ -21,8 +21,8 @@ search_space:
     init: ["xavier_uniform", "xavier_normal", "kaiming_uniform"]  # 가중치 초기화
 
   training:
-    epochs: [50, 80, 120, 200]           # categorical
-    batch_size: [128, 256, 512, 1024]    # categorical
+    epochs: [50, 80, 100]        # categorical
+    batch_size: [32, 64, 128]    # categorical
     # 학습률/가중감쇠는 로그스케일로 뽑도록 명시
     learning_rate: {loguniform: [1.0e-5, 1.0e-3]}
     weight_decay:  {loguniform: [1.0e-8, 1.0e-3]}
