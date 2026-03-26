@@ -20,7 +20,7 @@ from hdbscan import HDBSCAN            # <— density-based clustering
 
 from sklearn.decomposition import PCA
 from sklearn.manifold import MDS
-from sklearn.metrics import pairwise_distances
+from sklearn.metrics import silhouette_score, pairwise_distances
 from sklearn.preprocessing import StandardScaler
 
 from torch.utils.data import DataLoader, TensorDataset
@@ -30,8 +30,6 @@ from skbio.stats.distance import DistanceMatrix, permanova
 from statsmodels.genmod.generalized_estimating_equations import GEE
 from statsmodels.genmod.cov_struct import Exchangeable
 from statsmodels.genmod.families import Gaussian
-from skbio.stats.distance import permanova, DistanceMatrix
-from scipy.spatial.distance import pdist, squareform
 
 import matplotlib.pyplot as plt
 #from matplotlib.patches import Ellipse
@@ -94,7 +92,7 @@ def make_save_best_callback(logger, log_dir, cutoff=0.1):
         if study.best_trial.number == trial.number:
             today = datetime.today().strftime("%Y-%m-%d")
             best_params = trial.params
-            logger.info(f"New best trial {trial.number} | r2={trial.value:.4f}")
+            logger.info(f"New best trial {trial.number} | sil={trial.value:.4f}")
             best_path = Path(log_dir) / f"best_params_latest_trial{trial.number}_cutoff_{cutoff}_{today}.json"
             with open(best_path, "w") as f:
                 json.dump(best_params, f, indent=2)
@@ -328,32 +326,10 @@ def gee_latent_residual(z_np,
         result = model.fit()
         if not result.converged:
             raise ValueError("GEE did not converge")
-        if np.isnan(result.fittedvalues).any():
-            raise ValueError("GEE fittedvalues contain NaN")
-        
-        resid = df[col].values - result.fittedvalues.values
-        
-        residuals.append(resid)
+        resid = df[col] - result.fittedvalues
+        residuals.append(resid.values)
 
     return np.vstack(residuals).T
-
-def compute_permanova_r2(z_resid, lbl_used):
-    dist = squareform(pdist(z_resid, metric="euclidean"))
-    dm = DistanceMatrix(dist)
-    result = permanova(dm, lbl_used, permutations=99)  # 빠르게 99
-    n = len(lbl_used)
-    # R² 계산
-    d2 = dist ** 2
-    sst = d2[np.triu_indices(n, 1)].sum() / n
-    ssw = 0.0
-    for g in np.unique(lbl_used):
-        idx = np.where(lbl_used == g)[0]
-        if len(idx) < 2:
-            continue
-        d2_g = d2[np.ix_(idx, idx)]
-        ssw += d2_g[np.triu_indices(len(idx), 1)].sum() / len(idx)
-    r2 = (sst - ssw) / sst
-    return float(r2)
 
 def evaluate_latentgee(
         model: nn.Module,
@@ -361,7 +337,7 @@ def evaluate_latentgee(
         covariates_df: pd.DataFrame | None = None,
         min_cluster_size: int = 10,
         min_samples: int | None = None,
-        study_labels=None,
+        metric: str = "euclidean",
         cluster_selection_method: str = "eom"
     ) -> tuple[np.ndarray, float]:
 
@@ -373,7 +349,7 @@ def evaluate_latentgee(
     1. Encode data to latent space
     2. HDBSCAN clustering → pseudo-batch
     3. GEE residualization
-    4. permanova r2 calculation
+    4. silhouette score calculation
     """
 
     model.eval()
@@ -414,17 +390,10 @@ def evaluate_latentgee(
         covariates_df=cov_used
     )
 
-    # ---- permanova r2 score ----
-    if np.isnan(z_resid).any():
-        raise ValueError("z_resid contains NaN")
+    # ---- silhouette score ----
+    sil = silhouette_score(z_resid, lbl_used, metric="euclidean")
 
-    if study_labels is not None:
-        study_used = np.array(study_labels).flatten()[mask]
-        score = compute_permanova_r2(z_resid, study_used)
-    else:
-        score = compute_permanova_r2(z_resid, lbl_used)
-        
-    return labels, score, noise_ratio
+    return labels, sil, noise_ratio
     
 # --------------------------------------------------
 # 3. train_vae() 에서 ZILN 손실 사용
@@ -496,7 +465,6 @@ def train_vae(model, data_tensor,
 def objective(trial: optuna.Trial,
               config: dict,
               X_tensor_cache:  dict,
-              real_batch: np.array,
               trial_res_file,
               cutoff_list: list,
               covariates_df: pd.DataFrame | None = None,
@@ -593,8 +561,6 @@ def objective(trial: optuna.Trial,
         if "NaN" in str(e): # NaN loss — 이 파라미터 조합은 학습 자체가 불가능
             raise optuna.TrialPruned()
         else:
-            if logger:
-                logger.info(f"Trial {trial.number} | train ValueError: {e}")
             raise
         
 
@@ -605,16 +571,14 @@ def objective(trial: optuna.Trial,
             covariates_df= covariates_df,
             min_cluster_size=min_cluster_size,
             min_samples=min_samples,
-            study_labels=real_batch,
+            metric="euclidean",
             cluster_selection_method=csm
         )
-    except ValueError as e:                        # 클러스터 못 찾음 → 1.0 반환
-        if logger:
-            logger.info(f"Trial {trial.number} | eval ValueError: {e}")
-        return 1.0
+    except ValueError:                        # 클러스터 못 찾음 → -1.0 반환
+        return -1.0
 
-    if np.isnan(score) or np.isinf(score):    # score 이상값 → 1.0 반환
-        return 1.0
+    if np.isnan(score) or np.isinf(score):    # score 이상값 → -1.0 반환
+        return -1.0
 
     # ── ④ 로그 ───────────────────────────────────
     n_clusters = len(np.unique(labels[labels != -1]))
@@ -630,7 +594,7 @@ def objective(trial: optuna.Trial,
         "epochs":        [epochs],
         "learning_rate": [learning_rate],
         "loss":          [last_loss],
-        "permanova":    [score],
+        "silhouette":    [score],
         "n_clusters":    [n_clusters],
         "noise_ratio":   [noise_ratio],
         "beta_kl":       [beta_kl],          # 추가
@@ -647,7 +611,7 @@ def objective(trial: optuna.Trial,
         
     res_df.to_csv(trial_res_file, mode=mode, index=False, header=header)
 
-    logger.info(f"Trial {trial.number:3d} | r2={score:+.4f} | k={n_clusters}")
+    logger.info(f"Trial {trial.number:3d} | sil={score:+.4f} | k={n_clusters}")
     
     del model
     torch.cuda.empty_cache()
@@ -672,9 +636,8 @@ def load_hivrc(file_path, cutoff=0.1, normalize=True):
     dat_T.columns.values[0] = "SeqID"
     dat_merged = pd.merge(dat_T, dat_meta, on = "SeqID", how = "inner")
 
-    X = dat_merged.iloc[:, 1:(dat_T.shape[1])].apply(pd.to_numeric, errors="coerce").reset_index(drop=True)
+    X = dat_merged.iloc[:, 1:(dat_T.shape[1])].apply(pd.to_numeric, errors="coerce")
     dat_cov = dat_merged[['hivstatus', 'Age', 'gender', 'msm','ARTuse', 'cd4']].reset_index(drop=True)
-    dat_batch_lbl = dat_merged['Study'].reset_index(drop=True)
     
     # prevalence filtering
     prevalence = (X > 0).sum(axis=0) / X.shape[0]
@@ -686,7 +649,7 @@ def load_hivrc(file_path, cutoff=0.1, normalize=True):
     assert len(X) == len(dat_cov), f"샘플 수 불일치: X={len(X)}, dat_cov={len(dat_cov)}"
     
 
-    return X, dat_cov, dat_batch_lbl
+    return X.reset_index(drop=True), dat_cov
     
 
 def main():
@@ -728,13 +691,12 @@ def main():
     # DATA_PATH = "F:/졸업 후 연구/LatentGEE/Data"
     DATA_PATH = "/DATA/WGS_study/YSL/projects/Data"   
     cutoff_list = cfg["data"]["zero_prevalence_cutoff"] 
-    _ , dat_cov, real_batch = load_hivrc(file_path=DATA_PATH, cutoff=0.1, normalize=True)
+    _ , dat_cov = load_hivrc(file_path=DATA_PATH, cutoff=0.1, normalize=True)
     covariates_df = dat_cov
-    study_label = real_batch
     
     X_tensor_cache = {}
     for c in cutoff_list:
-        X_raw_c, _, _ = load_hivrc(file_path=DATA_PATH, cutoff=c)
+        X_raw_c, _ = load_hivrc(file_path=DATA_PATH, cutoff=c)
         X_tensor_cache[c] = torch.tensor(X_raw_c.values, dtype=torch.float32)
         
     # ---- 3. Optuna 실행 ----
@@ -746,15 +708,14 @@ def main():
     ) if tuning_cfg["pruner"] else optuna.pruners.NopPruner()
 
     study = optuna.create_study(
-        direction  ="minimize",
+        direction  ="maximize",
         sampler    =optuna.samplers.TPESampler(seed=tuning_cfg["seed"]),
         pruner     =pruner,
         study_name =tuning_cfg["study_name"],
     )
     study.optimize(
-        lambda tr: objective(tr, cfg, X_tensor_cache, real_batch=study_label,
-                             trial_res_file=trial_res_file, cutoff_list=cutoff_list,
-                             covariates_df=covariates_df, logger=logger),
+        lambda tr: objective(tr, cfg, X_tensor_cache, trial_res_file=trial_res_file,
+                     cutoff_list=cutoff_list, covariates_df=covariates_df, logger=logger),
         n_trials=tuning_cfg["n_trials"],
         callbacks=[make_save_best_callback(logger, LOGDIR, cutoff_list)]
     )
@@ -788,7 +749,7 @@ def main():
     min_samples    = None
 
     # ── 4-2. 모델 인스턴스 & 학습
-    X_raw_best, _, _ = load_hivrc(file_path=DATA_PATH, cutoff=best_cutoff)
+    X_raw_best, _ = load_hivrc(file_path=DATA_PATH, cutoff=best_cutoff)
     X_tensor_best = torch.tensor(X_raw_best.values, dtype=torch.float32).to(device)
     input_dim = X_tensor_best.shape[1]
     

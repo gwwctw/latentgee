@@ -1,0 +1,8 @@
+2026-03-26 13:33:23 | 로그 저장 경로: /DATA/WGS_study/YSL/projects/latentgee/examples/logs/latentgee_prototype_cutoff_multi_2026-03-26.log
+2026-03-26 13:33:23 | LatentGEE prototype 시작
+2026-03-26 13:33:23 | python == 3.10.20
+2026-03-26 13:33:23 | torch == 2.2.2
+2026-03-26 13:33:23 | numpy == 1.26.4
+2026-03-26 13:33:23 | scikit-learn == 1.7.2
+2026-03-26 13:33:23 | optuna == 3.6.1
+2026-03-26 13:33:23 | hdbscan == 0.8.41

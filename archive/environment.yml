@@ -1,15 +1,15 @@
 name: latentgee
 
 channels:
-  - pytorch
   - conda-forge
+  - pytorch
   - defaults
 
 dependencies:
   - python=3.10
 
   - numpy=1.26
-  - pandas
+  - pandas=2.1
   - scipy=1.11
   - scikit-learn
   - statsmodels
@@ -26,14 +26,8 @@ dependencies:
   - pytorch=2.2
   - cpuonly
 
-  # GPU 사용 시:
-  # - pytorch=2.2
-  # - pytorch-cuda=11.8
-  # - torchvision
-  # - torchaudio
-
+  # clustering / bio
+  - hdbscan
+  - scikit-bio
+  - optuna==3.6.1
   - pip
-  - pip:
-      - optuna==3.6.1
-      - scikit-bio
-      # - hdbscan  ← 가능하면 conda로 이동

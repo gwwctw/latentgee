@@ -1,9 +1,9 @@
 # 데이터/전처리 관련 (선택)
 data:
   # zero prevalence cutoff 후보들 (데이터 차원/분포가 바뀌므로 비용 큼)
-  zero_prevalence_cutoff: [0.0, 0.1005, 0.005]
+  zero_prevalence_cutoff: [0.005, 0.01, 0.03, 0.05, 0.07, 0.10]
   # latent를 HDBSCAN 전에 표준화할지 (z를 featurewise 표준화)
-  standardize_latent: [true, false]
+  # standardize_latent: [true, false]
   tensor_path: "D:/졸업 후 연구/LatentGEE/Data/hivrc_tensor_scene2.pt"
 
 search_space:
@@ -14,14 +14,14 @@ search_space:
     strategy: ["constant", "halve", "double"]
     activation: ["relu", "leaky_relu", "gelu"]
     dropout_rate: [0.0, 0.1, 0.2, 0.3, 0.4, 0.5]             # float range (uniform)
-    # ▼ 추가 추천 튜닝 항목
-    beta_kl: [0.1, 4.0]                  # β-VAE (KL 가중치)
-    kl_warmup_epochs: [0, 40]            # KL warmup(선형 또는 cosine)
+   
+    beta_kl: [0.01, 0.8]                  # β-VAE (KL 가중치)
+    kl_warmup_ratio: [0.2, 0.8]            # KL warmup(선형 또는 cosine)
     norm: ["none", "batchnorm", "layernorm"]   # 층 정규화 선택
     init: ["xavier_uniform", "xavier_normal", "kaiming_uniform"]  # 가중치 초기화
 
   training:
-    epochs: [50, 80, 100]        # categorical
+    epochs: [80, 100, 150]        # categorical
     batch_size: [32, 64, 128]    # categorical
     # 학습률/가중감쇠는 로그스케일로 뽑도록 명시
     learning_rate: {loguniform: [1.0e-5, 1.0e-3]}
@@ -33,27 +33,27 @@ search_space:
     warmup_epochs: [0, 10]               # 스케줄러 warmup 단계
 
   clustering:
-    min_cluster_size: [3, 50]            # int range
+    min_cluster_size: [3, 20]            # int range
     min_samples: ["null", 5, 10, 20]     # categorical (문자열 "None" → 파이썬 None 매핑)
     metric: ["euclidean"]
     cluster_selection_method: ["eom", "leaf"]
     allow_single_cluster: [true, false]  # HDBSCAN 옵션 (필요시)
-  tuning:
-    n_trials: 50
-    timeout: null        # seconds, null이면 제한 없음
 
-    pruner: true
-    pruner_type: median
-    pruner_startup_trials: 5
-    pruner_warmup_steps: 0
-    pruner_interval_steps: 1
+tuning:
+  n_trials: 5000
+  timeout: null        # seconds, null이면 제한 없음
+  pruner: false
+  pruner_type: median
+  pruner_startup_trials: 20
+  pruner_warmup_steps: 0
+  pruner_interval_steps: 1
 
-    sampler: tpe
-    seed: 42
+  sampler: tpe
+  seed: 42
 
-    study_name: latentgee_optuna
-    storage: null        # sqlite:///optuna.db 가능
-    load_if_exists: false
+  study_name: latentgee_optuna
+  storage: null        # sqlite:///optuna.db 가능
+  load_if_exists: false
 
   evaluation:
     silhouette_metric: ["braycurtis",  "manhattan", "canberra"]  # silhouette 계산용 거리
