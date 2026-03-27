@@ -673,7 +673,16 @@ def load_hivrc(file_path, cutoff=0.1, normalize=True):
     dat_merged = pd.merge(dat_T, dat_meta, on = "SeqID", how = "inner")
 
     X = dat_merged.iloc[:, 1:(dat_T.shape[1])].apply(pd.to_numeric, errors="coerce").reset_index(drop=True)
-    dat_cov = dat_merged[['hivstatus', 'Age', 'gender', 'msm','ARTuse', 'cd4']].reset_index(drop=True)
+    dat_cov = dat_merged[['hivstatus', 'Age', 'gender']].reset_index(drop=True)
+    
+    dat_cov['Age'] = dat_cov['Age'].fillna(dat_cov['Age'].median())
+    # msm=1인 경우 gender=1로 채우기
+    mask_msm = dat_cov['gender'].isna() & (dat_merged['msm'] == 1)
+    dat_cov.loc[mask_msm, 'gender'] = 1
+
+    # 나머지 NaN은 최빈값으로
+    dat_cov['gender'] = dat_cov['gender'].fillna(dat_cov['gender'].mode()[0])
+    
     dat_batch_lbl = dat_merged['Study'].reset_index(drop=True)
     
     # prevalence filtering
