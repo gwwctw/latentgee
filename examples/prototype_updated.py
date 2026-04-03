@@ -49,7 +49,7 @@ class FlushFileHandler(logging.FileHandler):
         super().emit(record) # emit()은 로그 메시지가 기록될 때마다 자동으로 호출되는 메서드
         self.flush()  # 매 로그마다 즉시 파일에 씀
 
-def setup_logger(log_dir=".", cutoff=0.1):
+def setup_logger(log_dir=".", cutoff=0.1, pid=None):
     
     log_dir = Path(log_dir)
     log_dir.mkdir(parents=True, exist_ok=True)
@@ -57,9 +57,18 @@ def setup_logger(log_dir=".", cutoff=0.1):
     today = datetime.today().strftime("%Y-%m-%d")
     log_path = log_dir / f"latentgee_prototype_cutoff_{cutoff}_{today}.log"
     
+    # pid가 있으면 파일명에 추가 # 병렬실행시 로그기록 충돌 방지
+    if pid is not None:
+        log_path = log_dir / f"latentgee_prototype_cutoff_{cutoff}_pid{pid}_{today}.log"
+    else:
+        log_path = log_dir / f"latentgee_prototype_cutoff_{cutoff}_{today}.log"
+
     i = 1
     while log_path.exists():
-        log_path = log_dir / f"latentgee_prototype_cutoff_{cutoff}_{today}({i}).log"
+        if pid is not None:
+            log_path = log_dir / f"latentgee_prototype_cutoff_{cutoff}_pid{pid}_{today}({i}).log"
+        else:
+            log_path = log_dir / f"latentgee_prototype_cutoff_{cutoff}_{today}({i}).log"
         i += 1
 
     logger = logging.getLogger("latentgee_prototype")
@@ -90,12 +99,13 @@ def save_model(model, path="best_model.pt"):
     torch.save(model.state_dict(), path)
 
 def make_save_best_callback(logger, log_dir, cutoff=0.1):
+    pid = os.getpid()  # ← 추가
     def callback(study, trial):
         if study.best_trial.number == trial.number:
             today = datetime.today().strftime("%Y-%m-%d")
             best_params = trial.params
             logger.info(f"New best trial {trial.number} | r2={trial.value:.4f}")
-            best_path = Path(log_dir) / f"best_params_latest_trial{trial.number}_cutoff_{cutoff}_{today}.json"
+            best_path = Path(log_dir) / f"best_params_latest_trial{trial.number}_pid{pid}_cutoff_{cutoff}_{today}.json"
             with open(best_path, "w") as f:
                 json.dump(best_params, f, indent=2)
     return callback
@@ -439,13 +449,20 @@ def train_vae(model, data_tensor,
               weight_decay=0.0,
               grad_clip_norm=0.5,
               kl_warmup_ratio=0.5,
-              logger=None):   # ← epoch 수 대신 비율로 변경
+              scheduler_type="none",   # ← 추가
+              logger=None):
 
-    kl_warmup_epochs = int(epochs * kl_warmup_ratio)  # 전체 epoch의 50%를 warmup으로
-    
+    kl_warmup_epochs = int(epochs * kl_warmup_ratio)
+
     dataset = TensorDataset(data_tensor)
     loader  = DataLoader(dataset, batch_size=batch_size, shuffle=True)
     opt = torch.optim.Adam(model.parameters(), lr=lr, weight_decay=weight_decay)
+
+    # ── scheduler 설정
+    if scheduler_type == "cosine":
+        scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(opt, T_max=epochs)
+    else:
+        scheduler = None
 
     for ep in range(epochs):
         model.train()
@@ -477,19 +494,26 @@ def train_vae(model, data_tensor,
             epoch_kl    += kl.item()
             n_batches   += 1
 
+        # ── scheduler step (epoch 단위)
+        if scheduler is not None:
+            scheduler.step()
+
         if (ep + 1) % 10 == 0:
-            if logger :
+            current_lr = opt.param_groups[0]['lr']
+            if logger:
                 logger.info(f"[{ep+1}/{epochs}] "
                     f"kl_warmup_epochs {kl_warmup_epochs}   "
                     f"ZILN-NLL {epoch_recon/n_batches:.4f}  "
                     f"KL {epoch_kl/n_batches:.4f}  "
-                    f"beta_t {beta_t:.4f}")
+                    f"beta_t {beta_t:.4f}  "
+                    f"lr {current_lr:.2e}")
             else:
                 print(f"[{ep+1}/{epochs}] "
                     f"kl_warmup_epochs {kl_warmup_epochs}   "
                     f"ZILN-NLL {epoch_recon/n_batches:.4f}  "
                     f"KL {epoch_kl/n_batches:.4f}  "
-                    f"beta_t {beta_t:.4f}")
+                    f"beta_t {beta_t:.4f}  "
+                    f"lr {current_lr:.2e}")
 
     return loss.item()
 
@@ -552,7 +576,8 @@ def objective(trial: optuna.Trial,
     min_samples_token   = trial.suggest_categorical("min_samples_token",config["search_space"]["clustering"]["min_samples"])
     
     min_samples         = None if min_samples_token in (None, "null") else int(min_samples_token)
-    # metric              = trial.suggest_categorical("metric", config["search_space"]["clustering"]["metric"])
+    scheduler_type      = trial.suggest_categorical("scheduler",
+                            config["search_space"]["training"]["scheduler"])
 
 
     
@@ -584,6 +609,7 @@ def objective(trial: optuna.Trial,
                               weight_decay=weight_decay, 
                               grad_clip_norm=grad_clip_norm,
                               kl_warmup_ratio=kl_warmup_ratio,
+                              scheduler_type=scheduler_type,
                               logger=logger)
         last_loss = float(last_loss)
     except RuntimeError as e:
@@ -596,8 +622,8 @@ def objective(trial: optuna.Trial,
             raise optuna.TrialPruned()
         else:
             if logger:
-                logger.info(f"Trial {trial.number} | train ValueError: {e}")
-            raise
+                print(f"Trial {trial.number} | train ValueError: {e}")
+            return 1.0
         
 
     # ── ③ 평가 ───────────────────────────────────
@@ -612,7 +638,7 @@ def objective(trial: optuna.Trial,
         )
     except ValueError as e:                        # 클러스터 못 찾음 → 1.0 반환
         if logger:
-            logger.info(f"Trial {trial.number} | eval ValueError: {e}")
+            print(f"Trial {trial.number} | eval ValueError: {e}")
         return 1.0
 
     if np.isnan(score) or np.isinf(score):    # score 이상값 → 1.0 반환
@@ -635,12 +661,17 @@ def objective(trial: optuna.Trial,
         "permanova":    [score],
         "n_clusters":    [n_clusters],
         "noise_ratio":   [noise_ratio],
+        "min_cluster_size":  [min_cluster_size],
+        "min_samples_token": [min_samples_token],
+        "batch_size":        [batch_size],
+        "init":              [init],
         "beta_kl":       [beta_kl],          # 추가
         "weight_decay":  [weight_decay],  # 추가
         "grad_clip_norm":     [grad_clip_norm],     # 추가
         "csm":           [csm],           # 추가
         "kl_warmup_ratio" : [kl_warmup_ratio],
-        "norm" : [norm]
+        "norm" : [norm],
+        "scheduler": [scheduler_type],
     })
     
     file_exists = os.path.exists(trial_res_file)
@@ -649,7 +680,7 @@ def objective(trial: optuna.Trial,
         
     res_df.to_csv(trial_res_file, mode=mode, index=False, header=header)
 
-    logger.info(f"Trial {trial.number:3d} | r2={score:+.4f} | k={n_clusters}")
+    print(f"Trial {trial.number:3d} | r2={score:+.4f} | k={n_clusters}")
     
     del model
     torch.cuda.empty_cache()
@@ -698,30 +729,28 @@ def load_hivrc(file_path, cutoff=0.1, normalize=True):
     
 
     return X, dat_cov, dat_batch_lbl
-    
 
-def main():
-    # WORKDIR = "C:/Users/KOBIC/Documents/latentgee/examples"
-    WORKDIR = "/DATA/WGS_study/YSL/projects/latentgee/examples"    
-    LOGDIR = f"{WORKDIR}/logs"
-    RESDIR = f"{WORKDIR}/results"
-    
 
-    # ── seed 고정
+
+def main(phase: int = 1,
+         best_trial_number: int | None = None,
+         trial_res_file_phase2: str | None = None):
+
+    WORKDIR = "/DATA/WGS_study/YSL/projects/latentgee/examples"
+    LOGDIR  = f"{WORKDIR}/logs"
+    RESDIR  = f"{WORKDIR}/results"
+    DATA_PATH = "/DATA/WGS_study/YSL/projects/Data"
+
     set_seed()
-    # ── Device 설정
-    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")   
-    
-    # ---- 1. YAML 로드 ----    
+    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+
     with open(f"{WORKDIR}/config.yaml") as f:
         cfg = yaml.safe_load(f)
-    
-    # ── logfile 생성
-    logger = setup_logger(log_dir=LOGDIR, cutoff = "multi") # ── 로거 설정
-    logger.info("LatentGEE prototype 시작")  # 이 줄도 추가하면 좋아요
-    trial_res_file = save_dated_filename(f"{LOGDIR}/optuna_trials", ".csv")
-        
-    # ── 모듈 패키지 기록
+
+    logger = setup_logger(log_dir=LOGDIR, cutoff="multi", pid=os.getpid())
+    logger.info(f"LatentGEE prototype 시작 | phase={phase}")
+
+    # ── 버전 기록
     logger.info(f"python == {sys.version.split()[0]}")
     logger.info(f"torch == {getattr(torch, '__version__', None)}")
     logger.info(f"numpy == {getattr(np, '__version__', None)}")
@@ -732,181 +761,195 @@ def main():
         logger.info(f"hdbscan == {importlib.metadata.version('hdbscan')}")
     except importlib.metadata.PackageNotFoundError:
         logger.info("hdbscan == (version unknown)")
-        
-    
-        
-    # ---- 2. data cashing & load ----
-    # DATA_PATH = "F:/졸업 후 연구/LatentGEE/Data"
-    DATA_PATH = "/DATA/WGS_study/YSL/projects/Data"   
-    cutoff_list = cfg["data"]["zero_prevalence_cutoff"] 
-    _ , dat_cov, real_batch = load_hivrc(file_path=DATA_PATH, cutoff=0.1, normalize=True)
+
+    # ── 공통: data load
+    cutoff_list = cfg["data"]["zero_prevalence_cutoff"]
+    _, dat_cov, real_batch = load_hivrc(file_path=DATA_PATH, cutoff=0.1, normalize=True)
     covariates_df = dat_cov
-    study_label = real_batch
-    
-    X_tensor_cache = {}
-    for c in cutoff_list:
-        X_raw_c, _, _ = load_hivrc(file_path=DATA_PATH, cutoff=c)
-        X_tensor_cache[c] = torch.tensor(X_raw_c.values, dtype=torch.float32)
+    study_label   = real_batch
+
+    # ================================================================
+    # Phase 1 — Optuna 탐색
+    # ================================================================
+    if phase == 1:
+        trial_res_file = save_dated_filename( f"{LOGDIR}/optuna_trials_pid{os.getpid()}", ".csv")
+
+        X_tensor_cache = {}
+        for c in cutoff_list:
+            X_raw_c, _, _ = load_hivrc(file_path=DATA_PATH, cutoff=c)
+            X_tensor_cache[c] = torch.tensor(X_raw_c.values, dtype=torch.float32)
+
+        tuning_cfg = cfg["tuning"]
+        pruner = optuna.pruners.MedianPruner(
+            n_startup_trials=tuning_cfg["pruner_startup_trials"],
+            n_warmup_steps  =tuning_cfg["pruner_warmup_steps"],
+            interval_steps  =tuning_cfg["pruner_interval_steps"],
+        ) if tuning_cfg["pruner"] else optuna.pruners.NopPruner()
+
+        study = optuna.create_study(
+            direction     ="minimize",
+            sampler       =optuna.samplers.TPESampler(seed=tuning_cfg["seed"]),
+            pruner        =pruner,
+            study_name    =tuning_cfg["study_name"],
+            storage       =tuning_cfg.get("storage", None),
+            load_if_exists=tuning_cfg.get("load_if_exists", False),
+        )
+        study.optimize(
+            lambda tr: objective(tr, cfg, X_tensor_cache, real_batch=study_label,
+                                trial_res_file=trial_res_file, cutoff_list=cutoff_list,
+                                covariates_df=covariates_df, logger=logger),
+            n_trials  = tuning_cfg["n_trials"],
+            n_jobs    = tuning_cfg.get("n_jobs", 1),
+            callbacks = [make_save_best_callback(logger, LOGDIR, cutoff_list)]
+        )
+        logger.info(f"Phase 1 완료 — CSV 경로: {trial_res_file}")
+        logger.info("CSV 확인 후 main(phase=2, best_trial_number=N, trial_res_file_phase2='...csv')로 실행하세요.")
+
+    # ================================================================
+    # Phase 2 — 선택한 trial로 재학습 + decode
+    # ================================================================
+    elif phase == 2:
+        # ── 인자 검증
+        if best_trial_number is None:
+            raise ValueError("phase=2 실행 시 best_trial_number를 지정해야 해요.")
+        if trial_res_file_phase2 is None:
+            raise ValueError("phase=2 실행 시 trial_res_file_phase2를 지정해야 해요.")
+
+        df  = pd.read_csv(trial_res_file_phase2)
+        row = df[df['trial_number'] == best_trial_number]
+        if len(row) == 0:
+            raise ValueError(f"trial_number={best_trial_number}가 CSV에 없어요.")
+        row = row.iloc[0]
+
+        best_cutoff     = row['cutoff']
+        base_dim        = int(row['base_dim'])
+        n_layers        = int(row['n_layers'])
+        latent_dim      = int(row['latent_dim'])
+        activation      = row['activation']
+        strategy        = row['strategy']
+        dropout_rate    = float(row['dropout_rate'])
+        epochs          = int(row['epochs'])
+        batch_size      = int(row['batch_size'])
+        lr              = float(row['learning_rate'])
+        beta_kl         = float(row['beta_kl'])
+        weight_decay    = float(row['weight_decay'])
+        grad_clip_norm  = float(row['grad_clip_norm'])
+        kl_warmup_ratio = float(row['kl_warmup_ratio'])
+        norm            = row['norm']
+        init            = row['init']
+        csm             = row['csm']
+        min_cs          = int(row['min_cluster_size'])
+        min_samples_token = row['min_samples_token']
+        min_samples     = None if str(min_samples_token) in ('null', 'None', 'nan') else int(min_samples_token)
+
+        logger.info(f"Phase 2 시작 | trial={best_trial_number} | cutoff={best_cutoff}")
+
+        # ── 데이터 로드
+        X_raw_best, _, _ = load_hivrc(file_path=DATA_PATH, cutoff=best_cutoff)
+        X_tensor_best = torch.tensor(X_raw_best.values, dtype=torch.float32).to(device)
+        input_dim = X_tensor_best.shape[1]
+
+        # ── 모델 재학습
+        best_model = VAE(
+            input_dim    = input_dim,
+            latent_dim   = latent_dim,
+            n_layers     = n_layers,
+            base_dim     = base_dim,
+            strategy     = strategy,
+            dropout_rate = dropout_rate,
+            activation   = activation,
+            norm         = norm,
+        ).to(device)
+        apply_init(best_model, init)
         
-    # ---- 3. Optuna 실행 ----
-    tuning_cfg = cfg["tuning"]
-    pruner = optuna.pruners.MedianPruner(
-        n_startup_trials=tuning_cfg["pruner_startup_trials"],
-        n_warmup_steps  =tuning_cfg["pruner_warmup_steps"],
-        interval_steps  =tuning_cfg["pruner_interval_steps"],
-    ) if tuning_cfg["pruner"] else optuna.pruners.NopPruner()
+        scheduler_type = row.get('scheduler', 'none')  # CSV에서 읽기
+        train_vae(best_model, X_tensor_best,
+                  beta_kl        = beta_kl,
+                  epochs         = epochs,
+                  lr             = lr,
+                  batch_size     = batch_size,
+                  weight_decay   = weight_decay,
+                  grad_clip_norm = grad_clip_norm,
+                  kl_warmup_ratio= kl_warmup_ratio,
+                  scheduler_type = scheduler_type,      # ← 추가
+                  logger         = logger)
 
-    study = optuna.create_study(
-        direction  ="minimize",
-        sampler    =optuna.samplers.TPESampler(seed=tuning_cfg["seed"]),
-        pruner     =pruner,
-        study_name =tuning_cfg["study_name"],
-    )
-    study.optimize(
-        lambda tr: objective(tr, cfg, X_tensor_cache, real_batch=study_label,
-                             trial_res_file=trial_res_file, cutoff_list=cutoff_list,
-                             covariates_df=covariates_df, logger=logger),
-        n_trials=tuning_cfg["n_trials"],
-        callbacks=[make_save_best_callback(logger, LOGDIR, cutoff_list)]
-    )
-        
-    # ---- 4. Best hyper-parameter ----
-    best_trial  = study.best_trial
-    best_params = best_trial.params
-        
-    logger.info("Best hyperparameters")
-    logger.info(best_params)
+        # ── encode
+        best_model.eval()
+        with torch.no_grad():
+            mu_z, logvar_z = best_model.encode(X_tensor_best)
+            z = best_model.reparameterize(mu_z, logvar_z)
+        z_np = z.cpu().numpy()
 
-    # ── 4-1. 파라미터 꺼내기
-    best_cutoff = best_params["cutoff"]   
-    base_dim       = best_params["base_dim"]
-    latent_dim     = best_params["latent_dim"]
-    n_layers       = best_params["n_layers"]
-    strategy       = best_params["strategy"]
-    dropout_rate   = best_params["dropout_rate"]
-    activation     = best_params["activation"]
-    epochs         = best_params["epochs"]
-    batch_size     = best_params["batch_size"]
-    lr             = best_params["learning_rate"]
-    min_cs         = best_params["min_cluster_size"]
-    beta_kl        = best_params["beta_kl"]
-    weight_decay   = best_params["weight_decay"]
-    grad_clip_norm = best_params["grad_clip_norm"]
-    kl_warmup_ratio= best_params["kl_warmup_ratio"]
-    norm           = best_params["norm"]
-    init           = best_params["init"]
-    
-    min_samples    = None
+        # ── pseudo-batch clustering
+        labels = pseudo_clustering(
+            z,
+            min_cluster_size         = min_cs,
+            min_samples              = min_samples,
+            metric                   = "euclidean",
+            cluster_selection_method = csm
+        )
 
-    # ── 4-2. 모델 인스턴스 & 학습
-    X_raw_best, _, _ = load_hivrc(file_path=DATA_PATH, cutoff=best_cutoff)
-    X_tensor_best = torch.tensor(X_raw_best.values, dtype=torch.float32).to(device)
-    input_dim = X_tensor_best.shape[1]
-    
-    best_model = VAE(
-        input_dim   = input_dim,
-        latent_dim  = latent_dim,
-        n_layers    = n_layers,
-        base_dim    = base_dim,
-        strategy    = strategy,
-        dropout_rate= dropout_rate,
-        activation  = activation,
-        norm        = norm,
-    ).to(device)
-    apply_init(best_model, init)
-    train_vae(best_model, X_tensor_best,
-              beta_kl       =beta_kl,
-              epochs        =epochs,
-              lr            =lr,
-              batch_size    =batch_size,
-              weight_decay  =weight_decay,
-              grad_clip_norm=grad_clip_norm,
-              kl_warmup_ratio=kl_warmup_ratio,
-              logger=logger)
-    
+        noise_mask = labels == -1
+        valid_mask = labels != -1
+        z_used     = z_np[valid_mask]
+        lbl_used   = labels[valid_mask]
+        noise_ratio = (labels == -1).mean()
+        n_clusters  = len(np.unique(lbl_used))
+        logger.info(f"  pseudo-batch 클러스터 수: {n_clusters}")
+        logger.info(f"  노이즈 비율: {noise_ratio:.2%}")
 
-    # ── 4-3. encode → z_tilde (GEE residualization) → decode
-    best_model.eval()
+        if n_clusters < 2:
+            raise ValueError("클러스터 2개 미만 — 파라미터 재검토 필요")
 
-    with torch.no_grad():
-        # a) encode
-        mu_z, logvar_z = best_model.encode(X_tensor_best)
-        # b) reparameterize
-        z = best_model.reparameterize(mu_z, logvar_z)
+        # ── GEE residualization
+        cov_used = covariates_df[valid_mask].reset_index(drop=True) if covariates_df is not None else None
+        z_tilde_valid = gee_latent_residual(z_used, lbl_used, covariates_df=cov_used)
 
-    z_np = z.cpu().numpy()
+        z_tilde_all = np.zeros_like(z_np)
+        z_tilde_all[valid_mask] = z_tilde_valid
 
-    # c) pseudo-batch clustering
-    labels = pseudo_clustering(
-        z,
-        min_cluster_size=min_cs,
-        min_samples     =min_samples,
-        metric          ="euclidean"
-    )
+        # ── noise 샘플 보정
+        if noise_mask.sum() > 0:
+            cluster_means = {c: z_np[valid_mask][lbl_used == c].mean(axis=0)
+                             for c in np.unique(lbl_used)}
+            centers = np.vstack(list(cluster_means.values()))
+            dists   = pairwise_distances(z_np[noise_mask], centers)
+            nearest = np.argmin(dists, axis=1)
+            z_tilde_all[noise_mask] = z_np[noise_mask] - centers[nearest]
 
-    # d) noise 샘플 제거
-    noise_mask = labels == -1
-    valid_mask = labels != -1
-    
-    z_used   = z_np[valid_mask]
-    lbl_used = labels[valid_mask]
-    
-    noise_ratio = (labels == -1).mean()
-    n_clusters  = len(np.unique(lbl_used))
-    logger.info(f"  pseudo-batch 클러스터 수 : {n_clusters}")
-    logger.info(f"  노이즈 비율              : {noise_ratio:.2%}")
+        # ── decode
+        z_tilde_tensor = torch.tensor(z_tilde_all, dtype=torch.float32).to(device)
+        with torch.no_grad():
+            pi, mu_x, log_sigma_x = best_model.decode(z_tilde_tensor)
+            sigma_x     = torch.exp(log_sigma_x)
+            X_corrected = (1 - pi) * torch.exp(mu_x + 0.5 * sigma_x ** 2)
 
-    if n_clusters < 2:
-        raise ValueError("클러스터가 2개 미만 — min_cluster_size 또는 학습 파라미터 재검토 필요")
-    
-    # e) GEE residualization → z_tilde (valid 샘플)
-    cov_used = covariates_df[valid_mask].reset_index(drop=True) if covariates_df is not None else None
-    z_tilde_valid = gee_latent_residual(z_used, lbl_used, covariates_df=cov_used)
-    
-    z_tilde_all = np.zeros_like(z_np)          # ← 추가
-    z_tilde_all[valid_mask] = z_tilde_valid    # ← 추가
+        # ── 저장
+        corrected_df = pd.DataFrame(
+            X_corrected.cpu().numpy(),
+            index   = X_raw_best.index,
+            columns = X_raw_best.columns
+        )
+        save_corrected_path = save_dated_filename(
+            f"{RESDIR}/X_corrected_LatentGEE_trial{best_trial_number}_cutoff{best_cutoff}", ".csv"
+        )
+        corrected_df.to_csv(save_corrected_path)
+        logger.info(f"X_corrected 저장: {save_corrected_path}")
 
-    # f) noise 샘플 보정 (가장 가까운 클러스터 평균 빼기)
-    if noise_mask.sum() > 0:
-        # 각 클러스터 중심 계산
-        cluster_means = {}
-        for c in np.unique(lbl_used):
-            cluster_means[c] = z_np[valid_mask][lbl_used == c].mean(axis=0)
-        
-        centers = np.vstack(list(cluster_means.values()))
-        
-        # noise 샘플과 각 클러스터 중심 거리 계산
-        dists = pairwise_distances(z_np[noise_mask], centers)
-        nearest = np.argmin(dists, axis=1)
-        
-        # 가장 가까운 클러스터 평균 빼기
-        z_noise_corrected = z_np[noise_mask] - centers[nearest]
-        z_tilde_all[noise_mask] = z_noise_corrected
+        save_path = save_dated_filename(
+            f"{RESDIR}/best_model_trial{best_trial_number}", ".pt"
+        )
+        torch.save(best_model.state_dict(), save_path)
+        logger.info(f"모델 저장: {save_path}")
 
-    # g) decode (전체 샘플)
-    z_tilde_tensor = torch.tensor(z_tilde_all, dtype=torch.float32).to(device)
-
-    with torch.no_grad():
-        pi, mu_x, log_sigma_x = best_model.decode(z_tilde_tensor)
-        sigma_x = torch.exp(log_sigma_x)
-        X_corrected = (1 - pi) * torch.exp(mu_x + 0.5 * sigma_x ** 2)
-
-    # h) 저장 (전체 샘플 유지)
-    corrected_df = pd.DataFrame(
-        X_corrected.cpu().numpy(),
-        index  = X_raw_best.index,
-        columns= X_raw_best.columns
-    )
-
-    save_corrected_path = save_dated_filename(f"{RESDIR}/X_corrected_LatentGEE_prototype_cutoff{best_cutoff}", ".csv")
-    corrected_df.to_csv(save_corrected_path)
-    logger.info(f"Batch correction complete — written to {save_corrected_path}")
-
-    # ── 4-5. best model 저장
-    save_path = save_dated_filename(f"{RESDIR}/best_model", ".pt")
-    torch.save(best_model.state_dict(), save_path)
-    logger.info(f"✓ 모델 가중치를 {save_path} 로 저장했습니다.")
+    else:
+        raise ValueError(f"phase는 1 또는 2여야 해요. (현재: {phase})")
 
 
 if __name__ == "__main__":
-    main()
+    main(phase=1)
+    # Phase 2 실행 예시:
+    # main(phase=2,
+    #      best_trial_number=60,
+    #      trial_res_file_phase2="logs/optuna_trials_2026-03-27.csv")
