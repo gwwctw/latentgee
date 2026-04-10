@@ -26,7 +26,7 @@ env/
 logs/
 results/
 *.log
-*.csv
+# *.csv
 
 # Model checkpoints
 *.pt
