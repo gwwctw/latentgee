@@ -1,0 +1,937 @@
+,Study,Study.1,SeqID,hivstatus,Age,gender,msm,ARTuse,vl,vlbin,cd4
+0,Villanueva-Millan,Villanueva-Millan.2017,4EP1,1,47.0,0.0,0.0,1.0,0.0,0.0,551.0
+1,Villanueva-Millan,Villanueva-Millan.2017,4EP10,1,51.0,1.0,0.0,1.0,0.0,0.0,868.0
+2,Villanueva-Millan,Villanueva-Millan.2017,4EP12,1,55.0,1.0,0.0,1.0,0.0,0.0,618.0
+3,Villanueva-Millan,Villanueva-Millan.2017,4EP15,1,59.0,1.0,0.0,1.0,0.0,0.0,1574.0
+4,Villanueva-Millan,Villanueva-Millan.2017,4EP17,1,50.0,1.0,,1.0,0.0,0.0,785.0
+5,Villanueva-Millan,Villanueva-Millan.2017,4EP19,1,50.0,1.0,0.0,1.0,0.0,0.0,570.0
+6,Villanueva-Millan,Villanueva-Millan.2017,4EP20,1,54.0,1.0,0.0,1.0,0.0,0.0,457.0
+7,Villanueva-Millan,Villanueva-Millan.2017,4EP21,1,45.0,0.0,0.0,1.0,0.0,0.0,271.0
+8,Villanueva-Millan,Villanueva-Millan.2017,4EP22,1,52.0,1.0,0.0,1.0,0.0,0.0,517.0
+9,Villanueva-Millan,Villanueva-Millan.2017,4EP23,1,46.0,0.0,0.0,1.0,0.0,0.0,764.0
+10,Villanueva-Millan,Villanueva-Millan.2017,4EP25,1,53.0,1.0,0.0,1.0,0.0,0.0,261.0
+11,Villanueva-Millan,Villanueva-Millan.2017,4EP28,1,48.0,1.0,0.0,1.0,0.0,0.0,325.0
+12,Villanueva-Millan,Villanueva-Millan.2017,4EP29,1,45.0,1.0,0.0,1.0,0.0,0.0,545.0
+13,Villanueva-Millan,Villanueva-Millan.2017,4EP3,1,55.0,1.0,0.0,1.0,0.0,0.0,810.0
+14,Villanueva-Millan,Villanueva-Millan.2017,4EP30,1,34.0,1.0,0.0,0.0,71500.0,1.0,448.0
+15,Villanueva-Millan,Villanueva-Millan.2017,4EP31,1,46.0,1.0,0.0,0.0,67300.0,1.0,899.0
+16,Villanueva-Millan,Villanueva-Millan.2017,4EP33,1,59.0,1.0,,0.0,3550.0,1.0,589.0
+17,Villanueva-Millan,Villanueva-Millan.2017,4EP34,1,52.0,0.0,0.0,1.0,0.0,0.0,416.0
+18,Villanueva-Millan,Villanueva-Millan.2017,4EP35,1,47.0,1.0,0.0,1.0,0.0,0.0,1249.0
+19,Villanueva-Millan,Villanueva-Millan.2017,4EP36,1,49.0,0.0,0.0,1.0,0.0,0.0,1398.0
+20,Villanueva-Millan,Villanueva-Millan.2017,4EP37,1,50.0,1.0,,1.0,0.0,0.0,545.0
+21,Villanueva-Millan,Villanueva-Millan.2017,4EP38,1,62.0,1.0,,1.0,0.0,0.0,627.0
+22,Villanueva-Millan,Villanueva-Millan.2017,4EP39,1,33.0,1.0,1.0,0.0,71800.0,1.0,1374.0
+23,Villanueva-Millan,Villanueva-Millan.2017,4EP4,1,44.0,1.0,0.0,1.0,0.0,0.0,1127.0
+24,Villanueva-Millan,Villanueva-Millan.2017,4EP40,1,41.0,1.0,1.0,1.0,0.0,0.0,478.0
+25,Villanueva-Millan,Villanueva-Millan.2017,4EP41,1,29.0,1.0,0.0,1.0,0.0,0.0,778.0
+26,Villanueva-Millan,Villanueva-Millan.2017,4EP42,0,57.0,0.0,0.0,,,,
+27,Villanueva-Millan,Villanueva-Millan.2017,4EP43,0,35.0,0.0,0.0,,,,
+28,Villanueva-Millan,Villanueva-Millan.2017,4EP45,0,50.0,1.0,,,,,
+29,Villanueva-Millan,Villanueva-Millan.2017,4EP46,1,43.0,0.0,0.0,1.0,0.0,0.0,549.0
+30,Villanueva-Millan,Villanueva-Millan.2017,4EP50,0,52.0,1.0,,,,,
+31,Villanueva-Millan,Villanueva-Millan.2017,4EP51,0,35.0,0.0,0.0,,,,
+32,Villanueva-Millan,Villanueva-Millan.2017,4EP52,0,35.0,0.0,0.0,,,,
+33,Villanueva-Millan,Villanueva-Millan.2017,4EP53,0,40.0,0.0,0.0,,,,
+34,Villanueva-Millan,Villanueva-Millan.2017,4EP54,1,52.0,1.0,0.0,1.0,0.0,0.0,429.0
+35,Villanueva-Millan,Villanueva-Millan.2017,4EP56,1,51.0,1.0,0.0,1.0,0.0,0.0,565.0
+36,Villanueva-Millan,Villanueva-Millan.2017,4EP57,1,52.0,0.0,0.0,1.0,0.0,0.0,900.0
+37,Villanueva-Millan,Villanueva-Millan.2017,4EP58,1,42.0,1.0,0.0,1.0,0.0,0.0,411.0
+38,Villanueva-Millan,Villanueva-Millan.2017,4EP59,1,54.0,1.0,0.0,1.0,0.0,0.0,696.0
+39,Villanueva-Millan,Villanueva-Millan.2017,4EP6,1,44.0,0.0,0.0,1.0,0.0,0.0,1115.0
+40,Villanueva-Millan,Villanueva-Millan.2017,4EP60,1,51.0,1.0,0.0,1.0,0.0,0.0,793.0
+41,Villanueva-Millan,Villanueva-Millan.2017,4EP61,0,41.0,0.0,0.0,,,,
+42,Villanueva-Millan,Villanueva-Millan.2017,4EP62,0,38.0,0.0,0.0,,,,
+43,Villanueva-Millan,Villanueva-Millan.2017,4EP63,0,51.0,1.0,,,,,
+44,Villanueva-Millan,Villanueva-Millan.2017,4EP64,0,52.0,1.0,,,,,
+45,Villanueva-Millan,Villanueva-Millan.2017,4EP65,1,50.0,1.0,0.0,1.0,0.0,0.0,916.0
+46,Villanueva-Millan,Villanueva-Millan.2017,4EP66,0,74.0,1.0,,,,,
+47,Villanueva-Millan,Villanueva-Millan.2017,4EP67,0,38.0,0.0,0.0,,,,
+48,Villanueva-Millan,Villanueva-Millan.2017,4EP69,0,71.0,1.0,,,,,
+49,Villanueva-Millan,Villanueva-Millan.2017,4EP7,1,56.0,1.0,0.0,1.0,0.0,0.0,916.0
+50,Villanueva-Millan,Villanueva-Millan.2017,4EP70,1,49.0,1.0,0.0,1.0,0.0,0.0,355.0
+51,Villanueva-Millan,Villanueva-Millan.2017,4EP71,1,49.0,0.0,0.0,0.0,55900.0,1.0,500.0
+52,Villanueva-Millan,Villanueva-Millan.2017,4EP72,0,28.0,1.0,,,,,
+53,Villanueva-Millan,Villanueva-Millan.2017,4EP74,0,63.0,1.0,,,,,
+54,Villanueva-Millan,Villanueva-Millan.2017,4EP75,0,58.0,1.0,,,,,
+55,Villanueva-Millan,Villanueva-Millan.2017,4EP76,1,34.0,1.0,1.0,1.0,0.0,0.0,880.0
+56,Villanueva-Millan,Villanueva-Millan.2017,4EP77,1,54.0,1.0,,1.0,0.0,0.0,415.0
+57,Villanueva-Millan,Villanueva-Millan.2017,4EP78,1,49.0,1.0,,1.0,0.0,0.0,678.0
+58,Villanueva-Millan,Villanueva-Millan.2017,4EP79,1,35.0,0.0,0.0,1.0,0.0,0.0,703.0
+59,Villanueva-Millan,Villanueva-Millan.2017,4EP8,1,48.0,0.0,0.0,1.0,0.0,0.0,547.0
+60,Villanueva-Millan,Villanueva-Millan.2017,4EP80,0,53.0,1.0,,,,,
+61,Villanueva-Millan,Villanueva-Millan.2017,4EP81,0,52.0,0.0,0.0,,,,
+62,Villanueva-Millan,Villanueva-Millan.2017,4EP82,1,44.0,0.0,0.0,1.0,0.0,0.0,722.0
+63,Villanueva-Millan,Villanueva-Millan.2017,4EP83,1,52.0,1.0,0.0,1.0,0.0,0.0,466.0
+64,Villanueva-Millan,Villanueva-Millan.2017,4EP84,1,39.0,0.0,0.0,1.0,0.0,0.0,511.0
+65,Villanueva-Millan,Villanueva-Millan.2017,4EP85,1,55.0,0.0,0.0,1.0,0.0,0.0,415.0
+66,Villanueva-Millan,Villanueva-Millan.2017,4EP86,1,48.0,0.0,0.0,1.0,0.0,0.0,728.0
+67,Villanueva-Millan,Villanueva-Millan.2017,4EP87,0,48.0,1.0,,,,,
+68,Villanueva-Millan,Villanueva-Millan.2017,4EP88,0,54.0,0.0,0.0,,,,
+69,Dubourg,Dubourg.2016,CNTRL20,0,37.0,1.0,,,,,
+70,Dubourg,Dubourg.2016,CNTRL23,0,39.0,1.0,,,,,
+71,Dubourg,Dubourg.2016,CNTRL300,0,43.0,1.0,,,,,
+72,Dubourg,Dubourg.2016,CNTRL48,0,25.0,0.0,0.0,,,,
+73,Dubourg,Dubourg.2016,CNTRL52,0,37.0,1.0,,,,,
+74,Dubourg,Dubourg.2016,CNTRL82,0,59.0,1.0,,,,,
+75,Dubourg,Dubourg.2016,CNTRL89,0,50.0,1.0,,,,,
+76,Dubourg,Dubourg.2016,CNTRLA1,0,70.0,1.0,,,,,
+77,Dubourg,Dubourg.2016,CNTRLA10,0,29.0,1.0,,,,,
+78,Dubourg,Dubourg.2016,CNTRLA11,0,27.0,1.0,,,,,
+79,Dubourg,Dubourg.2016,CNTRLA2,0,25.0,1.0,,,,,
+80,Dubourg,Dubourg.2016,CNTRLA3,0,36.0,1.0,,,,,
+81,Dubourg,Dubourg.2016,CNTRLA4,0,26.0,1.0,,,,,
+82,Dubourg,Dubourg.2016,CNTRLA5,0,45.0,0.0,0.0,,,,
+83,Dubourg,Dubourg.2016,CNTRLA6,0,37.0,1.0,,,,,
+84,Dubourg,Dubourg.2016,CNTRLA7,0,37.0,0.0,0.0,,,,
+85,Dubourg,Dubourg.2016,CNTRLA8,0,32.0,1.0,,,,,
+86,Dubourg,Dubourg.2016,CNTRLA9,0,29.0,1.0,,,,,
+87,Dubourg,Dubourg.2016,CNTRLP1,0,23.0,0.0,0.0,,,,
+88,Dubourg,Dubourg.2016,CNTRLP2,0,28.0,1.0,,,,,
+89,Dubourg,Dubourg.2016,CNTRLP3,0,33.0,1.0,,,,,
+90,Dubourg,Dubourg.2016,CNTRLP4,0,35.0,1.0,,,,,
+91,Dubourg,Dubourg.2016,CNTRLP5,0,24.0,0.0,0.0,,,,
+92,Dubourg,Dubourg.2016,CNTRLP6,0,23.0,1.0,,,,,
+93,Dubourg,Dubourg.2016,CNTRLP7,0,24.0,0.0,0.0,,,,
+94,Lozupone 2013,Lozupone.2013,ERR315268,0,23.0,1.0,,,,,
+95,Lozupone 2013,Lozupone.2013,ERR315269,1,34.0,1.0,,0.0,449000.0,1.0,452.0
+96,Lozupone 2013,Lozupone.2013,ERR315273,1,50.0,1.0,,1.0,44.0,0.0,311.0
+97,Lozupone 2013,Lozupone.2013,ERR315275,1,25.6,1.0,,0.0,8925.0,1.0,614.0
+98,Lozupone 2013,Lozupone.2013,ERR315277,0,45.2,1.0,,,,,
+99,Lozupone 2013,Lozupone.2013,ERR315278,1,23.2,1.0,,0.0,74600.0,1.0,551.0
+100,Lozupone 2013,Lozupone.2013,ERR315279,1,54.0,0.0,0.0,1.0,297.0,0.0,658.0
+101,Lozupone 2013,Lozupone.2013,ERR315281,1,43.1,1.0,,1.0,20.0,0.0,204.0
+102,Lozupone 2013,Lozupone.2013,ERR315282,1,26.4,0.0,0.0,0.0,418.0,1.0,1342.0
+103,Lozupone 2013,Lozupone.2013,ERR315283,1,27.0,1.0,,0.0,55495.0,1.0,493.0
+104,Lozupone 2013,Lozupone.2013,ERR315284,1,32.0,1.0,,1.0,0.0,0.0,611.0
+105,Lozupone 2013,Lozupone.2013,ERR315285,0,52.0,0.0,0.0,,,,
+106,Lozupone 2013,Lozupone.2013,ERR315286,1,53.6,1.0,,1.0,0.0,0.0,876.0
+107,Lozupone 2013,Lozupone.2013,ERR315288,0,30.9,1.0,,,,,
+108,Lozupone 2013,Lozupone.2013,ERR315289,0,46.7,0.0,0.0,,,,
+109,Lozupone 2013,Lozupone.2013,ERR315291,1,33.6,1.0,,1.0,21.0,0.0,364.0
+110,Lozupone 2013,Lozupone.2013,ERR315292,1,33.5,1.0,,0.0,1350.0,1.0,509.0
+111,Lozupone 2013,Lozupone.2013,ERR315294,1,47.6,1.0,,1.0,31.0,0.0,443.0
+112,Lozupone 2013,Lozupone.2013,ERR315295,1,28.5,1.0,,1.0,40.0,0.0,576.0
+113,Lozupone 2013,Lozupone.2013,ERR315297,0,22.0,0.0,0.0,,,,
+114,Lozupone 2013,Lozupone.2013,ERR315298,1,33.0,1.0,,0.0,199000.0,1.0,555.0
+115,Lozupone 2013,Lozupone.2013,ERR315300,1,28.5,1.0,,0.0,72500.0,1.0,658.0
+116,Lozupone 2013,Lozupone.2013,ERR315301,1,35.0,1.0,,0.0,301000.0,1.0,447.0
+117,Lozupone 2013,Lozupone.2013,ERR315302,1,44.0,1.0,,1.0,0.0,0.0,239.0
+118,Lozupone 2013,Lozupone.2013,ERR315304,0,30.6,0.0,0.0,,,,
+119,Lozupone 2013,Lozupone.2013,ERR315307,1,32.0,1.0,,1.0,40.0,0.0,547.0
+120,Lozupone 2013,Lozupone.2013,ERR315309,1,33.0,1.0,,0.0,17815.0,1.0,537.0
+121,Lozupone 2013,Lozupone.2013,ERR315311,0,50.0,1.0,,,,,
+122,Lozupone 2013,Lozupone.2013,ERR315313,1,25.0,1.0,,0.0,72300.0,1.0,291.0
+123,Lozupone 2013,Lozupone.2013,ERR315315,0,20.0,1.0,,,,,
+124,Lozupone 2013,Lozupone.2013,ERR315316,0,26.0,0.0,0.0,,,,
+125,Lozupone 2013,Lozupone.2013,ERR315317,0,53.0,1.0,,,,,
+126,Lozupone 2013,Lozupone.2013,ERR315320,1,30.0,1.0,,0.0,50200.0,1.0,1095.0
+127,Lozupone 2013,Lozupone.2013,ERR315321,0,50.0,1.0,,,,,
+128,Lozupone 2013,Lozupone.2013,ERR315322,1,27.7,1.0,,0.0,869000.0,1.0,270.0
+129,Lozupone 2013,Lozupone.2013,ERR315323,0,37.0,1.0,,,,,
+130,Lozupone 2013,Lozupone.2013,ERR315324,1,53.2,0.0,0.0,1.0,819.0,1.0,818.0
+131,Serrano-Villar 2016,Serrano-Villar.2016,ERR408162,1,56.0,1.0,0.0,1.0,82000.0,1.0,584.0
+132,Serrano-Villar 2016,Serrano-Villar.2016,ERR408163,1,33.0,1.0,1.0,1.0,8000.0,1.0,355.0
+133,Serrano-Villar 2016,Serrano-Villar.2016,ERR408164,1,47.0,0.0,0.0,1.0,100000.0,1.0,537.0
+134,Serrano-Villar 2016,Serrano-Villar.2016,ERR408165,1,33.0,1.0,1.0,1.0,2913000.0,1.0,898.0
+135,Serrano-Villar 2016,Serrano-Villar.2016,ERR408166,1,43.0,1.0,1.0,1.0,85000.0,1.0,466.0
+136,Serrano-Villar 2016,Serrano-Villar.2016,ERR408167,1,38.0,1.0,1.0,1.0,195000.0,1.0,561.0
+137,Serrano-Villar 2016,Serrano-Villar.2016,ERR408168,1,62.0,1.0,1.0,1.0,145000.0,1.0,426.0
+138,Serrano-Villar 2016,Serrano-Villar.2016,ERR408169,1,48.0,1.0,1.0,1.0,100000.0,1.0,507.0
+139,Serrano-Villar 2016,Serrano-Villar.2016,ERR408170,1,34.0,0.0,0.0,1.0,8000.0,1.0,781.0
+140,Serrano-Villar 2016,Serrano-Villar.2016,ERR408171,0,31.0,1.0,,,,,
+141,Serrano-Villar 2016,Serrano-Villar.2016,ERR408172,0,28.0,1.0,,,,,
+142,Serrano-Villar 2016,Serrano-Villar.2016,ERR408173,0,28.0,1.0,,,,,
+143,Serrano-Villar 2016,Serrano-Villar.2016,ERR408175,0,55.0,0.0,0.0,,,,
+144,Serrano-Villar 2016,Serrano-Villar.2016,ERR408176,0,47.0,0.0,0.0,,,,
+145,Serrano-Villar 2016,Serrano-Villar.2016,ERR408180,0,31.0,0.0,0.0,,,,
+146,Serrano-Villar 2016,Serrano-Villar.2016,ERR408181,0,60.0,1.0,,,,,
+147,Serrano-Villar 2016,Serrano-Villar.2016,ERR688979,1,55.0,1.0,0.0,1.0,,,196.0
+148,Serrano-Villar 2016,Serrano-Villar.2016,ERR688981,1,66.0,1.0,1.0,1.0,,,255.0
+149,Serrano-Villar 2016,Serrano-Villar.2016,ERR688982,1,48.0,1.0,1.0,1.0,9000.0,1.0,271.0
+150,Serrano-Villar 2016,Serrano-Villar.2016,ERR688984,1,50.0,1.0,1.0,1.0,435991.0,1.0,348.0
+151,Serrano-Villar 2016,Serrano-Villar.2016,ERR688985,1,44.0,1.0,1.0,1.0,100000.0,1.0,600.0
+152,Serrano-Villar 2016,Serrano-Villar.2016,ERR688986,1,36.0,1.0,1.0,0.0,2348.0,1.0,427.0
+153,Serrano-Villar 2016,Serrano-Villar.2016,ERR688987,1,35.0,1.0,1.0,0.0,46561.0,1.0,558.0
+154,Serrano-Villar 2016,Serrano-Villar.2016,ERR688988,1,45.0,1.0,1.0,0.0,37591.0,1.0,369.0
+155,Serrano-Villar 2016,Serrano-Villar.2016,ERR688989,1,40.0,1.0,1.0,0.0,42348.0,1.0,334.0
+156,Serrano-Villar 2016,Serrano-Villar.2016,ERR688990,1,39.0,1.0,1.0,0.0,4964.0,1.0,955.0
+157,Serrano-Villar 2016,Serrano-Villar.2016,ERR688991,1,32.0,1.0,1.0,0.0,5902.0,1.0,785.0
+158,Serrano-Villar 2016,Serrano-Villar.2016,ERR688992,1,41.0,1.0,1.0,1.0,750000.0,1.0,311.0
+159,Serrano-Villar 2016,Serrano-Villar.2016,ERR688993,1,34.0,1.0,1.0,0.0,43651.0,1.0,898.0
+160,Serrano-Villar 2016,Serrano-Villar.2016,ERR688994,1,33.0,1.0,1.0,0.0,28417.0,1.0,597.0
+161,Serrano-Villar 2016,Serrano-Villar.2016,ERR688995,1,46.0,1.0,1.0,0.0,14007.0,1.0,335.0
+162,Serrano-Villar 2016,Serrano-Villar.2016,ERR688999,0,67.0,1.0,,,,,
+163,Serrano-Villar 2016,Serrano-Villar.2016,ERR689000,1,35.0,0.0,0.0,0.0,426.0,1.0,646.0
+164,Serrano-Villar 2016,Serrano-Villar.2016,ERR689001,1,33.0,1.0,1.0,0.0,,,432.0
+165,Serrano-Villar 2016,Serrano-Villar.2016,ERR689004,1,48.0,1.0,0.0,1.0,,,204.0
+166,Serrano-Villar 2016,Serrano-Villar.2016,ERR689005,1,26.0,1.0,1.0,1.0,32453.0,1.0,321.0
+167,Serrano-Villar 2016,Serrano-Villar.2016,ERR689006,0,36.0,1.0,,,,,
+168,Serrano-Villar 2016,Serrano-Villar.2016,ERR689007,1,44.0,1.0,1.0,1.0,52000.0,1.0,667.0
+169,Serrano-Villar 2016,Serrano-Villar.2016,ERR689009,1,41.0,1.0,1.0,1.0,190532.0,1.0,326.0
+170,Yu,Yu.2014,FF.0179.537,0,38.0,1.0,1.0,,,,
+171,Yu,Yu.2014,FF.0180.537,0,39.0,1.0,1.0,,,,
+172,Yu,Yu.2014,FF.0189.500,0,48.0,1.0,1.0,,,,
+173,Yu,Yu.2014,FF.0190.500,0,42.0,1.0,1.0,,,,
+174,Yu,Yu.2014,FF.0191.500,1,41.0,1.0,1.0,,7263.0,1.0,809.0
+175,Yu,Yu.2014,FF.0195.500,0,31.0,1.0,1.0,,,,
+176,Yu,Yu.2014,FF.0202.500,1,37.0,1.0,1.0,,77000.0,1.0,835.0
+177,Yu,Yu.2014,FF.0203.500,1,34.0,1.0,1.0,,2699.0,1.0,768.0
+178,Yu,Yu.2014,FF.0204.500,1,38.0,1.0,1.0,,104862.0,1.0,667.0
+179,Yu,Yu.2014,FF.0207.539,0,44.0,1.0,1.0,,,,
+180,Yu,Yu.2014,FF.0213.500,1,43.0,1.0,1.0,,15300.0,1.0,552.0
+181,Yu,Yu.2014,FF.0216.500,0,34.0,1.0,1.0,,,,
+182,Yu,Yu.2014,FF.0228.500,0,39.0,1.0,1.0,,,,
+183,Yu,Yu.2014,FF.0230.500,1,38.0,1.0,1.0,,43401.0,1.0,963.0
+184,Yu,Yu.2014,FF.0231.500,1,44.0,1.0,1.0,,2736.0,1.0,743.0
+185,Yu,Yu.2014,FF.0246.500,1,35.0,1.0,1.0,,5952.0,1.0,700.0
+186,Yu,Yu.2014,FF.0249.500,1,31.0,1.0,1.0,,38474.0,1.0,773.0
+187,Yu,Yu.2014,FF.0256.529,1,38.0,1.0,1.0,,8679.0,1.0,98.0
+188,Yu,Yu.2014,FF.0259.500,1,35.0,1.0,1.0,,7184.0,1.0,377.0
+189,Yu,Yu.2014,FF.0260.500,0,35.0,1.0,1.0,,,,
+190,Yu,Yu.2014,FF.0263.500,1,44.0,1.0,1.0,,17628.0,1.0,565.0
+191,Yu,Yu.2014,FF.0264.500,1,44.0,1.0,1.0,,168942.0,1.0,434.0
+192,Yu,Yu.2014,FF.0290.537,0,32.0,1.0,1.0,,,,
+193,Yu,Yu.2014,FF.0292.500,0,37.0,1.0,1.0,,,,
+194,Yu,Yu.2014,FF.0294.500,1,41.0,1.0,1.0,,40517.0,1.0,265.0
+195,Yu,Yu.2014,FF.0314.500,1,41.0,1.0,1.0,,4249.0,1.0,703.0
+196,Yu,Yu.2014,FF.0315.500,1,35.0,1.0,1.0,,14051.0,1.0,863.0
+197,Yu,Yu.2014,FF.0316.500,0,41.0,1.0,1.0,,,,
+198,Yu,Yu.2014,FF.0326.539,0,65.0,1.0,1.0,,,,
+199,Yu,Yu.2014,FF.0331.500,1,41.0,1.0,1.0,,31443.0,1.0,140.0
+200,Yu,Yu.2014,FF.0340.539,1,36.0,1.0,1.0,,172735.0,1.0,424.0
+201,Yu,Yu.2014,FF.0342.539,0,38.0,1.0,1.0,,,,
+202,Yu,Yu.2014,FF.0347.500,0,42.0,1.0,1.0,,,,
+203,Yu,Yu.2014,FF.0350.500,1,37.0,1.0,1.0,,41734.0,1.0,499.0
+204,Yu,Yu.2014,FF.0368.539,1,43.0,1.0,1.0,,5398.0,1.0,595.0
+205,Yu,Yu.2014,FF.0369.500,1,36.0,1.0,1.0,,6193.0,1.0,648.0
+206,Yu,Yu.2014,FF.0377.559,0,42.0,1.0,1.0,,,,
+207,Yu,Yu.2014,FF.0391.500,0,37.0,1.0,1.0,,,,
+208,Yu,Yu.2014,FF.0404.500,0,46.0,1.0,1.0,,,,
+209,Yu,Yu.2014,FF.0405.500,0,36.0,1.0,1.0,,,,
+210,Yu,Yu.2014,FF.0417.500,0,38.0,1.0,1.0,,,,
+211,Yu,Yu.2014,FF.0418.500,0,38.0,1.0,1.0,,,,
+212,Yu,Yu.2014,FF.0419.500,1,53.0,1.0,1.0,,8055.0,1.0,496.0
+213,Yu,Yu.2014,FF.0431.500,0,44.0,1.0,1.0,,,,
+214,Yu,Yu.2014,FF.0432.500,0,40.0,1.0,1.0,,,,
+215,Yu,Yu.2014,FF.0433.500,0,36.0,1.0,1.0,,,,
+216,Yu,Yu.2014,FF.0434.500,0,45.0,1.0,1.0,,,,
+217,Yu,Yu.2014,FF.0435.500,0,32.0,1.0,1.0,,,,
+218,Yu,Yu.2014,FF.0436.500,0,55.0,1.0,1.0,,,,
+219,Yu,Yu.2014,FF.0440.500,0,38.0,1.0,1.0,,,,
+220,Yu,Yu.2014,FF.0441.500,0,49.0,1.0,1.0,,,,
+221,Yu,Yu.2014,FF.0453.500,0,40.0,1.0,1.0,,,,
+222,Yu,Yu.2014,FF.0480.539,0,42.0,1.0,1.0,,,,
+223,Yu,Yu.2014,FF.0502.500,0,42.0,1.0,1.0,,,,
+224,Yu,Yu.2014,FF.0508.500,0,37.0,1.0,1.0,,,,
+225,Yu,Yu.2014,FF.0568.539,0,54.0,1.0,1.0,,,,
+226,Yu,Yu.2014,FF.0570.539,0,41.0,1.0,1.0,,,,
+227,Yu,Yu.2014,FF.0605.500,1,43.0,1.0,1.0,,567.0,1.0,563.0
+228,Dubourg,Dubourg.2016,HIV10,1,29.0,1.0,,1.0,63.095734,0.0,43.0
+229,Dubourg,Dubourg.2016,HIV12,1,21.0,1.0,,0.0,275.42288,0.0,125.0
+230,Dubourg,Dubourg.2016,HIV13,1,31.0,1.0,,0.0,2137962.0,1.0,471.0
+231,Dubourg,Dubourg.2016,HIV16,1,50.0,1.0,,1.0,,,413.0
+232,Dubourg,Dubourg.2016,HIV17,1,45.0,1.0,,1.0,,,350.0
+233,Dubourg,Dubourg.2016,HIV18,1,47.0,1.0,,1.0,75.857758,0.0,216.0
+234,Dubourg,Dubourg.2016,HIV19,1,46.0,0.0,0.0,1.0,81.283051,0.0,77.0
+235,Dubourg,Dubourg.2016,HIV20,1,29.0,1.0,,0.0,281838.28,1.0,294.0
+236,Dubourg,Dubourg.2016,HIV21,1,47.0,0.0,0.0,0.0,21877.617,1.0,109.0
+237,Dubourg,Dubourg.2016,HIV22,1,36.0,1.0,,0.0,223872.11,1.0,145.0
+238,Dubourg,Dubourg.2016,HIV23,1,42.0,0.0,0.0,0.0,100.0,0.0,50.0
+239,Dubourg,Dubourg.2016,HIV25,1,46.0,1.0,,1.0,,,621.0
+240,Dubourg,Dubourg.2016,HIV26,1,45.0,1.0,,1.0,3801.894,1.0,468.0
+241,Dubourg,Dubourg.2016,HIV27,1,53.0,1.0,,1.0,,,498.0
+242,Dubourg,Dubourg.2016,HIV28,1,51.0,0.0,0.0,1.0,123.02688,0.0,1043.0
+243,Dubourg,Dubourg.2016,HIV29,1,51.0,0.0,0.0,1.0,,,1048.0
+244,Dubourg,Dubourg.2016,HIV3,1,46.0,1.0,,0.0,794328.25,1.0,200.0
+245,Dubourg,Dubourg.2016,HIV30,1,54.0,0.0,0.0,1.0,,,951.0
+246,Dubourg,Dubourg.2016,HIV31,1,37.0,1.0,,0.0,,,950.0
+247,Dubourg,Dubourg.2016,HIV32,1,46.0,1.0,,1.0,,,524.0
+248,Dubourg,Dubourg.2016,HIV33,1,49.0,1.0,,1.0,,,1017.0
+249,Dubourg,Dubourg.2016,HIV34,1,63.0,1.0,,1.0,,,84.0
+250,Dubourg,Dubourg.2016,HIV35,1,43.0,1.0,,1.0,3630.7805,1.0,125.0
+251,Dubourg,Dubourg.2016,HIV36,1,41.0,1.0,,1.0,,,436.0
+252,Dubourg,Dubourg.2016,HIV37,1,37.0,1.0,,0.0,17782.795,1.0,70.0
+253,Dubourg,Dubourg.2016,HIV38,1,32.0,1.0,,1.0,,,274.0
+254,Dubourg,Dubourg.2016,HIV39,1,49.0,0.0,0.0,0.0,3388.4417,1.0,120.0
+255,Dubourg,Dubourg.2016,HIV4,1,72.0,0.0,0.0,0.0,602559.56,1.0,170.0
+256,Dubourg,Dubourg.2016,HIV5,1,57.0,1.0,,1.0,,,1600.0
+257,Dubourg,Dubourg.2016,HIV6,1,42.0,1.0,,1.0,10232.93,1.0,132.0
+258,Dubourg,Dubourg.2016,HIV8,1,32.0,1.0,,0.0,1071.5193,1.0,840.0
+259,Monaco,Monaco.2016,MBA1011,1,29.9,0.0,0.0,1.0,58.0,0.0,733.0
+260,Monaco,Monaco.2016,MBA1019,1,49.0,1.0,,1.0,20.0,0.0,141.0
+261,Monaco,Monaco.2016,MBA1020,1,39.6,0.0,0.0,1.0,20.0,0.0,410.0
+262,Monaco,Monaco.2016,MBA1021,1,50.6,1.0,,1.0,20.0,0.0,281.0
+263,Monaco,Monaco.2016,MBA1029,1,40.9,0.0,0.0,1.0,78.0,0.0,597.0
+264,Monaco,Monaco.2016,MBA1034,1,46.8,0.0,0.0,1.0,20.0,0.0,825.0
+265,Monaco,Monaco.2016,MBA1053,1,55.0,1.0,,1.0,20.0,0.0,479.0
+266,Monaco,Monaco.2016,MBA1055,1,33.9,1.0,,1.0,20.0,0.0,230.0
+267,Monaco,Monaco.2016,MBA1062,1,41.5,0.0,0.0,1.0,20.0,0.0,966.0
+268,Monaco,Monaco.2016,MBA1077,1,35.3,0.0,0.0,1.0,20.0,0.0,282.0
+269,Monaco,Monaco.2016,MBA1087,1,53.0,0.0,0.0,1.0,20.0,0.0,289.0
+270,Monaco,Monaco.2016,MBA1090,1,44.0,0.0,0.0,1.0,20.0,0.0,672.0
+271,Monaco,Monaco.2016,MBA1098,1,44.8,0.0,0.0,1.0,20.0,0.0,361.0
+272,Monaco,Monaco.2016,MBA1099,1,40.3,1.0,,1.0,20.0,0.0,356.0
+273,Monaco,Monaco.2016,MBA1103,1,59.9,0.0,0.0,1.0,20.0,0.0,483.0
+274,Monaco,Monaco.2016,MBA1133,1,41.0,1.0,,1.0,20.0,0.0,426.0
+275,Monaco,Monaco.2016,MBA1135,1,46.3,1.0,,1.0,20.0,0.0,258.0
+276,Monaco,Monaco.2016,MBA1137,1,34.1,0.0,0.0,1.0,20.0,0.0,493.0
+277,Monaco,Monaco.2016,MBA1141,1,51.3,1.0,,1.0,121.0,0.0,167.0
+278,Monaco,Monaco.2016,MBA1151,1,55.0,1.0,,1.0,20.0,0.0,512.0
+279,Monaco,Monaco.2016,MBA1155,1,29.6,0.0,0.0,1.0,20.0,0.0,344.0
+280,Monaco,Monaco.2016,MBA1159,1,41.2,1.0,,1.0,38.0,0.0,186.0
+281,Monaco,Monaco.2016,MBA1161,1,39.8,0.0,0.0,1.0,20.0,0.0,382.0
+282,Monaco,Monaco.2016,MBA1181,1,45.8,1.0,,1.0,20.0,0.0,220.0
+283,Monaco,Monaco.2016,MBA1194,1,40.2,0.0,0.0,1.0,20.0,0.0,440.0
+284,Monaco,Monaco.2016,MBA1199,1,44.9,0.0,0.0,1.0,20.0,0.0,326.0
+285,Monaco,Monaco.2016,MBA1218,1,51.9,0.0,0.0,1.0,20.0,0.0,411.0
+286,Monaco,Monaco.2016,MBA1223,1,37.6,0.0,0.0,1.0,20.0,0.0,662.0
+287,Monaco,Monaco.2016,MBA1230,1,44.2,1.0,,1.0,20.0,0.0,550.0
+288,Monaco,Monaco.2016,MBA1267,1,46.4,1.0,,1.0,20.0,0.0,564.0
+289,Monaco,Monaco.2016,MBA1276,1,42.1,1.0,,1.0,20.0,0.0,326.0
+290,Monaco,Monaco.2016,MBA1281,1,33.4,1.0,,1.0,21.0,0.0,413.0
+291,Monaco,Monaco.2016,MBA1284,1,51.5,1.0,,1.0,20.0,0.0,417.0
+292,Monaco,Monaco.2016,MBA1293,1,34.9,1.0,,1.0,20.0,0.0,286.0
+293,Monaco,Monaco.2016,MBA1312,1,49.4,0.0,0.0,1.0,20.0,0.0,328.0
+294,Monaco,Monaco.2016,MBA1333,1,49.3,1.0,,1.0,20.0,0.0,224.0
+295,Monaco,Monaco.2016,MBA1352,1,36.5,1.0,,1.0,20.0,0.0,226.0
+296,Monaco,Monaco.2016,MBA1394,1,30.1,0.0,0.0,1.0,26.0,0.0,439.0
+297,Monaco,Monaco.2016,MBA1728,1,50.2,1.0,,0.0,43891.0,1.0,246.0
+298,Monaco,Monaco.2016,MBA1729,1,50.4,1.0,,0.0,50662.0,1.0,367.0
+299,Monaco,Monaco.2016,MBA1731,1,30.7,0.0,0.0,0.0,92100.0,1.0,92.0
+300,Monaco,Monaco.2016,MBA1732,1,37.0,0.0,0.0,0.0,119516.0,1.0,227.0
+301,Monaco,Monaco.2016,MBA1735,1,19.4,0.0,0.0,0.0,20214.0,1.0,397.0
+302,Monaco,Monaco.2016,MBA1736,1,21.9,0.0,0.0,0.0,3677.0,1.0,900.0
+303,Monaco,Monaco.2016,MBA1737,1,29.1,0.0,0.0,0.0,59481.0,1.0,377.0
+304,Monaco,Monaco.2016,MBA1738,1,30.5,1.0,,0.0,385238.0,1.0,337.0
+305,Monaco,Monaco.2016,MBA1739,1,23.2,0.0,0.0,0.0,61846.0,1.0,466.0
+306,Monaco,Monaco.2016,MBA1743,1,25.9,0.0,0.0,0.0,113331.0,1.0,455.0
+307,Monaco,Monaco.2016,MBA1744,1,24.9,0.0,0.0,0.0,241320.0,1.0,355.0
+308,Monaco,Monaco.2016,MBA1745,1,33.4,0.0,0.0,0.0,91508.0,1.0,343.0
+309,Monaco,Monaco.2016,MBA1746,1,34.2,0.0,0.0,0.0,6358.0,1.0,398.0
+310,Monaco,Monaco.2016,MBA1747,1,32.5,1.0,,0.0,298402.0,1.0,131.0
+311,Monaco,Monaco.2016,MBA1748,1,29.0,0.0,0.0,0.0,244701.0,1.0,142.0
+312,Monaco,Monaco.2016,MBA1749,1,42.3,1.0,,0.0,77251.0,1.0,87.0
+313,Monaco,Monaco.2016,MBA1750,1,24.9,1.0,,0.0,623804.0,1.0,158.0
+314,Monaco,Monaco.2016,MBA1752,1,34.9,0.0,0.0,0.0,192790.0,1.0,56.0
+315,Monaco,Monaco.2016,MBA1753,1,26.0,0.0,0.0,0.0,25092.0,1.0,224.0
+316,Monaco,Monaco.2016,MBA1754,1,20.3,0.0,0.0,0.0,1897675.0,1.0,24.0
+317,Monaco,Monaco.2016,MBA1755,1,26.5,0.0,0.0,0.0,2634.0,1.0,445.0
+318,Monaco,Monaco.2016,MBA1758,1,53.4,0.0,0.0,0.0,11207.0,1.0,325.0
+319,Monaco,Monaco.2016,MBA1759,1,40.6,0.0,0.0,0.0,274520.0,1.0,13.0
+320,Monaco,Monaco.2016,MBA1761,1,29.3,0.0,0.0,0.0,856188.0,1.0,96.0
+321,Monaco,Monaco.2016,MBA1762,1,21.5,1.0,,0.0,99041.0,1.0,446.0
+322,Monaco,Monaco.2016,MBA1764,1,26.5,0.0,0.0,0.0,281263.0,1.0,175.0
+323,Monaco,Monaco.2016,MBA1765,1,24.1,0.0,0.0,0.0,1467.0,1.0,695.0
+324,Monaco,Monaco.2016,MBA1766,1,38.8,1.0,,0.0,52782.0,1.0,10.0
+325,Monaco,Monaco.2016,MBA1767,1,32.4,1.0,,0.0,34911.0,1.0,187.0
+326,Monaco,Monaco.2016,MBA1769,1,28.7,0.0,0.0,0.0,13849.0,1.0,303.0
+327,Monaco,Monaco.2016,MBA1771,1,27.5,0.0,0.0,0.0,3958376.0,1.0,134.0
+328,Monaco,Monaco.2016,MBA4001,0,44.0,0.0,0.0,,,,
+329,Monaco,Monaco.2016,MBA4002,0,45.0,0.0,0.0,,,,
+330,Monaco,Monaco.2016,MBA4003,0,50.0,0.0,0.0,,,,
+331,Monaco,Monaco.2016,MBA4004,0,55.0,1.0,,,,,
+332,Monaco,Monaco.2016,MBA4005,0,35.0,1.0,,,,,
+333,Monaco,Monaco.2016,MBA4006,0,30.0,0.0,0.0,,,,
+334,Monaco,Monaco.2016,MBA4007,0,40.0,1.0,,,,,
+335,Monaco,Monaco.2016,MBA4009,0,44.0,1.0,,,,,
+336,Monaco,Monaco.2016,MBA4010,0,36.0,0.0,0.0,,,,
+337,Monaco,Monaco.2016,MBA4011,0,43.0,0.0,0.0,,,,
+338,Monaco,Monaco.2016,MBA4012,0,34.0,1.0,,,,,
+339,Monaco,Monaco.2016,MBA4013,0,46.0,0.0,0.0,,,,
+340,Monaco,Monaco.2016,MBA4014,0,39.0,0.0,0.0,,,,
+341,Monaco,Monaco.2016,MBA4015,0,48.0,0.0,0.0,,,,
+342,Monaco,Monaco.2016,MBA4016,0,39.0,0.0,0.0,,,,
+343,Monaco,Monaco.2016,MBA4017,0,74.0,1.0,,,,,
+344,Monaco,Monaco.2016,MBA4018,0,37.0,1.0,,,,,
+345,Monaco,Monaco.2016,MBA4019,0,30.0,0.0,0.0,,,,
+346,Monaco,Monaco.2016,MBA4020,0,39.0,0.0,0.0,,,,
+347,Monaco,Monaco.2016,MBA4021,0,38.0,1.0,,,,,
+348,Monaco,Monaco.2016,MBA4022,0,38.0,0.0,0.0,,,,
+349,Monaco,Monaco.2016,MBA4023,0,42.0,0.0,0.0,,,,
+350,Monaco,Monaco.2016,MBA4024,0,45.0,1.0,,,,,
+351,Monaco,Monaco.2016,MBA4025,0,51.0,1.0,,,,,
+352,Monaco,Monaco.2016,MBA4026,0,41.0,0.0,0.0,,,,
+353,Monaco,Monaco.2016,MBA4027,0,50.0,0.0,0.0,,,,
+354,Monaco,Monaco.2016,MBA4028,0,43.0,0.0,0.0,,,,
+355,Monaco,Monaco.2016,MBA4029,0,47.0,0.0,0.0,,,,
+356,Monaco,Monaco.2016,MBA4030,0,33.0,0.0,0.0,,,,
+357,Monaco,Monaco.2016,MBA4031,0,43.0,1.0,,,,,
+358,Monaco,Monaco.2016,MBA4032,0,47.0,1.0,,,,,
+359,Monaco,Monaco.2016,MBA4033,0,48.0,1.0,,,,,
+360,Monaco,Monaco.2016,MBA4034,0,41.0,1.0,,,,,
+361,Monaco,Monaco.2016,MBA4035,0,50.0,1.0,,,,,
+362,Monaco,Monaco.2016,MBA4038,0,46.0,1.0,,,,,
+363,Monaco,Monaco.2016,MBA4039,0,46.0,1.0,,,,,
+364,Monaco,Monaco.2016,MBA4040,0,53.0,1.0,,,,,
+365,Serrano-Villar 2017,Serrano-Villar.2017,S13,1,34.0,1.0,1.0,1.0,0.0,0.0,719.9
+366,Serrano-Villar 2017,Serrano-Villar.2017,S14,0,54.0,1.0,1.0,,,,
+367,Serrano-Villar 2017,Serrano-Villar.2017,S16,1,34.0,1.0,1.0,1.0,63.095734,0.0,442.0
+368,Serrano-Villar 2017,Serrano-Villar.2017,S17,1,40.0,1.0,1.0,1.0,0.0,0.0,520.2
+369,Serrano-Villar 2017,Serrano-Villar.2017,S19,1,47.0,1.0,1.0,1.0,0.0,0.0,827.28
+370,Serrano-Villar 2017,Serrano-Villar.2017,S20,1,45.0,1.0,1.0,1.0,0.0,0.0,1790.68
+371,Serrano-Villar 2017,Serrano-Villar.2017,S21,1,48.0,1.0,1.0,1.0,0.0,0.0,312.0
+372,Serrano-Villar 2017,Serrano-Villar.2017,S24,1,47.0,1.0,1.0,1.0,0.0,0.0,815.0
+373,Serrano-Villar 2017,Serrano-Villar.2017,S27,1,24.0,1.0,1.0,1.0,0.0,0.0,840.0
+374,Serrano-Villar 2017,Serrano-Villar.2017,S28,1,38.0,1.0,1.0,1.0,0.0,0.0,418.6
+375,Serrano-Villar 2017,Serrano-Villar.2017,S3,1,35.0,1.0,1.0,1.0,0.0,0.0,604.9
+376,Serrano-Villar 2017,Serrano-Villar.2017,S30,1,39.0,1.0,1.0,1.0,0.0,0.0,666.33
+377,Serrano-Villar 2017,Serrano-Villar.2017,S31,1,36.0,1.0,1.0,1.0,0.0,0.0,
+378,Serrano-Villar 2017,Serrano-Villar.2017,S33,1,48.0,1.0,1.0,1.0,0.0,0.0,532.0
+379,Serrano-Villar 2017,Serrano-Villar.2017,S34,1,52.0,1.0,1.0,1.0,0.0,0.0,1071.44
+380,Serrano-Villar 2017,Serrano-Villar.2017,S35,0,37.0,1.0,1.0,,,,
+381,Serrano-Villar 2017,Serrano-Villar.2017,S36,1,32.0,1.0,1.0,1.0,0.0,0.0,725.58
+382,Serrano-Villar 2017,Serrano-Villar.2017,S37,1,47.0,1.0,1.0,1.0,,,677.2
+383,Serrano-Villar 2017,Serrano-Villar.2017,S39,1,56.0,1.0,1.0,1.0,0.0,0.0,475.24
+384,Serrano-Villar 2017,Serrano-Villar.2017,S40,1,47.0,1.0,1.0,1.0,0.0,0.0,1083.0
+385,Serrano-Villar 2017,Serrano-Villar.2017,S41,1,56.0,1.0,1.0,1.0,0.0,0.0,284.95
+386,Serrano-Villar 2017,Serrano-Villar.2017,S42,1,32.0,1.0,1.0,1.0,0.0,0.0,1280.0
+387,Serrano-Villar 2017,Serrano-Villar.2017,S43,1,48.0,1.0,1.0,0.0,15848.932,1.0,563.0
+388,Noguera-Julian,Noguera-Julian.2016,SAMN04382182,1,56.0,0.0,0.0,1.0,0.0,0.0,561.0
+389,Noguera-Julian,Noguera-Julian.2016,SAMN04382183,1,45.0,1.0,0.0,1.0,0.0,0.0,1517.0
+390,Noguera-Julian,Noguera-Julian.2016,SAMN04382184,1,46.0,1.0,1.0,1.0,0.0,0.0,767.0
+391,Noguera-Julian,Noguera-Julian.2016,SAMN04382185,0,33.0,1.0,1.0,,,,
+392,Noguera-Julian,Noguera-Julian.2016,SAMN04382186,0,40.0,1.0,1.0,,,,
+393,Noguera-Julian,Noguera-Julian.2016,SAMN04382187,0,42.0,1.0,1.0,,,,
+394,Noguera-Julian,Noguera-Julian.2016,SAMN04382188,1,59.0,0.0,0.0,1.0,0.0,0.0,678.0
+395,Noguera-Julian,Noguera-Julian.2016,SAMN04382189,1,52.0,1.0,0.0,1.0,0.0,0.0,1274.0
+396,Noguera-Julian,Noguera-Julian.2016,SAMN04382190,1,55.0,1.0,0.0,1.0,0.0,0.0,201.0
+397,Noguera-Julian,Noguera-Julian.2016,SAMN04382191,0,54.0,1.0,1.0,,,,
+398,Noguera-Julian,Noguera-Julian.2016,SAMN04382192,1,52.0,1.0,1.0,1.0,0.0,0.0,687.0
+399,Noguera-Julian,Noguera-Julian.2016,SAMN04382193,1,49.0,0.0,0.0,1.0,0.0,0.0,603.0
+400,Noguera-Julian,Noguera-Julian.2016,SAMN04382194,1,40.0,0.0,0.0,1.0,0.0,0.0,777.0
+401,Noguera-Julian,Noguera-Julian.2016,SAMN04382195,1,56.0,0.0,0.0,1.0,0.0,0.0,283.0
+402,Noguera-Julian,Noguera-Julian.2016,SAMN04382196,1,50.0,0.0,0.0,1.0,0.0,0.0,242.0
+403,Noguera-Julian,Noguera-Julian.2016,SAMN04382197,0,40.0,0.0,0.0,,,,
+404,Noguera-Julian,Noguera-Julian.2016,SAMN04382198,1,37.0,1.0,1.0,0.0,16714.0,1.0,526.0
+405,Noguera-Julian,Noguera-Julian.2016,SAMN04382199,1,46.0,1.0,1.0,1.0,0.0,0.0,530.0
+406,Noguera-Julian,Noguera-Julian.2016,SAMN04382200,0,46.0,1.0,1.0,,,,
+407,Noguera-Julian,Noguera-Julian.2016,SAMN04382201,1,45.0,0.0,0.0,0.0,0.0,0.0,734.0
+408,Noguera-Julian,Noguera-Julian.2016,SAMN04382202,1,38.0,0.0,0.0,1.0,0.0,0.0,947.0
+409,Noguera-Julian,Noguera-Julian.2016,SAMN04382203,1,35.0,0.0,0.0,1.0,0.0,0.0,686.0
+410,Noguera-Julian,Noguera-Julian.2016,SAMN04382204,1,60.0,0.0,0.0,1.0,0.0,0.0,766.0
+411,Noguera-Julian,Noguera-Julian.2016,SAMN04382205,1,43.0,1.0,0.0,1.0,0.0,0.0,628.0
+412,Noguera-Julian,Noguera-Julian.2016,SAMN04382206,0,50.0,0.0,0.0,,,,
+413,Noguera-Julian,Noguera-Julian.2016,SAMN04382207,1,44.0,1.0,1.0,1.0,0.0,0.0,828.0
+414,Noguera-Julian,Noguera-Julian.2016,SAMN04382208,1,52.0,0.0,0.0,0.0,3940.0,1.0,1132.0
+415,Noguera-Julian,Noguera-Julian.2016,SAMN04382209,1,42.0,1.0,1.0,1.0,0.0,0.0,1285.0
+416,Noguera-Julian,Noguera-Julian.2016,SAMN04382210,0,28.0,1.0,1.0,,,,
+417,Noguera-Julian,Noguera-Julian.2016,SAMN04382211,1,53.0,0.0,0.0,1.0,0.0,0.0,296.0
+418,Noguera-Julian,Noguera-Julian.2016,SAMN04382212,0,43.0,1.0,1.0,,,,
+419,Noguera-Julian,Noguera-Julian.2016,SAMN04382214,1,53.0,1.0,1.0,1.0,0.0,0.0,724.0
+420,Noguera-Julian,Noguera-Julian.2016,SAMN04382215,1,35.0,1.0,0.0,0.0,13901.0,1.0,558.0
+421,Noguera-Julian,Noguera-Julian.2016,SAMN04382216,1,57.0,0.0,0.0,1.0,0.0,0.0,551.0
+422,Noguera-Julian,Noguera-Julian.2016,SAMN04382217,1,48.0,1.0,0.0,1.0,0.0,0.0,761.0
+423,Noguera-Julian,Noguera-Julian.2016,SAMN04382218,1,26.0,1.0,1.0,0.0,44567.0,1.0,233.0
+424,Noguera-Julian,Noguera-Julian.2016,SAMN04382219,1,50.0,1.0,1.0,1.0,0.0,0.0,952.0
+425,Noguera-Julian,Noguera-Julian.2016,SAMN04382220,1,60.0,0.0,0.0,0.0,794.0,1.0,580.0
+426,Noguera-Julian,Noguera-Julian.2016,SAMN04382221,1,44.0,0.0,0.0,0.0,227.0,0.0,1064.0
+427,Noguera-Julian,Noguera-Julian.2016,SAMN04382222,1,47.0,1.0,1.0,1.0,0.0,0.0,289.0
+428,Noguera-Julian,Noguera-Julian.2016,SAMN04382223,1,44.0,1.0,1.0,1.0,62.0,0.0,853.0
+429,Noguera-Julian,Noguera-Julian.2016,SAMN04382224,1,43.0,1.0,1.0,1.0,0.0,0.0,506.0
+430,Noguera-Julian,Noguera-Julian.2016,SAMN04382225,1,34.0,1.0,1.0,0.0,53095.0,1.0,192.0
+431,Noguera-Julian,Noguera-Julian.2016,SAMN04382226,1,35.0,1.0,1.0,1.0,51.0,0.0,952.0
+432,Noguera-Julian,Noguera-Julian.2016,SAMN04382227,1,50.0,0.0,0.0,1.0,0.0,0.0,616.0
+433,Noguera-Julian,Noguera-Julian.2016,SAMN04382228,1,47.0,1.0,0.0,1.0,0.0,0.0,1274.0
+434,Noguera-Julian,Noguera-Julian.2016,SAMN04382229,1,46.0,0.0,0.0,1.0,0.0,0.0,871.0
+435,Noguera-Julian,Noguera-Julian.2016,SAMN04382230,1,31.0,1.0,1.0,1.0,0.0,0.0,775.0
+436,Noguera-Julian,Noguera-Julian.2016,SAMN04382231,1,36.0,1.0,1.0,0.0,29355.0,1.0,842.0
+437,Noguera-Julian,Noguera-Julian.2016,SAMN04382232,1,53.0,1.0,1.0,1.0,0.0,0.0,280.0
+438,Noguera-Julian,Noguera-Julian.2016,SAMN04382233,1,41.0,1.0,1.0,1.0,0.0,0.0,648.0
+439,Noguera-Julian,Noguera-Julian.2016,SAMN04382234,1,42.0,0.0,0.0,0.0,96.0,0.0,1056.0
+440,Noguera-Julian,Noguera-Julian.2016,SAMN04382235,1,34.0,0.0,0.0,0.0,696.0,1.0,1380.0
+441,Noguera-Julian,Noguera-Julian.2016,SAMN04382236,1,48.0,1.0,1.0,1.0,0.0,0.0,764.0
+442,Noguera-Julian,Noguera-Julian.2016,SAMN04382237,1,44.0,1.0,0.0,0.0,74625.0,1.0,3.0
+443,Noguera-Julian,Noguera-Julian.2016,SAMN04382238,1,53.0,1.0,0.0,1.0,0.0,0.0,285.0
+444,Noguera-Julian,Noguera-Julian.2016,SAMN04382239,1,34.0,1.0,1.0,1.0,0.0,0.0,998.0
+445,Noguera-Julian,Noguera-Julian.2016,SAMN04382240,1,50.0,1.0,1.0,1.0,0.0,0.0,296.0
+446,Noguera-Julian,Noguera-Julian.2016,SAMN04382241,1,52.0,1.0,1.0,0.0,149.0,0.0,997.0
+447,Noguera-Julian,Noguera-Julian.2016,SAMN04382242,1,35.0,1.0,1.0,0.0,10080.0,1.0,784.0
+448,Noguera-Julian,Noguera-Julian.2016,SAMN04382243,1,36.0,1.0,1.0,0.0,2818.0,1.0,462.0
+449,Noguera-Julian,Noguera-Julian.2016,SAMN04382244,1,19.0,1.0,1.0,0.0,758.0,1.0,1011.0
+450,Noguera-Julian,Noguera-Julian.2016,SAMN04382245,1,54.0,1.0,0.0,1.0,0.0,0.0,289.0
+451,Noguera-Julian,Noguera-Julian.2016,SAMN04382246,1,53.0,1.0,1.0,1.0,0.0,0.0,283.0
+452,Noguera-Julian,Noguera-Julian.2016,SAMN04382247,1,23.0,1.0,1.0,0.0,12865.0,1.0,211.0
+453,Noguera-Julian,Noguera-Julian.2016,SAMN04382248,1,38.0,1.0,1.0,0.0,2829.0,1.0,570.0
+454,Noguera-Julian,Noguera-Julian.2016,SAMN04382249,1,53.0,1.0,0.0,1.0,0.0,0.0,1086.0
+455,Noguera-Julian,Noguera-Julian.2016,SAMN04382250,1,34.0,1.0,1.0,0.0,10018.0,1.0,701.0
+456,Noguera-Julian,Noguera-Julian.2016,SAMN04382251,1,37.0,1.0,1.0,1.0,0.0,0.0,517.0
+457,Noguera-Julian,Noguera-Julian.2016,SAMN04382252,1,37.0,1.0,1.0,1.0,0.0,0.0,815.0
+458,Noguera-Julian,Noguera-Julian.2016,SAMN04382253,0,42.0,1.0,1.0,,,,
+459,Noguera-Julian,Noguera-Julian.2016,SAMN04382254,0,60.0,1.0,1.0,,,,
+460,Noguera-Julian,Noguera-Julian.2016,SAMN04382255,0,37.0,1.0,1.0,,,,
+461,Noguera-Julian,Noguera-Julian.2016,SAMN04382256,0,37.0,1.0,1.0,,,,
+462,Noguera-Julian,Noguera-Julian.2016,SAMN04382257,0,38.0,1.0,1.0,,,,
+463,Noguera-Julian,Noguera-Julian.2016,SAMN04382258,0,36.0,1.0,1.0,,,,
+464,Noguera-Julian,Noguera-Julian.2016,SAMN04382259,1,49.0,1.0,0.0,1.0,0.0,0.0,187.0
+465,Noguera-Julian,Noguera-Julian.2016,SAMN04382260,1,38.0,1.0,1.0,0.0,220148.0,1.0,140.0
+466,Noguera-Julian,Noguera-Julian.2016,SAMN04382261,1,27.0,1.0,1.0,0.0,2188.0,1.0,708.0
+467,Noguera-Julian,Noguera-Julian.2016,SAMN04382262,1,32.0,1.0,1.0,1.0,0.0,0.0,866.0
+468,Noguera-Julian,Noguera-Julian.2016,SAMN04382263,1,43.0,1.0,1.0,0.0,2747163.0,1.0,100.0
+469,Noguera-Julian,Noguera-Julian.2016,SAMN04382264,1,28.0,1.0,1.0,0.0,60925.0,1.0,493.0
+470,Noguera-Julian,Noguera-Julian.2016,SAMN04382265,1,46.0,1.0,1.0,1.0,0.0,0.0,479.0
+471,Noguera-Julian,Noguera-Julian.2016,SAMN04382266,0,34.0,1.0,1.0,,,,
+472,Noguera-Julian,Noguera-Julian.2016,SAMN04382267,1,30.0,1.0,1.0,0.0,384009.0,1.0,85.0
+473,Noguera-Julian,Noguera-Julian.2016,SAMN04382268,1,28.0,1.0,1.0,0.0,70674.0,1.0,185.0
+474,Noguera-Julian,Noguera-Julian.2016,SAMN04382269,1,60.0,1.0,0.0,1.0,0.0,0.0,199.0
+475,Noguera-Julian,Noguera-Julian.2016,SAMN04382270,1,58.0,0.0,0.0,1.0,0.0,0.0,782.0
+476,Noguera-Julian,Noguera-Julian.2016,SAMN04382271,1,55.0,1.0,0.0,1.0,0.0,0.0,602.0
+477,Noguera-Julian,Noguera-Julian.2016,SAMN04382272,1,50.0,1.0,0.0,0.0,178530.0,1.0,22.0
+478,Noguera-Julian,Noguera-Julian.2016,SAMN04382273,1,38.0,1.0,1.0,0.0,56763.0,1.0,855.0
+479,Noguera-Julian,Noguera-Julian.2016,SAMN04382274,1,58.0,1.0,1.0,1.0,0.0,0.0,730.0
+480,Noguera-Julian,Noguera-Julian.2016,SAMN04382275,1,36.0,1.0,1.0,1.0,0.0,0.0,221.0
+481,Noguera-Julian,Noguera-Julian.2016,SAMN04382276,1,32.0,1.0,1.0,1.0,0.0,0.0,828.0
+482,Noguera-Julian,Noguera-Julian.2016,SAMN04382277,1,23.0,1.0,1.0,0.0,1223.0,1.0,783.0
+483,Noguera-Julian,Noguera-Julian.2016,SAMN04382278,1,42.0,1.0,0.0,0.0,296533.0,1.0,33.0
+484,Noguera-Julian,Noguera-Julian.2016,SAMN04382279,0,37.0,1.0,1.0,,,,
+485,Noguera-Julian,Noguera-Julian.2016,SAMN04382280,0,35.0,1.0,1.0,,,,
+486,Noguera-Julian,Noguera-Julian.2016,SAMN04382281,1,29.0,1.0,1.0,0.0,1339.0,1.0,772.0
+487,Noguera-Julian,Noguera-Julian.2016,SAMN04382282,1,36.0,1.0,1.0,0.0,154816.0,1.0,1207.0
+488,Noguera-Julian,Noguera-Julian.2016,SAMN04382283,1,56.0,1.0,1.0,0.0,0.0,0.0,951.0
+489,Noguera-Julian,Noguera-Julian.2016,SAMN04382284,1,40.0,1.0,0.0,1.0,0.0,0.0,855.0
+490,Noguera-Julian,Noguera-Julian.2016,SAMN04382285,1,43.0,1.0,1.0,1.0,0.0,0.0,860.0
+491,Noguera-Julian,Noguera-Julian.2016,SAMN04382286,1,51.0,1.0,1.0,1.0,0.0,0.0,557.0
+492,Noguera-Julian,Noguera-Julian.2016,SAMN04382287,1,29.0,1.0,1.0,1.0,0.0,0.0,688.0
+493,Noguera-Julian,Noguera-Julian.2016,SAMN04382288,1,34.0,0.0,0.0,1.0,0.0,0.0,1232.0
+494,Noguera-Julian,Noguera-Julian.2016,SAMN04382289,1,51.0,0.0,0.0,1.0,0.0,0.0,718.0
+495,Noguera-Julian,Noguera-Julian.2016,SAMN04382290,1,40.0,0.0,0.0,0.0,1430.0,1.0,333.0
+496,Noguera-Julian,Noguera-Julian.2016,SAMN04382291,1,68.0,0.0,0.0,1.0,0.0,0.0,1085.0
+497,Noguera-Julian,Noguera-Julian.2016,SAMN04382292,1,25.0,1.0,1.0,0.0,30055.0,1.0,631.0
+498,Noguera-Julian,Noguera-Julian.2016,SAMN04382293,0,51.0,1.0,1.0,,,,
+499,Noguera-Julian,Noguera-Julian.2016,SAMN04382294,1,43.0,1.0,1.0,0.0,181.0,0.0,471.0
+500,Noguera-Julian,Noguera-Julian.2016,SAMN04382295,1,46.0,1.0,1.0,1.0,0.0,0.0,848.0
+501,Noguera-Julian,Noguera-Julian.2016,SAMN04382296,1,54.0,1.0,0.0,1.0,0.0,0.0,229.0
+502,Noguera-Julian,Noguera-Julian.2016,SAMN04382297,1,26.0,1.0,1.0,0.0,570077.0,1.0,34.0
+503,Noguera-Julian,Noguera-Julian.2016,SAMN04382298,1,60.0,1.0,1.0,1.0,0.0,0.0,750.0
+504,Noguera-Julian,Noguera-Julian.2016,SAMN04382299,1,55.0,0.0,0.0,1.0,0.0,0.0,270.0
+505,Noguera-Julian,Noguera-Julian.2016,SAMN04382300,1,42.0,1.0,1.0,1.0,0.0,0.0,717.0
+506,Noguera-Julian,Noguera-Julian.2016,SAMN04382301,1,39.0,1.0,1.0,1.0,0.0,0.0,752.0
+507,Noguera-Julian,Noguera-Julian.2016,SAMN04382302,1,56.0,1.0,1.0,1.0,0.0,0.0,875.0
+508,Noguera-Julian,Noguera-Julian.2016,SAMN04382303,1,44.0,1.0,0.0,1.0,0.0,0.0,984.0
+509,Noguera-Julian,Noguera-Julian.2016,SAMN04382304,1,29.0,1.0,1.0,0.0,57.0,0.0,830.0
+510,Noguera-Julian,Noguera-Julian.2016,SAMN04382305,0,30.0,1.0,1.0,,,,
+511,Noguera-Julian,Noguera-Julian.2016,SAMN04382306,1,47.0,1.0,0.0,0.0,0.0,0.0,930.0
+512,Noguera-Julian,Noguera-Julian.2016,SAMN04382307,1,54.0,1.0,0.0,1.0,0.0,0.0,98.0
+513,Noguera-Julian,Noguera-Julian.2016,SAMN04382308,1,44.0,1.0,1.0,1.0,0.0,0.0,980.0
+514,Noguera-Julian,Noguera-Julian.2016,SAMN04382309,1,60.0,1.0,1.0,1.0,20.0,0.0,
+515,Noguera-Julian,Noguera-Julian.2016,SAMN04382310,1,46.0,1.0,1.0,0.0,9794.0,1.0,745.0
+516,Noguera-Julian,Noguera-Julian.2016,SAMN04382311,1,41.0,0.0,0.0,1.0,0.0,0.0,578.0
+517,Noguera-Julian,Noguera-Julian.2016,SAMN04382312,1,38.0,1.0,1.0,1.0,0.0,0.0,932.0
+518,Noguera-Julian,Noguera-Julian.2016,SAMN04382313,0,48.0,1.0,1.0,,,,
+519,Noguera-Julian,Noguera-Julian.2016,SAMN04382314,1,52.0,1.0,1.0,1.0,0.0,0.0,826.0
+520,Noguera-Julian,Noguera-Julian.2016,SAMN04382315,0,34.0,1.0,1.0,,,,
+521,Noguera-Julian,Noguera-Julian.2016,SAMN04382316,1,35.0,1.0,1.0,1.0,0.0,0.0,650.0
+522,Noguera-Julian,Noguera-Julian.2016,SAMN04382317,0,28.0,1.0,1.0,,,,
+523,Noguera-Julian,Noguera-Julian.2016,SAMN04382318,1,20.0,1.0,1.0,1.0,63.0,0.0,1238.0
+524,Noguera-Julian,Noguera-Julian.2016,SAMN04382319,1,52.0,1.0,1.0,1.0,0.0,0.0,140.0
+525,Noguera-Julian,Noguera-Julian.2016,SAMN04382320,1,47.0,1.0,1.0,1.0,0.0,0.0,480.0
+526,Noguera-Julian,Noguera-Julian.2016,SAMN04382321,1,44.0,1.0,1.0,1.0,0.0,0.0,913.0
+527,Noguera-Julian,Noguera-Julian.2016,SAMN04382322,1,37.0,1.0,1.0,1.0,0.0,0.0,500.0
+528,Noguera-Julian,Noguera-Julian.2016,SAMN04382323,1,25.0,1.0,1.0,1.0,0.0,0.0,1175.0
+529,Noguera-Julian,Noguera-Julian.2016,SAMN04382324,0,33.0,0.0,0.0,,,,
+530,Noguera-Julian,Noguera-Julian.2016,SAMN04382325,1,54.0,0.0,0.0,1.0,0.0,0.0,644.0
+531,Noguera-Julian,Noguera-Julian.2016,SAMN04382326,1,60.0,1.0,1.0,1.0,0.0,0.0,542.0
+532,Noguera-Julian,Noguera-Julian.2016,SAMN04382327,1,53.0,1.0,0.0,1.0,,,742.0
+533,Noguera-Julian,Noguera-Julian.2016,SAMN04382328,1,26.0,1.0,1.0,0.0,1382.0,1.0,598.0
+534,Noguera-Julian,Noguera-Julian.2016,SAMN04382329,0,35.0,1.0,0.0,,,,
+535,Noguera-Julian,Noguera-Julian.2016,SAMN04382330,1,54.0,1.0,0.0,1.0,0.0,0.0,268.0
+536,Noguera-Julian,Noguera-Julian.2016,SAMN04382331,0,25.0,1.0,1.0,,,,
+537,Noguera-Julian,Noguera-Julian.2016,SAMN04382332,1,48.0,1.0,1.0,1.0,0.0,0.0,259.0
+538,Noguera-Julian,Noguera-Julian.2016,SAMN04382333,1,38.0,1.0,1.0,0.0,170000.0,1.0,820.0
+539,Noguera-Julian,Noguera-Julian.2016,SAMN04382334,1,53.0,1.0,0.0,0.0,25.0,0.0,580.0
+540,Noguera-Julian,Noguera-Julian.2016,SAMN04382335,1,31.0,0.0,0.0,0.0,84.0,0.0,1160.0
+541,Noguera-Julian,Noguera-Julian.2016,SAMN04382337,1,46.0,1.0,1.0,0.0,260.0,0.0,1010.0
+542,Noguera-Julian,Noguera-Julian.2016,SAMN04382448,1,53.0,1.0,0.0,0.0,280.0,0.0,250.0
+543,Noguera-Julian,Noguera-Julian.2016,SAMN04382449,1,43.0,1.0,1.0,0.0,30500.0,1.0,720.0
+544,Noguera-Julian,Noguera-Julian.2016,SAMN04382450,1,35.0,0.0,0.0,0.0,27300.0,1.0,510.0
+545,Noguera-Julian,Noguera-Julian.2016,SAMN04382451,1,45.0,0.0,0.0,0.0,20700.0,1.0,550.0
+546,Noguera-Julian,Noguera-Julian.2016,SAMN04382452,1,30.0,0.0,0.0,0.0,19.0,0.0,940.0
+547,Noguera-Julian,Noguera-Julian.2016,SAMN04382453,1,30.0,0.0,0.0,0.0,31400.0,1.0,550.0
+548,Noguera-Julian,Noguera-Julian.2016,SAMN04382454,1,65.0,1.0,0.0,0.0,327.0,0.0,720.0
+549,Noguera-Julian,Noguera-Julian.2016,SAMN04382455,1,32.0,0.0,0.0,0.0,19.0,0.0,830.0
+550,Noguera-Julian,Noguera-Julian.2016,SAMN04382456,1,34.0,1.0,0.0,0.0,711.0,1.0,430.0
+551,Noguera-Julian,Noguera-Julian.2016,SAMN04382457,1,26.0,0.0,0.0,0.0,8260.0,1.0,400.0
+552,Noguera-Julian,Noguera-Julian.2016,SAMN04382459,1,59.0,0.0,0.0,0.0,32000.0,1.0,530.0
+553,Noguera-Julian,Noguera-Julian.2016,SAMN04382460,1,34.0,1.0,0.0,0.0,20800.0,1.0,390.0
+554,Noguera-Julian,Noguera-Julian.2016,SAMN04382461,1,62.0,1.0,0.0,0.0,33300.0,1.0,720.0
+555,Noguera-Julian,Noguera-Julian.2016,SAMN04382462,1,30.0,1.0,1.0,0.0,2120.0,1.0,530.0
+556,Noguera-Julian,Noguera-Julian.2016,SAMN04382463,1,58.0,1.0,1.0,0.0,11500.0,1.0,480.0
+557,Noguera-Julian,Noguera-Julian.2016,SAMN04382464,1,61.0,1.0,0.0,0.0,336000.0,1.0,410.0
+558,Noguera-Julian,Noguera-Julian.2016,SAMN04382465,1,48.0,1.0,0.0,0.0,11800.0,1.0,650.0
+559,Noguera-Julian,Noguera-Julian.2016,SAMN04382466,1,37.0,0.0,0.0,0.0,7670.0,1.0,370.0
+560,Noguera-Julian,Noguera-Julian.2016,SAMN04382467,1,42.0,0.0,0.0,0.0,52600.0,1.0,370.0
+561,Noguera-Julian,Noguera-Julian.2016,SAMN04382468,1,51.0,1.0,0.0,0.0,11400.0,1.0,594.0
+562,Noguera-Julian,Noguera-Julian.2016,SAMN04382469,1,51.0,0.0,0.0,0.0,1300000.0,1.0,560.0
+563,Noguera-Julian,Noguera-Julian.2016,SAMN04382470,1,41.0,1.0,0.0,0.0,321.0,0.0,434.0
+564,Noguera-Julian,Noguera-Julian.2016,SAMN04382471,1,45.0,1.0,0.0,0.0,137.0,0.0,380.0
+565,Noguera-Julian,Noguera-Julian.2016,SAMN04382472,1,30.0,1.0,0.0,0.0,146000.0,1.0,410.0
+566,Noguera-Julian,Noguera-Julian.2016,SAMN04382474,1,34.0,1.0,0.0,0.0,326000.0,1.0,640.0
+567,Noguera-Julian,Noguera-Julian.2016,SAMN04382475,1,41.0,1.0,1.0,0.0,59600.0,1.0,460.0
+568,Noguera-Julian,Noguera-Julian.2016,SAMN04382476,1,32.0,0.0,0.0,0.0,341.0,0.0,730.0
+569,Noguera-Julian,Noguera-Julian.2016,SAMN04382477,1,63.0,1.0,1.0,0.0,19.0,0.0,1040.0
+570,Noguera-Julian,Noguera-Julian.2016,SAMN04382478,1,32.0,1.0,0.0,0.0,66700.0,1.0,420.0
+571,Noguera-Julian,Noguera-Julian.2016,SAMN04382479,1,57.0,1.0,0.0,0.0,53900.0,1.0,540.0
+572,Noguera-Julian,Noguera-Julian.2016,SAMN04382480,1,33.0,1.0,0.0,0.0,6020.0,1.0,440.0
+573,Noguera-Julian,Noguera-Julian.2016,SAMN04382481,1,41.0,1.0,0.0,0.0,531000.0,1.0,290.0
+574,Noguera-Julian,Noguera-Julian.2016,SAMN04382482,1,28.0,1.0,1.0,0.0,13600.0,1.0,500.0
+575,Noguera-Julian,Noguera-Julian.2016,SAMN04382483,1,45.0,1.0,0.0,0.0,136000.0,1.0,360.0
+576,Noguera-Julian,Noguera-Julian.2016,SAMN04382484,1,48.0,1.0,1.0,0.0,584.0,1.0,580.0
+577,Noguera-Julian,Noguera-Julian.2016,SAMN04382485,1,27.0,0.0,0.0,0.0,36200.0,1.0,440.0
+578,Noguera-Julian,Noguera-Julian.2016,SAMN04382486,1,47.0,0.0,0.0,0.0,1590.0,1.0,600.0
+579,Noguera-Julian,Noguera-Julian.2016,SAMN04382487,1,27.0,0.0,0.0,0.0,50800.0,1.0,1060.0
+580,Noguera-Julian,Noguera-Julian.2016,SAMN04382488,1,54.0,0.0,0.0,0.0,77000.0,1.0,460.0
+581,Noguera-Julian,Noguera-Julian.2016,SAMN04382490,1,45.0,0.0,0.0,0.0,62.0,0.0,860.0
+582,Noguera-Julian,Noguera-Julian.2016,SAMN04382491,1,78.0,1.0,1.0,0.0,14900.0,1.0,630.0
+583,Noguera-Julian,Noguera-Julian.2016,SAMN04382492,1,47.0,1.0,0.0,0.0,152000.0,1.0,560.0
+584,Noguera-Julian,Noguera-Julian.2016,SAMN04382493,1,54.0,1.0,0.0,0.0,713000.0,1.0,530.0
+585,Noguera-Julian,Noguera-Julian.2016,SAMN04382494,1,44.0,1.0,0.0,0.0,11500.0,1.0,990.0
+586,Noguera-Julian,Noguera-Julian.2016,SAMN04382495,1,33.0,0.0,0.0,0.0,11500.0,1.0,740.0
+587,Noguera-Julian,Noguera-Julian.2016,SAMN04382496,1,34.0,0.0,0.0,0.0,19100.0,1.0,430.0
+588,Noguera-Julian,Noguera-Julian.2016,SAMN04382497,1,23.0,1.0,1.0,0.0,5740.0,1.0,410.0
+589,Noguera-Julian,Noguera-Julian.2016,SAMN04382498,1,25.0,1.0,1.0,0.0,548.0,1.0,500.0
+590,Noguera-Julian,Noguera-Julian.2016,SAMN04382499,1,58.0,1.0,1.0,0.0,3350.0,1.0,430.0
+591,Noguera-Julian,Noguera-Julian.2016,SAMN04382500,1,49.0,1.0,0.0,0.0,69900.0,1.0,680.0
+592,Noguera-Julian,Noguera-Julian.2016,SAMN04382501,1,30.0,1.0,1.0,0.0,45000.0,1.0,400.0
+593,Noguera-Julian,Noguera-Julian.2016,SAMN04382502,1,60.0,1.0,0.0,0.0,15600.0,1.0,424.0
+594,Noguera-Julian,Noguera-Julian.2016,SAMN04382503,1,20.0,1.0,1.0,0.0,108000.0,1.0,260.0
+595,Noguera-Julian,Noguera-Julian.2016,SAMN04382504,1,36.0,1.0,1.0,0.0,132000.0,1.0,340.0
+596,Noguera-Julian,Noguera-Julian.2016,SAMN04382505,1,36.0,0.0,0.0,0.0,19.0,0.0,799.0
+597,Noguera-Julian,Noguera-Julian.2016,SAMN04382506,1,37.0,1.0,0.0,0.0,150.0,0.0,620.0
+598,Noguera-Julian,Noguera-Julian.2016,SAMN04382507,1,30.0,0.0,0.0,0.0,56300.0,1.0,360.0
+599,Noguera-Julian,Noguera-Julian.2016,SAMN04382508,1,32.0,1.0,1.0,0.0,31400.0,1.0,610.0
+600,Noguera-Julian,Noguera-Julian.2016,SAMN04382509,1,38.0,1.0,0.0,0.0,406000.0,1.0,230.0
+601,Noguera-Julian,Noguera-Julian.2016,SAMN04382510,1,19.0,0.0,0.0,0.0,82000.0,1.0,330.0
+602,Noguera-Julian,Noguera-Julian.2016,SAMN04382512,1,33.0,1.0,1.0,0.0,13800.0,1.0,510.0
+603,Noguera-Julian,Noguera-Julian.2016,SAMN04382513,1,32.0,1.0,1.0,0.0,135000.0,1.0,350.0
+604,Noguera-Julian,Noguera-Julian.2016,SAMN04382515,1,38.0,1.0,1.0,0.0,108000.0,1.0,380.0
+605,Noguera-Julian,Noguera-Julian.2016,SAMN04382516,1,40.0,0.0,0.0,0.0,18700.0,1.0,150.0
+606,Noguera-Julian,Noguera-Julian.2016,SAMN04382517,1,30.0,0.0,0.0,0.0,162000.0,1.0,350.0
+607,Noguera-Julian,Noguera-Julian.2016,SAMN04382518,1,49.0,0.0,0.0,0.0,114.0,0.0,120.0
+608,Noguera-Julian,Noguera-Julian.2016,SAMN04382520,1,40.0,0.0,0.0,0.0,70300.0,1.0,130.0
+609,Noguera-Julian,Noguera-Julian.2016,SAMN04382521,1,38.0,0.0,0.0,0.0,651.0,1.0,790.0
+610,Noguera-Julian,Noguera-Julian.2016,SAMN04382522,1,47.0,0.0,0.0,0.0,144.0,0.0,120.0
+611,Noguera-Julian,Noguera-Julian.2016,SAMN04382523,1,55.0,1.0,0.0,0.0,19.0,0.0,340.0
+612,Noguera-Julian,Noguera-Julian.2016,SAMN04382524,1,45.0,0.0,0.0,0.0,116000.0,1.0,410.0
+613,Noguera-Julian,Noguera-Julian.2016,SAMN04382525,0,44.0,1.0,0.0,,,,
+614,Noguera-Julian,Noguera-Julian.2016,SAMN04382526,0,28.0,0.0,0.0,,,,
+615,Noguera-Julian,Noguera-Julian.2016,SAMN04382527,0,46.0,1.0,0.0,,,,
+616,Noguera-Julian,Noguera-Julian.2016,SAMN04382528,0,55.0,1.0,0.0,,,,
+617,Noguera-Julian,Noguera-Julian.2016,SAMN04382529,0,48.0,1.0,0.0,,,,
+618,Noguera-Julian,Noguera-Julian.2016,SAMN04382530,0,43.0,1.0,0.0,,,,
+619,Noguera-Julian,Noguera-Julian.2016,SAMN04382531,0,34.0,0.0,0.0,,,,
+620,Dillon,Dillion.2014,SRR1159399,0,27.0,1.0,,,,,
+621,Dillon,Dillion.2014,SRR1159402,1,48.0,1.0,1.0,0.0,8400.0,1.0,400.0
+622,Dillon,Dillion.2014,SRR1159405,1,25.0,1.0,1.0,0.0,26000.0,1.0,532.0
+623,Dillon,Dillion.2014,SRR1159408,0,29.0,1.0,,,,,
+624,Dillon,Dillion.2014,SRR1159411,1,58.0,0.0,0.0,0.0,22000.0,1.0,400.0
+625,Dillon,Dillion.2014,SRR1159414,0,33.0,1.0,,,,,
+626,Dillon,Dillion.2014,SRR1159417,1,29.0,1.0,1.0,0.0,81500.0,1.0,621.0
+627,Dillon,Dillion.2014,SRR1159420,0,34.0,1.0,,,,,
+628,Dillon,Dillion.2014,SRR1159423,0,23.0,1.0,,,,,
+629,Dillon,Dillion.2014,SRR1159426,1,52.0,0.0,0.0,0.0,3850.0,1.0,693.0
+630,Dillon,Dillion.2014,SRR1159428,1,22.0,1.0,1.0,0.0,207000.0,1.0,368.0
+631,Dillon,Dillion.2014,SRR1159431,1,54.0,1.0,1.0,0.0,9440.0,1.0,429.0
+632,Dillon,Dillion.2014,SRR1159434,1,39.0,1.0,1.0,0.0,68300.0,1.0,528.0
+633,Dillon,Dillion.2014,SRR1159437,0,33.0,0.0,0.0,,,,
+634,Dillon,Dillion.2014,SRR1159440,1,29.0,0.0,0.0,0.0,196000.0,1.0,238.0
+635,Dillon,Dillion.2014,SRR1159443,0,29.0,0.0,0.0,,,,
+636,Dillon,Dillion.2014,SRR1159446,1,28.0,1.0,1.0,0.0,25100.0,1.0,460.0
+637,Dillon,Dillion.2014,SRR1159449,0,28.0,0.0,0.0,,,,
+638,Dillon,Dillion.2014,SRR1159452,0,54.0,1.0,,,,,
+639,Dillon,Dillion.2014,SRR1159455,1,46.0,1.0,1.0,0.0,88600.0,1.0,338.0
+640,Dillon,Dillion.2014,SRR1159458,1,31.0,1.0,0.0,0.0,2880.0,1.0,420.0
+641,Dillon,Dillion.2014,SRR1159461,1,25.0,1.0,1.0,0.0,59500.0,1.0,504.0
+642,Dillon,Dillion.2014,SRR1159464,0,47.0,1.0,,,,,
+643,Dillon,Dillion.2014,SRR1159467,0,27.0,1.0,,,,,
+644,Dillon,Dillion.2014,SRR1159470,1,27.0,1.0,1.0,0.0,4670.0,1.0,527.0
+645,Dillon,Dillion.2014,SRR1159473,1,34.0,1.0,1.0,0.0,43200.0,1.0,364.0
+646,Dillon,Dillion.2014,SRR1159476,1,39.0,0.0,0.0,0.0,64900.0,1.0,250.0
+647,Dillon,Dillion.2014,SRR1159478,1,43.0,1.0,1.0,0.0,106000.0,1.0,286.0
+648,Dillon,Dillion.2014,SRR1159481,0,43.0,0.0,0.0,,,,
+649,Dillon,Dillion.2014,SRR1159484,0,25.0,1.0,,,,,
+650,Dillon,Dillion.2014,SRR1159487,0,51.0,0.0,0.0,,,,
+651,Dillon,Dillion.2014,SRR1159490,1,25.0,0.0,0.0,0.0,119000.0,1.0,782.0
+652,Dinh,Dinh.2015,SRR1179142,0,42.73,1.0,,,,,
+653,Dinh,Dinh.2015,SRR1179143,0,58.95,1.0,,,,,
+654,Dinh,Dinh.2015,SRR1179144,0,34.56,1.0,,,,,
+655,Dinh,Dinh.2015,SRR1179145,0,34.28,1.0,,,,,
+656,Dinh,Dinh.2015,SRR1179146,0,50.33,1.0,,,,,
+657,Dinh,Dinh.2015,SRR1179147,1,57.06,1.0,1.0,1.0,8280.0,1.0,933.0
+658,Dinh,Dinh.2015,SRR1179148,1,59.99,1.0,1.0,1.0,200.0,0.0,728.0
+659,Dinh,Dinh.2015,SRR1179149,1,44.49,1.0,1.0,1.0,200.0,0.0,1004.0
+660,Dinh,Dinh.2015,SRR1179150,1,54.03,1.0,1.0,1.0,200.0,0.0,268.0
+661,Dinh,Dinh.2015,SRR1179151,0,32.99,0.0,0.0,,,,
+662,Dinh,Dinh.2015,SRR1179152,0,27.72,0.0,0.0,,,,
+663,Dinh,Dinh.2015,SRR1179153,1,42.68,0.0,0.0,1.0,,,540.0
+664,Dinh,Dinh.2015,SRR1179154,0,59.39,1.0,,,,,
+665,Dinh,Dinh.2015,SRR1179155,1,52.45,1.0,1.0,1.0,38.0,0.0,430.0
+666,Dinh,Dinh.2015,SRR1179156,1,44.35,1.0,,1.0,38.0,0.0,1054.0
+667,Dinh,Dinh.2015,SRR1179157,0,47.09,0.0,0.0,,,,
+668,Dinh,Dinh.2015,SRR1179158,0,44.85,1.0,,,,,
+669,Dinh,Dinh.2015,SRR1179159,1,53.13,1.0,,1.0,38.0,0.0,398.0
+670,Dinh,Dinh.2015,SRR1179160,1,49.83,1.0,1.0,1.0,38.0,0.0,2611.0
+671,Dinh,Dinh.2015,SRR1179161,1,50.75,1.0,1.0,1.0,200.0,0.0,429.0
+672,Dinh,Dinh.2015,SRR1179162,1,47.18,1.0,,1.0,38.0,0.0,544.0
+673,Dinh,Dinh.2015,SRR1179163,1,43.41,1.0,,1.0,,,806.0
+674,Dinh,Dinh.2015,SRR1179164,1,50.63,1.0,1.0,1.0,200.0,0.0,418.0
+675,Dinh,Dinh.2015,SRR1179165,1,49.02,1.0,1.0,1.0,200.0,0.0,356.0
+676,Dinh,Dinh.2015,SRR1179166,1,44.64,1.0,1.0,1.0,200.0,0.0,1198.0
+677,Dinh,Dinh.2015,SRR1179167,1,46.16,1.0,1.0,1.0,200.0,0.0,668.0
+678,Dinh,Dinh.2015,SRR1179168,0,50.29,0.0,0.0,,,,
+679,Dinh,Dinh.2015,SRR1179169,1,52.78,0.0,0.0,1.0,200.0,0.0,758.0
+680,Dinh,Dinh.2015,SRR1179170,1,56.48,0.0,0.0,1.0,200.0,0.0,519.0
+681,Dinh,Dinh.2015,SRR1179171,0,44.06,1.0,,,,,
+682,Dinh,Dinh.2015,SRR1179172,0,50.8,1.0,,,,,
+683,Dinh,Dinh.2015,SRR1179173,0,48.45,1.0,,,,,
+684,Dinh,Dinh.2015,SRR1179174,0,34.2,1.0,,,,,
+685,Dinh,Dinh.2015,SRR1179175,1,46.1,1.0,,1.0,200.0,0.0,800.0
+686,Dinh,Dinh.2015,SRR1179176,1,54.91,1.0,1.0,1.0,200.0,0.0,391.0
+687,Dinh,Dinh.2015,SRR1179177,1,55.07,0.0,0.0,1.0,38.0,0.0,701.0
+688,Pinto-Cardoso,Pinto-Cardoso.2017,SRR4341360,1,40.0,1.0,1.0,1.0,0.0,0.0,379.0
+689,Pinto-Cardoso,Pinto-Cardoso.2017,SRR4341361,1,37.0,1.0,1.0,1.0,0.0,0.0,273.0
+690,Pinto-Cardoso,Pinto-Cardoso.2017,SRR4341362,1,35.0,1.0,1.0,1.0,0.0,0.0,510.0
+691,Pinto-Cardoso,Pinto-Cardoso.2017,SRR4341363,1,35.0,1.0,1.0,1.0,0.0,0.0,548.0
+692,Pinto-Cardoso,Pinto-Cardoso.2017,SRR4341364,1,32.0,1.0,1.0,1.0,0.0,0.0,1297.0
+693,Pinto-Cardoso,Pinto-Cardoso.2017,SRR4341365,1,30.0,1.0,1.0,1.0,0.0,0.0,380.0
+694,Pinto-Cardoso,Pinto-Cardoso.2017,SRR4341366,1,48.0,1.0,1.0,1.0,0.0,0.0,276.0
+695,Pinto-Cardoso,Pinto-Cardoso.2017,SRR4341367,1,42.0,1.0,1.0,1.0,0.0,0.0,518.0
+696,Pinto-Cardoso,Pinto-Cardoso.2017,SRR4341368,1,24.0,1.0,1.0,1.0,0.0,0.0,276.0
+697,Pinto-Cardoso,Pinto-Cardoso.2017,SRR4341369,1,48.0,1.0,1.0,1.0,0.0,0.0,614.0
+698,Pinto-Cardoso,Pinto-Cardoso.2017,SRR4341370,1,36.0,1.0,0.0,1.0,0.0,0.0,559.0
+699,Pinto-Cardoso,Pinto-Cardoso.2017,SRR4341371,1,41.0,1.0,1.0,1.0,0.0,0.0,393.0
+700,Pinto-Cardoso,Pinto-Cardoso.2017,SRR4341372,1,59.0,1.0,0.0,1.0,0.0,0.0,374.0
+701,Pinto-Cardoso,Pinto-Cardoso.2017,SRR4341373,1,54.0,1.0,1.0,1.0,0.0,0.0,634.0
+702,Pinto-Cardoso,Pinto-Cardoso.2017,SRR4341374,1,34.0,1.0,1.0,1.0,0.0,0.0,559.0
+703,Pinto-Cardoso,Pinto-Cardoso.2017,SRR4341375,1,39.0,1.0,1.0,1.0,0.0,0.0,336.0
+704,Pinto-Cardoso,Pinto-Cardoso.2017,SRR4341376,1,52.0,1.0,1.0,1.0,0.0,0.0,1061.0
+705,Pinto-Cardoso,Pinto-Cardoso.2017,SRR4341377,1,30.0,1.0,1.0,1.0,0.0,0.0,1177.0
+706,Pinto-Cardoso,Pinto-Cardoso.2017,SRR4341378,1,40.0,0.0,0.0,1.0,0.0,0.0,605.0
+707,Pinto-Cardoso,Pinto-Cardoso.2017,SRR4341379,1,19.0,0.0,0.0,1.0,0.0,0.0,615.0
+708,Pinto-Cardoso,Pinto-Cardoso.2017,SRR4341380,1,27.0,1.0,,1.0,0.0,0.0,407.0
+709,Pinto-Cardoso,Pinto-Cardoso.2017,SRR4341381,1,49.0,1.0,1.0,1.0,0.0,0.0,240.0
+710,Pinto-Cardoso,Pinto-Cardoso.2017,SRR4341382,1,29.0,1.0,1.0,1.0,0.0,0.0,920.0
+711,Pinto-Cardoso,Pinto-Cardoso.2017,SRR4341383,1,41.0,1.0,,1.0,0.0,0.0,248.0
+712,Pinto-Cardoso,Pinto-Cardoso.2017,SRR4341384,1,42.0,1.0,,1.0,0.0,0.0,703.0
+713,Pinto-Cardoso,Pinto-Cardoso.2017,SRR4341387,1,48.0,1.0,0.0,1.0,0.0,0.0,298.0
+714,Pinto-Cardoso,Pinto-Cardoso.2017,SRR4341388,1,48.0,1.0,0.0,1.0,0.0,0.0,369.0
+715,Pinto-Cardoso,Pinto-Cardoso.2017,SRR4341408,0,31.0,1.0,,,,,
+716,Pinto-Cardoso,Pinto-Cardoso.2017,SRR4341409,0,66.0,1.0,,,,,
+717,Pinto-Cardoso,Pinto-Cardoso.2017,SRR4341410,0,20.0,1.0,,,,,
+718,Pinto-Cardoso,Pinto-Cardoso.2017,SRR4341411,0,43.0,0.0,0.0,,,,
+719,Pinto-Cardoso,Pinto-Cardoso.2017,SRR4341412,0,38.0,1.0,,,,,
+720,Pinto-Cardoso,Pinto-Cardoso.2017,SRR4341413,0,41.0,1.0,,,,,
+721,Pinto-Cardoso,Pinto-Cardoso.2017,SRR4341414,0,33.0,0.0,0.0,,,,
+722,Pinto-Cardoso,Pinto-Cardoso.2017,SRR4341415,1,45.0,1.0,1.0,1.0,0.0,0.0,509.0
+723,Pinto-Cardoso,Pinto-Cardoso.2017,SRR4341416,0,35.0,0.0,0.0,,,,
+724,Pinto-Cardoso,Pinto-Cardoso.2017,SRR4341417,0,42.0,0.0,0.0,,,,
+725,Pinto-Cardoso,Pinto-Cardoso.2017,SRR4341418,0,26.0,1.0,,,,,
+726,Pinto-Cardoso,Pinto-Cardoso.2017,SRR4341419,1,52.0,1.0,0.0,1.0,0.0,0.0,235.0
+727,Pinto-Cardoso,Pinto-Cardoso.2017,SRR4341420,1,52.0,0.0,0.0,1.0,0.0,0.0,808.0
+728,Pinto-Cardoso,Pinto-Cardoso.2017,SRR4341421,1,54.0,1.0,0.0,1.0,0.0,0.0,428.0
+729,Pinto-Cardoso,Pinto-Cardoso.2017,SRR4341422,1,43.0,0.0,0.0,1.0,0.0,0.0,653.0
+730,Pinto-Cardoso,Pinto-Cardoso.2017,SRR4341423,1,34.0,1.0,1.0,1.0,0.0,0.0,486.0
+731,Vesterbacka,Vesterbacka.2017,SRR5328788,1,45.0,0.0,0.0,0.0,116000.0,1.0,410.0
+732,Vesterbacka,Vesterbacka.2017,SRR5328789,1,55.0,1.0,0.0,0.0,19.0,0.0,340.0
+733,Vesterbacka,Vesterbacka.2017,SRR5328790,1,38.0,0.0,0.0,0.0,651.0,1.0,790.0
+734,Vesterbacka,Vesterbacka.2017,SRR5328791,1,40.0,0.0,0.0,0.0,70300.0,1.0,130.0
+735,Vesterbacka,Vesterbacka.2017,SRR5328792,1,52.0,1.0,0.0,0.0,42300.0,1.0,710.0
+736,Vesterbacka,Vesterbacka.2017,SRR5328793,1,49.0,0.0,0.0,0.0,114.0,0.0,120.0
+737,Vesterbacka,Vesterbacka.2017,SRR5328794,1,40.0,0.0,0.0,0.0,18700.0,1.0,150.0
+738,Vesterbacka,Vesterbacka.2017,SRR5328795,1,38.0,1.0,1.0,0.0,108000.0,1.0,380.0
+739,Vesterbacka,Vesterbacka.2017,SRR5328796,1,38.0,0.0,0.0,0.0,61400.0,1.0,280.0
+740,Vesterbacka,Vesterbacka.2017,SRR5328797,1,37.0,1.0,1.0,0.0,31400.0,1.0,610.0
+741,Vesterbacka,Vesterbacka.2017,SRR5328798,1,32.0,1.0,1.0,0.0,132000.0,1.0,340.0
+742,Vesterbacka,Vesterbacka.2017,SRR5328799,1,49.0,1.0,0.0,0.0,69900.0,1.0,680.0
+743,Vesterbacka,Vesterbacka.2017,SRR5328800,1,58.0,1.0,1.0,0.0,3350.0,1.0,430.0
+744,Vesterbacka,Vesterbacka.2017,SRR5328801,1,34.0,0.0,0.0,0.0,19100.0,1.0,430.0
+745,Vesterbacka,Vesterbacka.2017,SRR5328802,1,44.0,1.0,0.0,0.0,11500.0,1.0,990.0
+746,Vesterbacka,Vesterbacka.2017,SRR5328803,1,47.0,1.0,0.0,0.0,152000.0,1.0,560.0
+747,Vesterbacka,Vesterbacka.2017,SRR5328804,1,78.0,1.0,1.0,0.0,14900.0,1.0,630.0
+748,Vesterbacka,Vesterbacka.2017,SRR5328805,1,54.0,0.0,0.0,0.0,77000.0,1.0,460.0
+749,Vesterbacka,Vesterbacka.2017,SRR5328806,1,47.0,0.0,0.0,0.0,1590.0,1.0,600.0
+750,Vesterbacka,Vesterbacka.2017,SRR5328807,1,48.0,1.0,1.0,0.0,584.0,1.0,580.0
+751,Vesterbacka,Vesterbacka.2017,SRR5328808,1,57.0,1.0,0.0,0.0,53900.0,1.0,540.0
+752,Vesterbacka,Vesterbacka.2017,SRR5328809,1,32.0,1.0,0.0,0.0,66700.0,1.0,420.0
+753,Vesterbacka,Vesterbacka.2017,SRR5328810,1,32.0,0.0,0.0,0.0,341.0,0.0,730.0
+754,Vesterbacka,Vesterbacka.2017,SRR5328811,1,33.0,0.0,0.0,0.0,118000.0,1.0,700.0
+755,Vesterbacka,Vesterbacka.2017,SRR5328812,1,45.0,1.0,0.0,0.0,137.0,0.0,380.0
+756,Vesterbacka,Vesterbacka.2017,SRR5328813,1,51.0,0.0,0.0,0.0,1300000.0,1.0,560.0
+757,Vesterbacka,Vesterbacka.2017,SRR5328814,1,42.0,0.0,0.0,0.0,52600.0,1.0,370.0
+758,Vesterbacka,Vesterbacka.2017,SRR5328815,1,37.0,0.0,0.0,0.0,7670.0,1.0,370.0
+759,Vesterbacka,Vesterbacka.2017,SRR5328816,1,58.0,1.0,1.0,0.0,11500.0,1.0,480.0
+760,Vesterbacka,Vesterbacka.2017,SRR5328817,1,59.0,0.0,0.0,0.0,32000.0,1.0,530.0
+761,Vesterbacka,Vesterbacka.2017,SRR5328818,1,45.0,0.0,0.0,0.0,20700.0,1.0,550.0
+762,Vesterbacka,Vesterbacka.2017,SRR5328819,1,43.0,1.0,1.0,0.0,30500.0,1.0,720.0
+763,Vesterbacka,Vesterbacka.2017,SRR5328820,0,65.0,1.0,1.0,,,,
+764,Vesterbacka,Vesterbacka.2017,SRR5328821,0,48.0,1.0,0.0,,,,
+765,Vesterbacka,Vesterbacka.2017,SRR5328822,0,53.0,0.0,0.0,,,,
+766,Vesterbacka,Vesterbacka.2017,SRR5328823,0,44.0,0.0,0.0,,,,
+767,Vesterbacka,Vesterbacka.2017,SRR5328824,0,61.0,0.0,0.0,,,,
+768,Vesterbacka,Vesterbacka.2017,SRR5328825,0,49.0,0.0,0.0,,,,
+769,Vesterbacka,Vesterbacka.2017,SRR5328826,0,56.0,0.0,0.0,,,,
+770,Vesterbacka,Vesterbacka.2017,SRR5328827,0,50.0,1.0,1.0,,,,
+771,Vesterbacka,Vesterbacka.2017,SRR5328828,0,51.0,1.0,1.0,,,,
+772,Vesterbacka,Vesterbacka.2017,SRR5328829,0,52.0,1.0,0.0,,,,
+773,Vesterbacka,Vesterbacka.2017,SRR5328830,0,49.0,1.0,0.0,,,,
+774,Vesterbacka,Vesterbacka.2017,SRR5328831,0,39.0,0.0,0.0,,,,
+775,Vesterbacka,Vesterbacka.2017,SRR5328832,0,44.0,0.0,0.0,,,,
+776,Vesterbacka,Vesterbacka.2017,SRR5328833,0,46.0,0.0,0.0,,,,
+777,Vesterbacka,Vesterbacka.2017,SRR5328834,0,41.0,1.0,0.0,,,,
+778,Vesterbacka,Vesterbacka.2017,SRR5328835,1,40.0,0.0,0.0,0.0,19.0,0.0,740.0
+779,Vesterbacka,Vesterbacka.2017,SRR5328836,1,48.0,1.0,1.0,0.0,64.0,0.0,1270.0
+780,Vesterbacka,Vesterbacka.2017,SRR5328837,1,41.0,0.0,0.0,0.0,19.0,0.0,820.0
+781,Vesterbacka,Vesterbacka.2017,SRR5328838,1,40.0,0.0,0.0,0.0,19.0,0.0,695.0
+782,Vesterbacka,Vesterbacka.2017,SRR5328839,1,28.0,0.0,0.0,0.0,19.0,0.0,792.0
+783,Vesterbacka,Vesterbacka.2017,SRR5328840,1,32.0,0.0,0.0,0.0,19.0,0.0,1055.0
+784,Vesterbacka,Vesterbacka.2017,SRR5328841,1,68.0,1.0,1.0,0.0,34.0,0.0,950.0
+785,Vesterbacka,Vesterbacka.2017,SRR5328842,1,49.0,1.0,0.0,0.0,19.0,0.0,670.0
+786,Vesterbacka,Vesterbacka.2017,SRR5328843,1,46.0,0.0,0.0,0.0,19.0,0.0,770.0
+787,Vesterbacka,Vesterbacka.2017,SRR5328844,1,55.0,1.0,1.0,0.0,52.0,0.0,1030.0
+788,Vesterbacka,Vesterbacka.2017,SRR5328845,1,62.0,1.0,0.0,0.0,225.0,0.0,480.0
+789,Vesterbacka,Vesterbacka.2017,SRR5328846,1,44.0,0.0,0.0,0.0,19.0,0.0,550.0
+790,Vesterbacka,Vesterbacka.2017,SRR5328847,1,56.0,1.0,0.0,0.0,19.0,0.0,960.0
+791,Vesterbacka,Vesterbacka.2017,SRR5328848,1,51.0,1.0,1.0,0.0,19.0,0.0,1210.0
+792,Vesterbacka,Vesterbacka.2017,SRR5328849,1,45.0,1.0,0.0,0.0,19.0,0.0,630.0
+793,Villar-Garcia,Villar-Garcia.2017,qG13006776,1,28.0,1.0,1.0,1.0,0.0,0.0,413.0
+794,Villar-Garcia,Villar-Garcia.2017,qG13006777,1,48.0,1.0,0.0,1.0,0.0,0.0,582.0
+795,Villar-Garcia,Villar-Garcia.2017,qG13006778,1,41.0,1.0,0.0,1.0,0.0,0.0,503.0
+796,Villar-Garcia,Villar-Garcia.2017,qG13006779,1,44.0,1.0,0.0,1.0,0.0,0.0,1001.0
+797,Villar-Garcia,Villar-Garcia.2017,qG13006780,1,34.0,1.0,1.0,1.0,0.0,0.0,463.0
+798,Villar-Garcia,Villar-Garcia.2017,qG13006781,1,49.0,1.0,1.0,1.0,0.0,0.0,336.0
+799,Villar-Garcia,Villar-Garcia.2017,qG13006782,1,47.0,1.0,1.0,1.0,0.0,0.0,389.0
+800,Villar-Garcia,Villar-Garcia.2017,qG13006790,1,59.0,1.0,1.0,1.0,0.0,0.0,888.0
+801,Villar-Garcia,Villar-Garcia.2017,qG13006791,1,23.0,1.0,1.0,1.0,0.0,0.0,457.0
+802,Villar-Garcia,Villar-Garcia.2017,qG13006792,1,59.0,1.0,0.0,1.0,0.0,0.0,445.0
+803,Villar-Garcia,Villar-Garcia.2017,qG13006793,1,43.0,1.0,1.0,1.0,0.0,0.0,630.0
+804,Villar-Garcia,Villar-Garcia.2017,qG13006794,1,44.0,0.0,0.0,1.0,0.0,0.0,659.0
+805,Villar-Garcia,Villar-Garcia.2017,qG13006799,1,42.0,1.0,1.0,1.0,0.0,0.0,233.0
+806,Villar-Garcia,Villar-Garcia.2017,qG13006800,1,40.0,1.0,0.0,1.0,0.0,0.0,207.0
+807,Villar-Garcia,Villar-Garcia.2017,qG13006801,1,54.0,1.0,0.0,1.0,0.0,0.0,36.0
+808,Villar-Garcia,Villar-Garcia.2017,qG13006803,1,52.0,1.0,0.0,1.0,0.0,0.0,169.0
+809,Villar-Garcia,Villar-Garcia.2017,qG13006804,1,57.0,1.0,0.0,1.0,0.0,0.0,269.0
+810,Villar-Garcia,Villar-Garcia.2017,qG13006805,1,40.0,1.0,0.0,1.0,0.0,0.0,175.0
+811,Villar-Garcia,Villar-Garcia.2017,qG13006811,1,54.0,1.0,1.0,1.0,0.0,0.0,218.0
+812,Villar-Garcia,Villar-Garcia.2017,qG13006812,1,39.0,1.0,1.0,1.0,0.0,0.0,255.0
+813,Villar-Garcia,Villar-Garcia.2017,qG13006813,1,50.0,0.0,0.0,1.0,0.0,0.0,203.0
+814,Villar-Garcia,Villar-Garcia.2017,qG13006814,1,49.0,1.0,0.0,1.0,0.0,0.0,306.0
+815,Villar-Garcia,Villar-Garcia.2017,qG13006816,1,59.0,0.0,0.0,1.0,0.0,0.0,220.0
+816,Villar-Garcia,Villar-Garcia.2017,qG13006817,1,47.0,1.0,0.0,1.0,0.0,0.0,87.0
+817,Nowak2017,Nowak.2017,rgn.1.1,1,35.0,1.0,1.0,1.0,20.0,0.0,377.0
+818,Nowak2017,Nowak.2017,rgn.1.10,1,27.0,1.0,1.0,1.0,20.0,0.0,426.0
+819,Nowak2017,Nowak.2017,rgn.1.12,1,27.0,1.0,1.0,1.0,23.0,0.0,408.0
+820,Nowak2017,Nowak.2017,rgn.1.16,1,25.0,1.0,1.0,0.0,244939.0,1.0,330.0
+821,Nowak2017,Nowak.2017,rgn.1.17,1,27.0,1.0,1.0,0.0,700712.0,1.0,413.0
+822,Nowak2017,Nowak.2017,rgn.1.18,1,30.0,1.0,1.0,0.0,506373.0,1.0,15.0
+823,Nowak2017,Nowak.2017,rgn.1.19,1,27.0,1.0,1.0,0.0,16164.0,1.0,381.0
+824,Nowak2017,Nowak.2017,rgn.1.2,1,26.0,1.0,1.0,1.0,20.0,0.0,534.0
+825,Nowak2017,Nowak.2017,rgn.1.3,1,34.0,1.0,1.0,1.0,50.0,0.0,249.0
+826,Nowak2017,Nowak.2017,rgn.1.5,0,32.0,1.0,1.0,,,,
+827,Nowak2017,Nowak.2017,rgn.1.6,1,26.0,1.0,1.0,1.0,34.0,0.0,287.0
+828,Nowak2017,Nowak.2017,rgn.1.7,0,22.0,1.0,1.0,,,,
+829,Nowak2017,Nowak.2017,rgn.1.8,0,21.0,1.0,1.0,,,,
+830,Nowak2017,Nowak.2017,rgn.2.1,1,27.0,1.0,1.0,1.0,2846.0,1.0,354.0
+831,Nowak2017,Nowak.2017,rgn.2.10,1,33.0,1.0,1.0,1.0,20.0,0.0,198.0
+832,Nowak2017,Nowak.2017,rgn.2.12,1,23.0,1.0,1.0,1.0,20.0,0.0,315.0
+833,Nowak2017,Nowak.2017,rgn.2.13,0,37.0,1.0,1.0,,,,
+834,Nowak2017,Nowak.2017,rgn.2.14,1,36.0,1.0,1.0,0.0,238750.0,1.0,117.0
+835,Nowak2017,Nowak.2017,rgn.2.15,1,21.0,1.0,1.0,1.0,58.0,0.0,332.0
+836,Nowak2017,Nowak.2017,rgn.2.18,1,24.0,1.0,1.0,0.0,94649.0,1.0,244.0
+837,Nowak2017,Nowak.2017,rgn.2.19,1,32.0,1.0,1.0,0.0,13930.0,1.0,276.0
+838,Nowak2017,Nowak.2017,rgn.2.2,0,29.0,1.0,1.0,,,,
+839,Nowak2017,Nowak.2017,rgn.2.5,0,26.0,1.0,1.0,,,,
+840,Nowak2017,Nowak.2017,rgn.2.6,0,31.0,1.0,1.0,,,,
+841,Nowak2017,Nowak.2017,rgn.2.7,1,19.0,1.0,1.0,0.0,232091.0,1.0,130.0
+842,Nowak2017,Nowak.2017,rgn.2.8,1,23.0,1.0,1.0,0.0,23624.0,1.0,355.0
+843,Nowak2017,Nowak.2017,rgn.2.9,1,26.0,1.0,1.0,0.0,8341.0,1.0,339.0
+844,Nowak2017,Nowak.2017,rgn.3.1,1,29.0,1.0,1.0,1.0,86.0,0.0,262.0
+845,Nowak2017,Nowak.2017,rgn.3.10,0,26.0,1.0,1.0,,,,
+846,Nowak2017,Nowak.2017,rgn.3.11,1,27.0,1.0,1.0,1.0,20.0,0.0,313.0
+847,Nowak2017,Nowak.2017,rgn.3.12,0,22.0,1.0,1.0,,,,
+848,Nowak2017,Nowak.2017,rgn.3.13,0,20.0,1.0,1.0,,,,
+849,Nowak2017,Nowak.2017,rgn.3.14,1,32.0,1.0,1.0,0.0,3673.0,1.0,361.0
+850,Nowak2017,Nowak.2017,rgn.3.15,0,32.0,1.0,1.0,,,,
+851,Nowak2017,Nowak.2017,rgn.3.16,1,31.0,1.0,1.0,1.0,361.0,0.0,215.0
+852,Nowak2017,Nowak.2017,rgn.3.17,0,25.0,1.0,1.0,,,,
+853,Nowak2017,Nowak.2017,rgn.3.18,0,28.0,1.0,1.0,,,,
+854,Nowak2017,Nowak.2017,rgn.3.2,1,26.0,1.0,1.0,1.0,20.0,0.0,452.0
+855,Nowak2017,Nowak.2017,rgn.3.3,0,28.0,1.0,1.0,,,,
+856,Nowak2017,Nowak.2017,rgn.3.4,1,28.0,1.0,1.0,1.0,20.0,0.0,354.0
+857,Nowak2017,Nowak.2017,rgn.3.7,0,24.0,1.0,1.0,,,,
+858,Nowak2017,Nowak.2017,rgn.3.8,0,23.0,1.0,1.0,,,,
+859,Nowak2017,Nowak.2017,rgn.3.9,1,32.0,1.0,1.0,1.0,20.0,0.0,752.0
+860,Nowak2017,Nowak.2017,rgn.4.10,0,23.0,1.0,1.0,,,,
+861,Nowak2017,Nowak.2017,rgn.4.11,1,24.0,1.0,1.0,0.0,9620.0,1.0,496.0
+862,Nowak2017,Nowak.2017,rgn.4.12,0,32.0,1.0,1.0,,,,
+863,Nowak2017,Nowak.2017,rgn.4.13,1,27.0,1.0,1.0,0.0,164268.0,1.0,240.0
+864,Nowak2017,Nowak.2017,rgn.4.14,0,20.0,1.0,1.0,,,,
+865,Nowak2017,Nowak.2017,rgn.4.15,1,19.0,1.0,1.0,0.0,101956.0,1.0,332.0
+866,Nowak2017,Nowak.2017,rgn.4.16,1,35.0,1.0,1.0,1.0,2849.0,1.0,207.0
+867,Nowak2017,Nowak.2017,rgn.4.17,0,32.0,1.0,1.0,,,,
+868,Nowak2017,Nowak.2017,rgn.4.18,0,28.0,1.0,1.0,,,,
+869,Nowak2017,Nowak.2017,rgn.4.19,1,35.0,1.0,1.0,1.0,31.0,0.0,137.0
+870,Nowak2017,Nowak.2017,rgn.4.2,0,22.0,1.0,1.0,,,,
+871,Nowak2017,Nowak.2017,rgn.4.3,1,26.0,1.0,1.0,0.0,99045.0,1.0,326.0
+872,Nowak2017,Nowak.2017,rgn.4.4,0,23.0,1.0,1.0,,,,
+873,Nowak2017,Nowak.2017,rgn.4.5,1,26.0,1.0,1.0,1.0,43173.0,1.0,454.0
+874,Nowak2017,Nowak.2017,rgn.4.6,1,20.0,1.0,1.0,1.0,114.0,0.0,267.0
+875,Nowak2017,Nowak.2017,rgn.4.7,0,26.0,1.0,1.0,,,,
+876,Nowak2017,Nowak.2017,rgn.4.8,0,28.0,1.0,1.0,,,,
+877,Nowak2017,Nowak.2017,rgn.5.1,1,19.0,1.0,1.0,0.0,1021899.0,1.0,202.0
+878,Nowak2017,Nowak.2017,rgn.5.10,1,25.0,1.0,1.0,0.0,32309.0,1.0,293.0
+879,Nowak2017,Nowak.2017,rgn.5.13,0,36.0,1.0,1.0,,,,
+880,Nowak2017,Nowak.2017,rgn.5.14,0,29.0,1.0,1.0,,,,
+881,Nowak2017,Nowak.2017,rgn.5.15,1,32.0,1.0,1.0,1.0,29.0,0.0,438.0
+882,Nowak2017,Nowak.2017,rgn.5.16,0,28.0,1.0,1.0,,,,
+883,Nowak2017,Nowak.2017,rgn.5.17,0,20.0,1.0,1.0,,,,
+884,Nowak2017,Nowak.2017,rgn.5.2,0,25.0,1.0,1.0,,,,
+885,Nowak2017,Nowak.2017,rgn.5.3,1,24.0,1.0,1.0,1.0,87.0,0.0,221.0
+886,Nowak2017,Nowak.2017,rgn.5.6,1,38.0,1.0,1.0,0.0,610400.0,1.0,24.0
+887,Nowak2017,Nowak.2017,rgn.5.7,1,27.0,1.0,1.0,0.0,123758.0,1.0,257.0
+888,Nowak2017,Nowak.2017,rgn.6.1,0,30.0,1.0,1.0,,,,
+889,Nowak2017,Nowak.2017,rgn.6.10,1,19.0,1.0,1.0,0.0,203058.0,1.0,341.0
+890,Nowak2017,Nowak.2017,rgn.6.11,0,27.0,1.0,1.0,,,,
+891,Nowak2017,Nowak.2017,rgn.6.12,1,28.0,1.0,1.0,0.0,87892.0,1.0,197.0
+892,Nowak2017,Nowak.2017,rgn.6.13,1,27.0,1.0,1.0,0.0,364082.0,1.0,195.0
+893,Nowak2017,Nowak.2017,rgn.6.14,1,27.0,1.0,1.0,0.0,95711.0,1.0,430.0
+894,Nowak2017,Nowak.2017,rgn.6.15,1,24.0,1.0,1.0,1.0,20.0,0.0,500.0
+895,Nowak2017,Nowak.2017,rgn.6.16,1,23.0,1.0,1.0,0.0,101950.0,1.0,146.0
+896,Nowak2017,Nowak.2017,rgn.6.17,1,27.0,1.0,1.0,1.0,27.0,0.0,116.0
+897,Nowak2017,Nowak.2017,rgn.6.18,0,18.0,1.0,1.0,,,,
+898,Nowak2017,Nowak.2017,rgn.6.2,0,33.0,1.0,1.0,,,,
+899,Nowak2017,Nowak.2017,rgn.6.3,0,20.0,1.0,1.0,,,,
+900,Nowak2017,Nowak.2017,rgn.6.4,1,19.0,1.0,1.0,0.0,224492.0,1.0,264.0
+901,Nowak2017,Nowak.2017,rgn.6.9,0,24.0,1.0,1.0,,,,
+902,Nowak2017,Nowak.2017,rgn.7.1,1,27.0,1.0,1.0,0.0,551525.0,1.0,219.0
+903,Nowak2017,Nowak.2017,rgn.7.11,1,23.0,1.0,1.0,1.0,20.0,0.0,577.0
+904,Nowak2017,Nowak.2017,rgn.7.14,1,25.0,1.0,1.0,0.0,80255.0,1.0,235.0
+905,Nowak2017,Nowak.2017,rgn.7.15,1,32.0,1.0,1.0,1.0,510252.0,1.0,122.0
+906,Nowak2017,Nowak.2017,rgn.7.18,1,25.0,1.0,1.0,1.0,20.0,0.0,651.0
+907,Nowak2017,Nowak.2017,rgn.7.19,1,26.0,1.0,1.0,1.0,20.0,0.0,428.0
+908,Nowak2017,Nowak.2017,rgn.7.2,1,23.0,1.0,1.0,0.0,20869.0,1.0,249.0
+909,Nowak2017,Nowak.2017,rgn.7.3,1,18.0,1.0,1.0,0.0,3616.0,1.0,592.0
+910,Nowak2017,Nowak.2017,rgn.7.4,0,22.0,1.0,1.0,,,,
+911,Nowak2017,Nowak.2017,rgn.7.5,1,21.0,1.0,1.0,0.0,349957.0,1.0,306.0
+912,Nowak2017,Nowak.2017,rgn.7.6,1,24.0,1.0,1.0,0.0,78647.0,1.0,221.0
+913,Nowak2017,Nowak.2017,rgn.7.7,1,27.0,1.0,1.0,0.0,42624.0,1.0,340.0
+914,Nowak2017,Nowak.2017,rgn.7.8,1,26.0,1.0,1.0,0.0,685.0,1.0,358.0
+915,Nowak2017,Nowak.2017,rgn.8.1,1,20.0,1.0,1.0,0.0,158919.0,1.0,352.0
+916,Nowak2017,Nowak.2017,rgn.8.10,0,17.0,1.0,1.0,,,,
+917,Nowak2017,Nowak.2017,rgn.8.11,1,20.0,1.0,1.0,1.0,20.0,0.0,477.0
+918,Nowak2017,Nowak.2017,rgn.8.13,1,19.0,1.0,1.0,0.0,270722.0,1.0,161.0
+919,Nowak2017,Nowak.2017,rgn.8.14,0,19.0,1.0,1.0,,,,
+920,Nowak2017,Nowak.2017,rgn.8.17,0,16.0,1.0,1.0,,,,
+921,Nowak2017,Nowak.2017,rgn.8.18,0,18.0,1.0,1.0,,,,
+922,Nowak2017,Nowak.2017,rgn.8.19,0,19.0,1.0,1.0,,,,
+923,Nowak2017,Nowak.2017,rgn.8.2,0,16.0,1.0,1.0,,,,
+924,Nowak2017,Nowak.2017,rgn.8.5,0,17.0,1.0,1.0,,,,
+925,Nowak2017,Nowak.2017,rgn.8.6,1,33.0,1.0,1.0,1.0,23833.0,1.0,335.0
+926,Nowak2017,Nowak.2017,rgn.8.8,0,18.0,1.0,1.0,,,,
+927,Nowak2017,Nowak.2017,rgn.8.9,0,25.0,1.0,1.0,,,,
+928,Nowak2017,Nowak.2017,rgn.9.10,0,26.0,1.0,1.0,,,,
+929,Nowak2017,Nowak.2017,rgn.9.11,1,30.0,1.0,1.0,0.0,139339.0,1.0,419.0
+930,Nowak2017,Nowak.2017,rgn.9.12,1,25.0,1.0,1.0,0.0,925542.0,1.0,426.0
+931,Nowak2017,Nowak.2017,rgn.9.13,0,16.0,1.0,1.0,,,,
+932,Nowak2017,Nowak.2017,rgn.9.2,0,19.0,1.0,1.0,,,,
+933,Nowak2017,Nowak.2017,rgn.9.3,0,23.0,1.0,1.0,,,,
+934,Nowak2017,Nowak.2017,rgn.9.6,0,25.0,1.0,1.0,,,,
+935,Nowak2017,Nowak.2017,rgn.9.9,1,20.0,1.0,1.0,0.0,204981.0,1.0,439.0
