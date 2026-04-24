@@ -1,0 +1,21 @@
+{
+  "cutoff": 0.03,
+  "init": "xavier_normal",
+  "beta_kl": 0.013547769547714415,
+  "norm": "batchnorm",
+  "strategy": "constant",
+  "n_layers": 3,
+  "base_dim": 768,
+  "latent_dim": 48,
+  "activation": "relu",
+  "dropout_rate": 0.3,
+  "epochs": 150,
+  "batch_size": 64,
+  "weight_decay": 2.106359857383759e-05,
+  "learning_rate": 0.0005834117833563876,
+  "grad_clip_norm": 0.5821387740110574,
+  "kl_warmup_ratio": 0.3028943758638206,
+  "cluster_selection_method": "leaf",
+  "min_cluster_size": 5,
+  "min_samples_token": 5
+}

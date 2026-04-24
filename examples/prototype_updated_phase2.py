@@ -823,7 +823,7 @@ def build_dataset(
         prevalence = (X > 0).sum(axis=1) / X.shape[1]
         keep_sample = prevalence > sample_zeroprev
         meta = meta.loc[keep_sample.values].reset_index(drop=True)
-        X = X.loc[keep].copy()
+        X = X.loc[keep_sample].copy()
         batch_label = meta[study_col].reset_index(drop=True)
                      
     # ------------------------------------------------------------------------------
@@ -1471,5 +1471,5 @@ if __name__ == "__main__":
     #     experiment_name="df1",
     #     phase=2,
     #     best_trial_number=12,
-    #     trial_res_file_phase2="/DATA/WGS_study/YSL/projects/latentgee/examples/logs/df1/phase1/optuna_trials_2026-04-21.csv"
+    #     trial_res_file_phase2="/DATA/WGS_study/YSL/projects/latentgee/examples/logs/df1/phase1/optuna_trials_2026-04-22.csv"
     # )

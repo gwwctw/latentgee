@@ -23,20 +23,20 @@ env/
 *.db
 
 # Logs & results
-logs/
-results/
+#logs/
+#results/
 *.log
 # *.csv
 
 # Model checkpoints
-*.pt
+#*.pt
 *.pth
-*.json
+#*.json
 
 # Data
 Data/
 *.txt
-*.xlsx
+#*.xlsx
 
 # OS
 .DS_Store
