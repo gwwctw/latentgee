@@ -42,6 +42,50 @@ import matplotlib.pyplot as plt
 #from matplotlib.patches import Ellipse
 #from scipy.spatial.distance import pdist, squareform
 
+
+def load_hivrc(file_path, cutoff=0.1, normalize=True):
+    data_path = Path(f"{file_path}/insight.merged_otus.txt")
+    meta_path = Path(f"{file_path}/SupplementaryMaterial.xlsx")
+
+    dat = pd.read_csv(data_path, sep="\t", encoding = "utf-8")
+    dat_meta = pd.read_excel(meta_path, header = 1, usecols = "B:L")
+
+    dat_cols = dat_meta["SeqID"].astype(str).to_list()
+    dat_cols.insert(0, 'Resphera Insight (Raw Counts)')
+    dat_T = dat[dat_cols].T
+    dat_T.reset_index(inplace = True)
+    dat_T.columns = dat_T.iloc[0].astype(str)
+    dat_T = dat_T.iloc[1:]
+    dat_T.columns.values[0] = "SeqID"
+    dat_merged = pd.merge(dat_T, dat_meta, on = "SeqID", how = "inner")
+
+    X = dat_merged.iloc[:, 1:(dat_T.shape[1])].apply(pd.to_numeric, errors="coerce").reset_index(drop=True)
+    dat_cov = dat_merged[['hivstatus', 'Age', 'gender']].reset_index(drop=True)
+    
+    dat_cov['Age'] = dat_cov['Age'].fillna(dat_cov['Age'].median())
+    # msm=1인 경우 gender=1로 채우기
+    mask_msm = dat_cov['gender'].isna() & (dat_merged['msm'] == 1)
+    dat_cov.loc[mask_msm, 'gender'] = 1
+
+    # 나머지 NaN은 최빈값으로
+    dat_cov['gender'] = dat_cov['gender'].fillna(dat_cov['gender'].mode()[0])
+    
+    dat_batch_lbl = dat_merged['Study'].reset_index(drop=True)
+    
+    # prevalence filtering
+    prevalence = (X > 0).sum(axis=0) / X.shape[0]
+    X = X.loc[:, prevalence > cutoff]
+    # relative abundance
+    if normalize:
+        X = X.div(X.sum(axis=1), axis=0)
+        
+    assert len(X) == len(dat_cov), f"샘플 수 불일치: X={len(X)}, dat_cov={len(dat_cov)}"
+    
+
+    return X, dat_cov, dat_batch_lbl
+
+
+
 def set_seed(seed: int = 42):
     random.seed(seed)
     np.random.seed(seed)
@@ -311,18 +355,9 @@ def gee_latent_residual(z_np,
 
     df = pd.DataFrame(z_np, columns=[f"z{i}" for i in range(z_np.shape[1])])
     df["cluster"] = pseudo_batch_labels
-    cov_names = []
-    if covariates_df is not None:
-        if isinstance(covariates_df, pd.DataFrame):
-            df = pd.concat([df, covariates_df], axis=1)
-            cov_names = list(covariates_df.columns)
-
-        elif isinstance(covariates_df, np.ndarray):
-            for i in range(covariates_df.shape[1]):
-                name = f"cov{i}"
-                df[name] = covariates_df[:, i]
-                cov_names.append(name)
-
+    cov_names = ["Age", "gender", "hivstatus"]
+    df = pd.concat([df, covariates_df], axis=1)
+    
     residuals = []
     latent_cols = [c for c in df.columns if c.startswith("z")]
 
@@ -522,15 +557,364 @@ def train_vae(model, data_tensor,
 
     return loss.item()
 
+
+CONFOUNDED_STUDIES = [
+    "Monaco.2016",
+    "Pinto-Cardoso.2017",
+    "Villanueva-Millan.2017",
+    "Yu.2014",
+]
+
+
+EXPERIMENT_DESIGNS = {
+    "df1": {
+        "name": "full_raw_norm",
+        "aggregation": None,
+        "subset_studies": None,
+    
+        "cleanset_filtering" : False,
+        "normalize" : True,
+        "otu_zeroprev" : 0.01,
+        "sample_zeroprev": None,
+           
+        "description": "Full raw HIVRC, normalized, standalone LatentGEE",
+    },
+    
+    "df2": {
+        "name": "minproc_otu_count",
+        "aggregation": None,
+        "subset_studies": None,
+        "cleanset_filtering": False,
+        "normalize": False,
+        "otu_zeroprev": None,
+        "sample_zeroprev": None,
+        "description": "Minimally processed HIVRC at the OTU level, raw count",
+    },
+    "df3": {
+        "name": "prep_genus_norm",
+        "aggregation": "genus",
+        "subset_studies": None,
+        
+        "cleanset_filtering" : True,
+        "normalize" : True,
+        "otu_zeroprev" : None,
+        "sample_zeroprev": None,
+    
+        "description": "Preprocessed HIVRC, genus-level, normalized",
+    },
+    "df4": {
+        "name": "prep_genus_count",
+        "aggregation": "genus",
+        "subset_studies": None,
+                
+        "cleanset_filtering" : True,
+        "normalize" : False,
+        "otu_zeroprev" : None,
+        "sample_zeroprev": None,
+        
+        "description": "Preprocessed HIVRC, genus-level, raw count",
+    },
+    "df5": {
+        "name": "subset_genus_norm",
+        "aggregation": "genus",
+        
+        "cleanset_filtering" : True,
+        "normalize" : True,
+        "otu_zeroprev" : None,
+        "sample_zeroprev": None,
+        
+        "subset_studies": CONFOUNDED_STUDIES,
+        "description": "Confounded subset HIVRC, genus-level, normalized",
+    },
+    "df6": {
+        "name": "subset_genus_count",
+        "aggregation": "genus",
+        
+        "cleanset_filtering" : True,
+        "normalize" : False,
+        "otu_zeroprev" : None,
+        "sample_zeroprev": None,
+        
+        "subset_studies": CONFOUNDED_STUDIES,
+        "description": "Confounded subset HIVRC, genus-level, raw count",
+    },
+    "df7": {
+        "name": "prep_otu_norm",
+        "normalize": True,
+        "aggregation": None,
+        
+        "cleanset_filtering" : True,
+        "otu_zeroprev" : None,
+        "sample_zeroprev": None,
+        
+        "subset_studies": None,
+        "description": "Preprocessed HIVRC, OTU-level, normalized",
+    },
+    "df8": {
+        "name": "prep_otu_count",
+        "normalize": False,
+        "aggregation": None,
+        
+        "cleanset_filtering" : True,
+        "otu_zeroprev" : None,
+        "sample_zeroprev": None,
+        
+        "subset_studies": None,
+        "description": "Preprocessed HIVRC, OTU-level, raw count",
+    },
+    "df9": {
+        "name": "subset_otu_norm",
+        
+        "normalize": True,
+        "aggregation": None,
+        
+        "cleanset_filtering" : True,
+        "otu_zeroprev" : None,
+        "sample_zeroprev": None,
+        
+        "subset_studies": CONFOUNDED_STUDIES,
+        "description": "Confounded subset HIVRC, OTU-level, normalized",
+    },
+    "df10": {
+        "name": "subset_otu_count",
+        
+        "normalize": False,
+        "aggregation": None,
+        
+        "cleanset_filtering" : True,
+        "otu_zeroprev" : None,
+        "sample_zeroprev": None,
+        
+        "subset_studies": CONFOUNDED_STUDIES,
+        "description": "Confounded subset HIVRC, OTU-level, raw count",
+    },
+}
+
+def extract_genus_from_taxonomy(taxonomy_series: pd.Series) -> pd.Series:
+    genus = (
+        taxonomy_series
+        .astype(str)
+        .str.extract(r"g__([^;]*)", expand=False)
+        .fillna("")
+        .str.strip()
+    )
+
+    genus_lower = genus.str.lower()
+    genus = genus.mask(
+        genus_lower.isin([
+            "", "uncultured", "unassigned", "ambiguous_taxa", "incertae_sedis"
+        ]),
+        "Unassigned"
+    )
+
+    genus = genus.replace({
+        "uncultured": "Unassigned",
+        "unassigned": "Unassigned",
+        "Ambiguous_taxa": "Unassigned",
+        "Incertae_Sedis": "Unassigned",
+    })
+
+    return genus
+
+def read_hivrc_raw(file_path: str):
+    sample_id_col = "SeqID"
+
+    otu_raw_path = Path(file_path) / "insight.merged_otus.txt"
+    meta_raw_path = Path(file_path) / "SupplementaryMaterial.xlsx"
+
+    otu_raw = pd.read_csv(
+        otu_raw_path,
+        sep="\t",
+        encoding="utf-8",
+        index_col="Resphera Insight (Raw Counts)"
+    )
+    meta_raw = pd.read_excel(meta_raw_path, header=1, usecols="B:L")
+
+    otu_raw.index.name = sample_id_col
+    otu_raw = otu_raw.reset_index()
+    otu_raw.index = otu_raw[sample_id_col].astype(str)
+
+    return otu_raw, meta_raw
+
+def build_dataset(
+    otu_raw: pd.DataFrame,
+    meta_raw: pd.DataFrame,
+    aggregation=None,
+    subset_studies=None,
+    
+    cleanset_filtering = False,
+    normalize = None,
+    otu_zeroprev= None,
+    sample_zeroprev = None,
+    
+    sample_id_col="SeqID",
+    study_col="Study",
+    hiv_col="hivstatus",
+    age_col="Age",
+    gender_col="gender",
+    taxonomy_col="taxonomy",
+):
+    sample_cols = [c for c in otu_raw.columns if c not in [taxonomy_col, sample_id_col]]
+    otu_counts = otu_raw[sample_cols].apply(pd.to_numeric, errors="coerce").fillna(0)
+
+    if aggregation == "genus":
+        genus = extract_genus_from_taxonomy(otu_raw[taxonomy_col])
+        otu_counts["Feature"] = genus.values
+        feature_by_sample = otu_counts.groupby("Feature", dropna=False).sum()
+    elif aggregation is None:
+        otu_counts.index = otu_raw[sample_id_col].astype(str)
+        feature_by_sample = otu_counts.copy()
+    else:
+        raise ValueError(f"Unknown aggregation: {aggregation}")
+    
+    # common sample filtering -----------------------------------------------------
+    X = feature_by_sample.T
+    X.index = X.index.astype(str)
+
+    meta = meta_raw.copy()
+    meta[sample_id_col] = meta[sample_id_col].astype(str)
+    meta = meta.set_index(sample_id_col, drop=False)
+
+    common_samples = X.index.intersection(meta.index)
+    X = X.loc[common_samples].copy()
+    meta = meta.loc[common_samples].copy()
+    batch_label = meta[study_col].reset_index(drop=True)
+    # -----------------------------------------------------------------------------
+
+    # subset_studies --------------------------------------------------------------
+    if subset_studies is not None:
+        keep_subset = meta[study_col].isin(subset_studies)
+        X = X.loc[keep_subset.values].copy()
+        meta = meta.loc[keep_subset].copy()    
+        batch_label = meta[study_col]
+    # -----------------------------------------------------------------------------
+
+    # cleanset_ filtering ----------------------------------------------------------
+    if cleanset_filtering:
+        meta[age_col] = pd.to_numeric(meta[age_col], errors="coerce")
+        meta[study_col] = pd.Categorical(meta[study_col])
+
+        keep_complete = meta[[study_col, hiv_col, age_col, gender_col]].notna().all(axis=1)
+        X = X.loc[keep_complete.values].copy()
+        meta = meta.loc[keep_complete].copy()
+
+        X = X.loc[:, X.sum(axis=0) > 0].copy()
+
+        meta = meta.reset_index(drop=True)
+        X.index = meta[sample_id_col].values    
+        batch_label = meta[study_col]
+    # ------------------------------------------------------------------------------
+    
+    # zero_prevalence filtering -----------------------------------------------------
+    if otu_zeroprev is not None:
+        # prevalence filtering
+        prevalence = (X > 0).sum(axis=0) / X.shape[0]
+        X = X.loc[:, prevalence > otu_zeroprev].copy()
+
+        # zero-library sample 제거
+        row_sums = X.sum(axis=1)
+        keep = row_sums > 0
+        
+        meta = meta.loc[keep.values].reset_index(drop=True)
+        X = X.loc[keep].copy()
+        batch_label = meta[study_col].reset_index(drop=True)
+        
+    if sample_zeroprev is not None:
+        prevalence = (X > 0).sum(axis=1) / X.shape[1]
+        keep_sample = prevalence > sample_zeroprev
+        meta = meta.loc[keep_sample.values].reset_index(drop=True)
+        X = X.loc[keep].copy()
+        batch_label = meta[study_col].reset_index(drop=True)
+                     
+    # ------------------------------------------------------------------------------
+    
+            
+    # normalization ----------------------------------------------------------------
+    row_sums = X.sum(axis=1)
+    keep_nonzero = row_sums > 0
+    meta = meta.loc[keep_nonzero.values].reset_index(drop=True)
+    X = X.loc[keep_nonzero].copy()
+    batch_label = meta[study_col].reset_index(drop=True)
+    if normalize:
+        X = X.div(X.sum(axis=1), axis=0)
+    # ------------------------------------------------------------------------------
+
+    
+    # 정렬 보정
+    X.index = meta["SeqID"].astype(str).values
+    batch_label = meta[study_col]
+                       
+    return X, meta, batch_label
+
+def get_experiment_data(
+    design_id: str,
+    file_path: str,
+    verbose: bool = True,
+):
+    """
+    design_id(df1 ~ df10)에 따라 feature_table, meta_data, batch_label 반환
+    """
+
+    if design_id not in EXPERIMENT_DESIGNS:
+        raise ValueError(
+            f"Unknown design_id: {design_id}. "
+            f"Available: {list(EXPERIMENT_DESIGNS.keys())}"
+        )
+
+    cfg = EXPERIMENT_DESIGNS[design_id]
+
+    normalize = cfg["normalize"]
+    aggregation = cfg["aggregation"]
+    cleanset_filtering = cfg["cleanset_filtering"]
+    otu_zeroprev = cfg["otu_zeroprev"]
+    sample_zeroprev = cfg["sample_zeroprev"]
+    subset_studies = cfg["subset_studies"]
+    
+
+    otu_raw, meta_raw = read_hivrc_raw(file_path)
+
+    X, meta_data, batch_label = build_dataset(
+        otu_raw=otu_raw,
+        meta_raw=meta_raw,
+        aggregation=aggregation,
+        subset_studies=subset_studies,
+        normalize=normalize,
+        cleanset_filtering=cleanset_filtering,
+        otu_zeroprev=otu_zeroprev,
+        sample_zeroprev=sample_zeroprev,
+    )
+    
+
+
+    assert len(X) == len(meta_data) == len(batch_label)
+    assert all(X.index == meta_data["SeqID"].astype(str))
+
+    if verbose:
+        print("=" * 70)
+        print(f"Design ID               : {design_id}")
+        print(f"Design name             : {cfg['name']}")
+        print(f"Description             : {cfg['description']}")
+        print(f"Aggregation             : {aggregation}")
+        print(f"Normalize               : {normalize}")
+        print(f"Cleanset Filtering      : {cleanset_filtering}")        
+        print(f"Subset studies          : {subset_studies}")
+        print(f"OTU zero-prev           : {otu_zeroprev}")
+        print(f"Sample zero-prev        : {sample_zeroprev}")
+        print("-" * 70)
+        print(f"feature_table           : {X.shape}")
+        print(f"meta_data               : {meta_data.shape}")
+        print(f"n_batches               : {pd.Series(batch_label).nunique()}")
+        print("=" * 70)
+
+    return X, meta_data, batch_label, cfg
+
 # ---------------------------------------------------------
 # 2. Optuna objective
 def objective(trial: optuna.Trial,
               config: dict,
-              X_tensor_cache:  dict,
-              real_batch: np.array,
+              data_cache:  dict,
               trial_res_file,
               cutoff_list: list,
-              covariates_df: pd.DataFrame | None = None,
               logger = None) -> float:
     
 
@@ -587,7 +971,12 @@ def objective(trial: optuna.Trial,
 
     
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-    X_tensor = X_tensor_cache[cutoff].to(device)
+    
+    cache = data_cache[cutoff]
+    X_tensor = cache["X"].to(device)
+    covariates_df = cache["covariates_df"]
+    real_batch = cache["study_label"]
+    
     input_dim = X_tensor.shape[1]
     
     # ── ② 모델 구성 & 학습 ──────────────────────── 
@@ -694,57 +1083,67 @@ def objective(trial: optuna.Trial,
     # ── ⑤ Optuna가 최대화할 스코어 반환 ───────────
     return score
 
-def load_hivrc(file_path, cutoff=0.1, normalize=True):
-    data_path = Path(f"{file_path}/insight.merged_otus.txt")
-    meta_path = Path(f"{file_path}/SupplementaryMaterial.xlsx")
 
-    dat = pd.read_csv(data_path, sep="\t", encoding = "utf-8")
-    dat_meta = pd.read_excel(meta_path, header = 1, usecols = "B:L")
 
-    dat_cols = dat_meta["SeqID"].astype(str).to_list()
-    dat_cols.insert(0, 'Resphera Insight (Raw Counts)')
-    dat_T = dat[dat_cols].T
-    dat_T.reset_index(inplace = True)
-    dat_T.columns = dat_T.iloc[0].astype(str)
-    dat_T = dat_T.iloc[1:]
-    dat_T.columns.values[0] = "SeqID"
-    dat_merged = pd.merge(dat_T, dat_meta, on = "SeqID", how = "inner")
+def make_experiment_dirs(workdir: str, experiment_name: str, phase: int):
+    base_logdir = os.path.join(workdir, "logs")
+    base_resdir = os.path.join(workdir, "results")
 
-    X = dat_merged.iloc[:, 1:(dat_T.shape[1])].apply(pd.to_numeric, errors="coerce").reset_index(drop=True)
-    dat_cov = dat_merged[['hivstatus', 'Age', 'gender']].reset_index(drop=True)
+    exp_logdir = os.path.join(base_logdir, experiment_name)
+    exp_resdir = os.path.join(base_resdir, experiment_name)
+
+    phase_logdir = os.path.join(exp_logdir, f"phase{phase}")
+    phase_resdir = os.path.join(exp_resdir, f"phase{phase}")
+
+    os.makedirs(phase_logdir, exist_ok=True)
+    os.makedirs(phase_resdir, exist_ok=True)
+
+    return {
+        "base_logdir": base_logdir,
+        "base_resdir": base_resdir,
+        "exp_logdir": exp_logdir,
+        "exp_resdir": exp_resdir,
+        "phase_logdir": phase_logdir,
+        "phase_resdir": phase_resdir,
+    }
+
+
+def save_config_snapshot(cfg: dict, save_dir: str, filename: str = "config_used.yaml"):
+    save_path = os.path.join(save_dir, filename)
+    with open(save_path, "w") as f:
+        yaml.safe_dump(cfg, f, sort_keys=False, allow_unicode=True)
+    return save_path
+
+
+def main(
+    experiment_name: str,
+    phase: int = 1,
+    best_trial_number: int | None = None,
+    trial_res_file_phase2: str | None = None,
+):
     
-    dat_cov['Age'] = dat_cov['Age'].fillna(dat_cov['Age'].median())
-    # msm=1인 경우 gender=1로 채우기
-    mask_msm = dat_cov['gender'].isna() & (dat_merged['msm'] == 1)
-    dat_cov.loc[mask_msm, 'gender'] = 1
-
-    # 나머지 NaN은 최빈값으로
-    dat_cov['gender'] = dat_cov['gender'].fillna(dat_cov['gender'].mode()[0])
+    # get_experiment_data() returns the base dataset for the design.
+    # Additional zero-prevalence filtering for Optuna is applied here as a tunable step.
     
-    dat_batch_lbl = dat_merged['Study'].reset_index(drop=True)
+    """
     
-    # prevalence filtering
-    prevalence = (X > 0).sum(axis=0) / X.shape[0]
-    X = X.loc[:, prevalence > cutoff]
-    # relative abundance
-    if normalize:
-        X = X.div(X.sum(axis=1), axis=0)
-        
-    assert len(X) == len(dat_cov), f"샘플 수 불일치: X={len(X)}, dat_cov={len(dat_cov)}"
-    
-
-    return X, dat_cov, dat_batch_lbl
-
-
-
-def main(phase: int = 1,         
-         best_trial_number: int | None = None,
-         trial_res_file_phase2: str | None = None):
-
+    experiment_name: EXPERIMENT_DESIGNS의 key (예: "df1", "df5", "df10")
+    phase:
+        1 = Optuna tuning
+        2 = 선택된 best trial로 재학습 + decode
+    """
     WORKDIR = "/DATA/WGS_study/YSL/projects/latentgee/examples"
-    LOGDIR  = f"{WORKDIR}/logs"
-    RESDIR  = f"{WORKDIR}/results"
     DATA_PATH = "/DATA/WGS_study/YSL/projects/Data"
+
+    if experiment_name not in EXPERIMENT_DESIGNS:
+        raise ValueError(
+            f"Unknown experiment_name: {experiment_name}. "
+            f"Available: {list(EXPERIMENT_DESIGNS.keys())}"
+        )
+
+    dirs = make_experiment_dirs(WORKDIR, experiment_name, phase)
+    LOGDIR = dirs["phase_logdir"]
+    RESDIR = dirs["phase_resdir"]
 
     set_seed()
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
@@ -752,10 +1151,16 @@ def main(phase: int = 1,
     with open(f"{WORKDIR}/config.yaml") as f:
         cfg = yaml.safe_load(f)
 
-    logger = setup_logger(log_dir=LOGDIR, cutoff="multi", pid=os.getpid())
-    logger.info(f"LatentGEE prototype 시작 | phase={phase}")
+    cfg_path = save_config_snapshot(cfg, LOGDIR)
 
-    # ── 버전 기록
+    logger = setup_logger(
+        log_dir=LOGDIR,
+        cutoff=experiment_name,
+        pid=os.getpid()
+    )
+    logger.info(f"LatentGEE 시작 | experiment={experiment_name} | phase={phase}")
+    logger.info(f"config snapshot saved: {cfg_path}")
+
     logger.info(f"python == {sys.version.split()[0]}")
     logger.info(f"torch == {getattr(torch, '__version__', None)}")
     logger.info(f"numpy == {getattr(np, '__version__', None)}")
@@ -767,195 +1172,304 @@ def main(phase: int = 1,
     except importlib.metadata.PackageNotFoundError:
         logger.info("hdbscan == (version unknown)")
 
-    # ── 공통: data load
     cutoff_list = cfg["data"]["zero_prevalence_cutoff"]
-    _, dat_cov, real_batch = load_hivrc(file_path=DATA_PATH, cutoff=0.1, normalize=True)
+
+   
+    # ------------------------------------------------------------
+    X_base, dat_cov, real_batch, design_cfg = get_experiment_data(
+        design_id=experiment_name,
+        file_path=DATA_PATH,
+        verbose=True,
+    )
+    
+
     covariates_df = dat_cov
-    study_label   = real_batch
+    study_label = real_batch
 
-    # ================================================================
-    # Phase 1 — Optuna 탐색
-    # ================================================================
+    assert len(X_base) == len(covariates_df) == len(study_label), "Base data length mismatch"
+    if "SeqID" in covariates_df.columns:
+        assert all(X_base.index.astype(str) == covariates_df["SeqID"].astype(str)), \
+            "Base sample order mismatch"
+
+    logger.info(f"design_name: {design_cfg['name']}")
+    logger.info(f"description: {design_cfg['description']}")
+    logger.info(f"base feature table shape: {X_base.shape}")
+    logger.info(f"base metadata shape: {covariates_df.shape}")
+    logger.info(f"n batches: {pd.Series(study_label).nunique()}")
+
+    # ============================================================
+    # Phase 1 — Optuna
+    # ============================================================
     if phase == 1:
-        trial_res_file = save_dated_filename( f"{LOGDIR}/optuna_trials_pid{os.getpid()}", ".csv")
+        trial_res_file = save_dated_filename(
+            f"{LOGDIR}/optuna_trials",
+            ".csv"
+        )
 
-        X_tensor_cache = {}
+        data_cache = {}
+
         for c in cutoff_list:
-            X_raw_c, _, _ = load_hivrc(file_path=DATA_PATH, cutoff=c)
-            X_tensor_cache[c] = torch.tensor(X_raw_c.values, dtype=torch.float32)
+            X_raw_base, covariates_df_base, study_label_base, _ = get_experiment_data(
+                design_id=experiment_name,
+                file_path=DATA_PATH,
+                verbose=False,
+            )
 
+            # feature prevalence filtering
+            prevalence = (X_raw_base > 0).sum(axis=0) / X_raw_base.shape[0]
+            X_raw_c = X_raw_base.loc[:, prevalence > c].copy()
+
+            # zero-library sample 제거
+            row_sums = X_raw_c.sum(axis=1)
+            keep_sample = row_sums > 0
+            X_raw_c = X_raw_c.loc[keep_sample].copy()
+            # covariates 재정렬
+            covariates_df_c = (
+                covariates_df_base.set_index("SeqID", drop=False)
+                .loc[X_raw_c.index]
+                # .reset_index()
+            )
+            # batch label 재정렬
+            if isinstance(study_label_base, pd.Series):
+                study_df = pd.DataFrame({
+                    "SeqID": covariates_df_base["SeqID"].values,
+                    "batch": study_label_base.values
+                })
+                study_label_c = (
+                    study_df.set_index("SeqID")
+                    .loc[X_raw_c.index, "batch"]
+                    .reset_index(drop=True)
+                )
+            else:
+                raise TypeError("study_label_base must be a pandas Series")
+
+            # sanity check
+            assert len(X_raw_c) == len(covariates_df_c) == len(study_label_c)
+
+            assert all(X_raw_c.index.astype(str) == covariates_df_c["SeqID"].astype(str))
+
+            data_cache[c] = {
+                "X": torch.tensor(X_raw_c.values, dtype=torch.float32),
+                "covariates_df": covariates_df_c,
+                "study_label": study_label_c,
+                "sample_index": X_raw_c.index,
+            }
+            
         tuning_cfg = cfg["tuning"]
         pruner = optuna.pruners.MedianPruner(
             n_startup_trials=tuning_cfg["pruner_startup_trials"],
-            n_warmup_steps  =tuning_cfg["pruner_warmup_steps"],
-            interval_steps  =tuning_cfg["pruner_interval_steps"],
+            n_warmup_steps=tuning_cfg["pruner_warmup_steps"],
+            interval_steps=tuning_cfg["pruner_interval_steps"],
         ) if tuning_cfg["pruner"] else optuna.pruners.NopPruner()
 
         study = optuna.create_study(
-            direction     ="minimize",
-            sampler       =optuna.samplers.TPESampler(seed=tuning_cfg["seed"]),
-            pruner        =pruner,
-            study_name    =tuning_cfg["study_name"],
-            storage       =tuning_cfg.get("storage", None),
+            direction="minimize",
+            sampler=optuna.samplers.TPESampler(seed=tuning_cfg["seed"]),
+            pruner=pruner,
+            study_name=f"{tuning_cfg['study_name']}_{experiment_name}",
+            storage=tuning_cfg.get("storage", None),
             load_if_exists=tuning_cfg.get("load_if_exists", False),
         )
+
         study.optimize(
-            lambda tr: objective(tr, cfg, X_tensor_cache, real_batch=study_label,
-                                trial_res_file=trial_res_file, cutoff_list=cutoff_list,
-                                covariates_df=covariates_df, logger=logger),
-            n_trials  = tuning_cfg["n_trials"],
-            n_jobs    = tuning_cfg.get("n_jobs", 1),
-            callbacks = [make_save_best_callback(logger, LOGDIR, cutoff_list)]
+            lambda tr: objective(
+                tr,
+                cfg,
+                data_cache,
+                trial_res_file=trial_res_file,
+                cutoff_list=cutoff_list,
+                logger=logger
+            ),
+            n_trials=tuning_cfg["n_trials"],
+            n_jobs=tuning_cfg.get("n_jobs", 1),
+            callbacks=[make_save_best_callback(logger, LOGDIR, cutoff_list)]
         )
-        logger.info(f"Phase 1 완료 — CSV 경로: {trial_res_file}")
-        logger.info("CSV 확인 후 main(phase=2, best_trial_number=N, trial_res_file_phase2='...csv')로 실행하세요.")
 
-    # ================================================================
-    # Phase 2 — 선택한 trial로 재학습 + decode
-    # ================================================================
+        logger.info(f"Phase 1 완료 | experiment={experiment_name}")
+        logger.info(f"trial result file: {trial_res_file}")
+        return
+
+    # ============================================================
+    # Phase 2 — best trial 재학습 + correction
+    # ============================================================
     elif phase == 2:
-        # ── 인자 검증
         if best_trial_number is None:
-            raise ValueError("phase=2 실행 시 best_trial_number를 지정해야 해요.")
+            raise ValueError("phase=2 실행 시 best_trial_number 필요")
         if trial_res_file_phase2 is None:
-            raise ValueError("phase=2 실행 시 trial_res_file_phase2를 지정해야 해요.")
+            raise ValueError("phase=2 실행 시 trial_res_file_phase2 필요")
 
-        df  = pd.read_csv(trial_res_file_phase2)
-        row = df[df['trial_number'] == best_trial_number]
+        df = pd.read_csv(trial_res_file_phase2)
+        row = df[df["trial_number"] == best_trial_number]
         if len(row) == 0:
-            raise ValueError(f"trial_number={best_trial_number}가 CSV에 없어요.")
+            raise ValueError(f"trial_number={best_trial_number} not found")
         row = row.iloc[0]
 
-        best_cutoff     = row['cutoff']
-        base_dim        = int(row['base_dim'])
-        n_layers        = int(row['n_layers'])
-        latent_dim      = int(row['latent_dim'])
-        activation      = row['activation']
-        strategy        = row['strategy']
-        dropout_rate    = float(row['dropout_rate'])
-        epochs          = int(row['epochs'])
-        batch_size      = int(row['batch_size']) if 'batch_size' in row.index else 64
-        lr              = float(row['learning_rate'])
-        beta_kl         = float(row['beta_kl'])
-        weight_decay    = float(row['weight_decay'])
-        grad_clip_norm  = float(row['grad_clip_norm'])
-        kl_warmup_ratio = float(row['kl_warmup_ratio'])
-        norm            = row['norm']
-        csm             = row['csm']
+        best_cutoff = row["cutoff"]
+        logger.info(f"Phase 2 시작 | experiment={experiment_name} | trial={best_trial_number}")
+        logger.info(f"best cutoff from trial csv: {best_cutoff}")
+
+        # 주의:
+        # 현재 get_experiment_data()는 design config만 사용하고 별도 cutoff override를 받지 않음.
+        # best_cutoff를 실제 반영하려면 get_experiment_data()에 override 인자를 추가하는 것이 가장 좋다.
+        X_raw_best, dat_cov_best, batch_best, _ = get_experiment_data(
+            design_id=experiment_name,
+            file_path=DATA_PATH,
+            verbose=False,
+        )
         
-        min_cs            = int(row['min_cluster_size']) if 'min_cluster_size' in row.index else 13
-        min_samples_token = row['min_samples_token'] if 'min_samples_token' in row.index else 'null'
-        init              = row['init'] if 'init' in row.index else 'xavier_uniform'
-        min_samples       = None if str(min_samples_token) in ('null', 'None', 'nan') else int(min_samples_token)
+        prevalence = (X_raw_best > 0).sum(axis=0) / X_raw_best.shape[0]
+        X_raw_best = X_raw_best.loc[:, prevalence > best_cutoff].copy()
 
-        logger.info(f"Phase 2 시작 | trial={best_trial_number} | cutoff={best_cutoff}")
+        row_sums = X_raw_best.sum(axis=1)
+        keep_sample = row_sums > 0
+        X_raw_best = X_raw_best.loc[keep_sample].copy()
+        dat_cov_best = dat_cov_best.loc[keep_sample.values].reset_index(drop=True)
+        batch_best = batch_best.loc[keep_sample.values].reset_index(drop=True)
+        
+        assert len(X_raw_best) == len(dat_cov_best) == len(batch_best)
+        assert all(X_raw_best.index.astype(str) == dat_cov_best["SeqID"].astype(str))
 
-        # ── 데이터 로드
-        X_raw_best, _, _ = load_hivrc(file_path=DATA_PATH, cutoff=best_cutoff)
+        covariates_df = dat_cov_best
+        study_label = batch_best
+
         X_tensor_best = torch.tensor(X_raw_best.values, dtype=torch.float32).to(device)
         input_dim = X_tensor_best.shape[1]
 
-        # ── 모델 재학습
-        best_model = VAE(
-            input_dim    = input_dim,
-            latent_dim   = latent_dim,
-            n_layers     = n_layers,
-            base_dim     = base_dim,
-            strategy     = strategy,
-            dropout_rate = dropout_rate,
-            activation   = activation,
-            norm         = norm,
-        ).to(device)
-        apply_init(best_model, init)
-        
-        scheduler_type = row.get('scheduler', 'none')  # CSV에서 읽기
-        train_vae(best_model, X_tensor_best,
-                  beta_kl        = beta_kl,
-                  epochs         = epochs,
-                  lr             = lr,
-                  batch_size     = batch_size,
-                  weight_decay   = weight_decay,
-                  grad_clip_norm = grad_clip_norm,
-                  kl_warmup_ratio= kl_warmup_ratio,
-                  scheduler_type = scheduler_type,      # ← 추가
-                  logger         = logger)
+        base_dim        = int(row["base_dim"])
+        n_layers        = int(row["n_layers"])
+        latent_dim      = int(row["latent_dim"])
+        activation      = row["activation"]
+        strategy        = row["strategy"]
+        dropout_rate    = float(row["dropout_rate"])
+        epochs          = int(row["epochs"])
+        batch_size      = int(row["batch_size"]) if "batch_size" in row.index else 64
+        lr              = float(row["learning_rate"])
+        beta_kl         = float(row["beta_kl"])
+        weight_decay    = float(row["weight_decay"])
+        grad_clip_norm  = float(row["grad_clip_norm"])
+        kl_warmup_ratio = float(row["kl_warmup_ratio"])
+        norm            = row["norm"]
+        csm             = row["csm"]
 
-        # ── encode
+        min_cs = int(row["min_cluster_size"]) if "min_cluster_size" in row.index else 13
+        min_samples_token = row["min_samples_token"] if "min_samples_token" in row.index else "null"
+        init = row["init"] if "init" in row.index else "xavier_uniform"
+        min_samples = None if str(min_samples_token) in ("null", "None", "nan") else int(min_samples_token)
+        scheduler_type = row.get("scheduler", "none")
+
+        best_model = VAE(
+            input_dim=input_dim,
+            latent_dim=latent_dim,
+            n_layers=n_layers,
+            base_dim=base_dim,
+            strategy=strategy,
+            dropout_rate=dropout_rate,
+            activation=activation,
+            norm=norm,
+        ).to(device)
+
+        apply_init(best_model, init)
+
+        train_vae(
+            best_model,
+            X_tensor_best,
+            beta_kl=beta_kl,
+            epochs=epochs,
+            lr=lr,
+            batch_size=batch_size,
+            weight_decay=weight_decay,
+            grad_clip_norm=grad_clip_norm,
+            kl_warmup_ratio=kl_warmup_ratio,
+            scheduler_type=scheduler_type,
+            logger=logger
+        )
+
         best_model.eval()
         with torch.no_grad():
             mu_z, logvar_z = best_model.encode(X_tensor_best)
             z = best_model.reparameterize(mu_z, logvar_z)
         z_np = z.cpu().numpy()
 
-        # ── pseudo-batch clustering
         labels = pseudo_clustering(
             z,
-            min_cluster_size         = min_cs,
-            min_samples              = min_samples,
-            metric                   = "euclidean",
-            cluster_selection_method = csm
+            min_cluster_size=min_cs,
+            min_samples=min_samples,
+            metric="euclidean",
+            cluster_selection_method=csm
         )
 
         noise_mask = labels == -1
         valid_mask = labels != -1
-        z_used     = z_np[valid_mask]
-        lbl_used   = labels[valid_mask]
+        z_used = z_np[valid_mask]
+        lbl_used = labels[valid_mask]
         noise_ratio = (labels == -1).mean()
-        n_clusters  = len(np.unique(lbl_used))
-        logger.info(f"  pseudo-batch 클러스터 수: {n_clusters}")
-        logger.info(f"  노이즈 비율: {noise_ratio:.2%}")
+        n_clusters = len(np.unique(lbl_used))
+
+        logger.info(f"pseudo-batch 클러스터 수: {n_clusters}")
+        logger.info(f"노이즈 비율: {noise_ratio:.2%}")
 
         if n_clusters < 2:
             raise ValueError("클러스터 2개 미만 — 파라미터 재검토 필요")
 
-        # ── GEE residualization
-        cov_used = covariates_df[valid_mask].reset_index(drop=True) if covariates_df is not None else None
+        cov_used = covariates_df.iloc[valid_mask].reset_index(drop=True) if covariates_df is not None else None
         z_tilde_valid = gee_latent_residual(z_used, lbl_used, covariates_df=cov_used)
 
         z_tilde_all = np.zeros_like(z_np)
         z_tilde_all[valid_mask] = z_tilde_valid
 
-        # ── noise 샘플 보정
         if noise_mask.sum() > 0:
-            cluster_means = {c: z_np[valid_mask][lbl_used == c].mean(axis=0)
-                             for c in np.unique(lbl_used)}
+            cluster_means = {
+                c: z_np[valid_mask][lbl_used == c].mean(axis=0)
+                for c in np.unique(lbl_used)
+            }
             centers = np.vstack(list(cluster_means.values()))
-            dists   = pairwise_distances(z_np[noise_mask], centers)
+            dists = pairwise_distances(z_np[noise_mask], centers)
             nearest = np.argmin(dists, axis=1)
             z_tilde_all[noise_mask] = z_np[noise_mask] - centers[nearest]
 
-        # ── decode
         z_tilde_tensor = torch.tensor(z_tilde_all, dtype=torch.float32).to(device)
+
         with torch.no_grad():
             pi, mu_x, log_sigma_x = best_model.decode(z_tilde_tensor)
-            sigma_x     = torch.exp(log_sigma_x)
+            sigma_x = torch.exp(log_sigma_x)
             X_corrected = (1 - pi) * torch.exp(mu_x + 0.5 * sigma_x ** 2)
 
-        # ── 저장
         corrected_df = pd.DataFrame(
             X_corrected.cpu().numpy(),
-            index   = X_raw_best.index,
-            columns = X_raw_best.columns
+            index=X_raw_best.index,
+            columns=X_raw_best.columns
         )
+
         save_corrected_path = save_dated_filename(
-            f"{RESDIR}/X_corrected_LatentGEE_trial{best_trial_number}_cutoff{best_cutoff}", ".csv"
+            f"{RESDIR}/{experiment_name}_X_corrected_trial{best_trial_number}_cutoff{best_cutoff}",
+            ".csv"
         )
         corrected_df.to_csv(save_corrected_path)
         logger.info(f"X_corrected 저장: {save_corrected_path}")
 
-        save_path = save_dated_filename(
-            f"{RESDIR}/best_model_trial{best_trial_number}", ".pt"
+        save_model_path = save_dated_filename(
+            f"{RESDIR}/{experiment_name}_best_model_trial{best_trial_number}",
+            ".pt"
         )
-        torch.save(best_model.state_dict(), save_path)
-        logger.info(f"모델 저장: {save_path}")
+        torch.save(best_model.state_dict(), save_model_path)
+        logger.info(f"모델 저장: {save_model_path}")
+        return
 
     else:
-        raise ValueError(f"phase는 1 또는 2여야 해요. (현재: {phase})")
+        raise ValueError(f"phase는 1 또는 2여야 함. 현재: {phase}")
 
 
 if __name__ == "__main__":
-    main(phase=1)
-    # Phase 2 실행 예시:
-    # main(phase=2,
-    #      best_trial_number=60,
-    #      trial_res_file_phase2="logs/optuna_trials_2026-03-27.csv")
+    # Phase 1: Optuna tuning
+    main(
+        experiment_name="df3",
+        phase=1
+    )
+
+    # Phase 2 예시
+    # main(
+    #     experiment_name="df1",
+    #     phase=2,
+    #     best_trial_number=12,
+    #     trial_res_file_phase2="/DATA/WGS_study/YSL/projects/latentgee/examples/logs/df1/phase1/optuna_trials_2026-04-21.csv"
+    # )
