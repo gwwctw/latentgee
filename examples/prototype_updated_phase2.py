@@ -148,9 +148,14 @@ def save_model(model, path="best_model.pt"):
     torch.save(model.state_dict(), path)
 
 def make_save_best_callback(logger, log_dir, cutoff=0.1):
-    pid = os.getpid()  # ← 추가
+    pid = os.getpid()
     def callback(study, trial):
-        if study.best_trial.number == trial.number:
+        try:                                    # ← 추가
+            best = study.best_trial
+        except ValueError:                      # ← 추가
+            return                              # ← best trial 없으면 그냥 skip
+        
+        if best.number == trial.number:
             today = datetime.today().strftime("%Y-%m-%d")
             best_params = trial.params
             logger.info(f"New best trial {trial.number} | r2={trial.value:.4f}")
@@ -1462,7 +1467,7 @@ def main(
 if __name__ == "__main__":
     # Phase 1: Optuna tuning
     main(
-        experiment_name="df3",
+        experiment_name="df4",
         phase=1
     )
 
