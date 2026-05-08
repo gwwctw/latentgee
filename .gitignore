@@ -17,7 +17,7 @@ env/
 
 # Jupyter
 .ipynb_checkpoints/
-*.ipynb
+#*.ipynb
 
 # Optuna
 *.db
