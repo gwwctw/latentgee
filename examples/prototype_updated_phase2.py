@@ -1,8 +1,8 @@
 # 스레드 제한 
 import os
-os.environ["OMP_NUM_THREADS"] = "4"
-os.environ["MKL_NUM_THREADS"] = "4"
-os.environ["OPENBLAS_NUM_THREADS"] = "4"
+os.environ["OMP_NUM_THREADS"] = "8"
+os.environ["MKL_NUM_THREADS"] = "8"
+os.environ["OPENBLAS_NUM_THREADS"] = "8"
 
 import yaml
 import numpy as np
@@ -294,10 +294,10 @@ class VAE(nn.Module):
 
     def decode(self, z):
         h  = self.dec_net(z)
-        pi = torch.sigmoid(self.dec_pi(h))          # (0 ~ 1)
-        mu = self.dec_mu(h)                         # 실수
-        log_sigma = self.dec_log_sigma(h)                     # 실수
-        return pi, mu, log_sigma    # 3-tuple 반환
+        pi = torch.sigmoid(self.dec_pi(h))
+        mu = torch.clamp(self.dec_mu(h), min=-10, max=10)           # ← clamp 추가
+        log_sigma = torch.clamp(self.dec_log_sigma(h), min=-10, max=10)  # ← clamp 추가
+        return pi, mu, log_sigma
 
     def forward(self, x):
         mu_z, logvar_z = self.encode(x)
@@ -354,43 +354,44 @@ def pseudo_clustering(z_tensor,
 # --------------------------------------------------
 # 4. gee latent residualizaiton
 # --------------------------------------------------
-def gee_latent_residual(z_np, 
-                        pseudo_batch_labels, 
-                        covariates_df: pd.DataFrame | None = None):
-
+def gee_latent_residual(z_np, pseudo_batch_labels, covariates_df=None):
+    """
+    covariate NaN row 제외하고 GEE fit, 원본값으로 복원
+    """
+    
     df = pd.DataFrame(z_np, columns=[f"z{i}" for i in range(z_np.shape[1])])
     df["cluster"] = pseudo_batch_labels
     cov_names = ["Age", "gender", "hivstatus"]
-    df = pd.concat([df, covariates_df], axis=1)
-    
-    residuals = []
+    df = pd.concat([df, covariates_df.reset_index(drop=True)], axis=1)
+
+    # NaN 있는 row 마스크
+    if covariates_df is not None:
+        valid_cov_mask = ~df[cov_names].isna().any(axis=1).values
+    else:
+        valid_cov_mask = np.ones(len(df), dtype=bool)
+
+    df_fit = df[valid_cov_mask].reset_index(drop=True)
+
+    residuals_all = z_np.copy()  # NaN row는 보정 없이 원본 유지
+
     latent_cols = [c for c in df.columns if c.startswith("z")]
+    residuals_valid = []
 
     for col in latent_cols:
-        if covariates_df is None:
-            formula = f"{col} ~ C(cluster)"
-        else:
-            formula = f"{col} ~ C(cluster) + {' + '.join(cov_names)}"
-
-        model = GEE.from_formula(
-            formula,
-            groups="cluster",
-            data=df,
-            family=Gaussian(),
-            cov_struct=Exchangeable()
-        )
-
+        formula = f"{col} ~ C(cluster) + {' + '.join(cov_names)}" if covariates_df is not None else f"{col} ~ C(cluster)"
+        model = GEE.from_formula(formula, groups="cluster", data=df_fit, family=Gaussian(), cov_struct=Exchangeable())
         result = model.fit()
+
         if not result.converged:
             raise ValueError("GEE did not converge")
         if np.isnan(result.fittedvalues).any():
             raise ValueError("GEE fittedvalues contain NaN")
-        
-        resid = df[col].values - result.fittedvalues.values
-        
-        residuals.append(resid)
 
-    return np.vstack(residuals).T
+        resid = df_fit[col].values - result.fittedvalues.values
+        residuals_valid.append(resid)
+
+    residuals_all[valid_cov_mask] = np.vstack(residuals_valid).T
+    return residuals_all
 
 def compute_permanova_r2(z_resid, lbl_used):
     dist = squareform(pdist(z_resid, metric="euclidean"))
@@ -579,7 +580,7 @@ EXPERIMENT_DESIGNS = {
     
         "cleanset_filtering" : False,
         "normalize" : True,
-        "otu_zeroprev" : 0.01,
+        "otu_zeroprev" : None,
         "sample_zeroprev": None,
            
         "description": "Full raw HIVRC, normalized, standalone LatentGEE",
@@ -1467,7 +1468,7 @@ def main(
 if __name__ == "__main__":
     # Phase 1: Optuna tuning
     main(
-        experiment_name="df4",
+        experiment_name="df1",
         phase=1
     )
 

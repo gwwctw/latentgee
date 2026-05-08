@@ -1,0 +1,22 @@
+{
+  "cutoff": 0.03,
+  "init": "kaiming_uniform",
+  "beta_kl": 0.010963347874161616,
+  "norm": "layernorm",
+  "strategy": "double",
+  "n_layers": 4,
+  "base_dim": 512,
+  "latent_dim": 19,
+  "activation": "leaky_relu",
+  "dropout_rate": 0.2,
+  "epochs": 150,
+  "batch_size": 32,
+  "weight_decay": 5.124775281902637e-08,
+  "learning_rate": 0.0004734204400035822,
+  "grad_clip_norm": 1.5888430698471157,
+  "kl_warmup_ratio": 0.6953838154639899,
+  "cluster_selection_method": "leaf",
+  "min_cluster_size": 4,
+  "min_samples_token": "null",
+  "scheduler": "none"
+}
