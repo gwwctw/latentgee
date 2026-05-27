@@ -1,8 +1,8 @@
 # 스레드 제한 
 import os
-os.environ["OMP_NUM_THREADS"] = "8"
-os.environ["MKL_NUM_THREADS"] = "8"
-os.environ["OPENBLAS_NUM_THREADS"] = "8"
+os.environ["OMP_NUM_THREADS"] = "4"
+os.environ["MKL_NUM_THREADS"] = "4"
+os.environ["OPENBLAS_NUM_THREADS"] = "4"
 
 import yaml
 import numpy as np
@@ -13,6 +13,8 @@ import random
 import sys
 import logging
 import json
+import time
+import psutil
 
 import torch
 import torch.nn as nn
@@ -564,11 +566,19 @@ def train_vae(model, data_tensor,
     return loss.item()
 
 
-CONFOUNDED_STUDIES = [
-    "Monaco.2016",
-    "Pinto-Cardoso.2017",
-    "Villanueva-Millan.2017",
-    "Yu.2014",
+# CONFOUNDED_STUDIES = [
+#     "Monaco.2016",
+#     "Pinto-Cardoso.2017",
+#     "Villanueva-Millan.2017",
+#     "Yu.2014",
+# ]
+
+BALANCED_STUDIES = [
+    "Mutlu",
+    "Dillon", 
+    "Dinh",
+    "Dubourg",
+    "Nowak2017"
 ]
 
 
@@ -623,26 +633,22 @@ EXPERIMENT_DESIGNS = {
     "df5": {
         "name": "subset_genus_norm",
         "aggregation": "genus",
-        
-        "cleanset_filtering" : True,
-        "normalize" : True,
-        "otu_zeroprev" : None,
+        "cleanset_filtering": True,
+        "normalize": True,
+        "otu_zeroprev": None,
         "sample_zeroprev": None,
-        
-        "subset_studies": CONFOUNDED_STUDIES,
-        "description": "Confounded subset HIVRC, genus-level, normalized",
+        "subset_studies": BALANCED_STUDIES,  # 변경
+        "description": "Balanced subset HIVRC, genus-level, normalized",
     },
     "df6": {
         "name": "subset_genus_count",
         "aggregation": "genus",
-        
-        "cleanset_filtering" : True,
-        "normalize" : False,
-        "otu_zeroprev" : None,
+        "cleanset_filtering": True,
+        "normalize": False,
+        "otu_zeroprev": None,
         "sample_zeroprev": None,
-        
-        "subset_studies": CONFOUNDED_STUDIES,
-        "description": "Confounded subset HIVRC, genus-level, raw count",
+        "subset_studies": BALANCED_STUDIES,  # 변경
+        "description": "Balanced subset HIVRC, genus-level, raw count",
     },
     "df7": {
         "name": "prep_otu_norm",
@@ -670,29 +676,23 @@ EXPERIMENT_DESIGNS = {
     },
     "df9": {
         "name": "subset_otu_norm",
-        
         "normalize": True,
         "aggregation": None,
-        
-        "cleanset_filtering" : True,
-        "otu_zeroprev" : None,
+        "cleanset_filtering": True,
+        "otu_zeroprev": None,
         "sample_zeroprev": None,
-        
-        "subset_studies": CONFOUNDED_STUDIES,
-        "description": "Confounded subset HIVRC, OTU-level, normalized",
+        "subset_studies": BALANCED_STUDIES,  # 변경
+        "description": "Balanced subset HIVRC, OTU-level, normalized",
     },
     "df10": {
         "name": "subset_otu_count",
-        
         "normalize": False,
         "aggregation": None,
-        
-        "cleanset_filtering" : True,
-        "otu_zeroprev" : None,
+        "cleanset_filtering": True,
+        "otu_zeroprev": None,
         "sample_zeroprev": None,
-        
-        "subset_studies": CONFOUNDED_STUDIES,
-        "description": "Confounded subset HIVRC, OTU-level, raw count",
+        "subset_studies": BALANCED_STUDIES,  # 변경
+        "description": "Balanced subset HIVRC, OTU-level, raw count",
     },
 }
 
@@ -1207,6 +1207,18 @@ def main(
     # Phase 1 — Optuna
     # ============================================================
     if phase == 1:
+        
+        phase_start = time.time()
+        process = psutil.Process(os.getpid())
+        mem_before = process.memory_info().rss / 1024**3  # GB
+        cpu_count = psutil.cpu_count(logical=True)
+        
+        print(f"[Resource] Phase {phase} 시작")
+        print(f"[Resource] CPU 코어 수: {cpu_count}")
+        print(f"[Resource] 시작 메모리: {mem_before:.2f} GB")
+        print(f"[Resource] 시작 시각: {time.strftime('%Y-%m-%d %H:%M:%S')}")
+        
+        
         trial_res_file = save_dated_filename(
             f"{LOGDIR}/optuna_trials",
             ".csv"
@@ -1293,12 +1305,31 @@ def main(
 
         logger.info(f"Phase 1 완료 | experiment={experiment_name}")
         logger.info(f"trial result file: {trial_res_file}")
+        
+        phase_end = time.time()
+        mem_after = process.memory_info().rss / 1024**3
+        elapsed = phase_end - phase_start
+        hours, rem = divmod(elapsed, 3600)
+        minutes, seconds = divmod(rem, 60)
+        logger.info(f"[Resource] Phase 1 종료")
+        logger.info(f"[Resource] 종료 시각: {time.strftime('%Y-%m-%d %H:%M:%S')}")
+        logger.info(f"[Resource] 소요 시간: {int(hours)}h {int(minutes)}m {int(seconds)}s")
+        logger.info(f"[Resource] 종료 메모리: {mem_after:.2f} GB")
+        logger.info(f"[Resource] 메모리 증가: {mem_after - mem_before:.2f} GB")
+        logger.info(f"[Resource] n_jobs: {tuning_cfg.get('n_jobs', 1)}, OMP_NUM_THREADS: {os.environ.get('OMP_NUM_THREADS')}")
+        
         return
 
     # ============================================================
     # Phase 2 — best trial 재학습 + correction
     # ============================================================
     elif phase == 2:
+        phase_start = time.time()                              
+        process = psutil.Process(os.getpid())                  
+        mem_before = process.memory_info().rss / 1024**3 
+        
+        logger.info(f"Phase 2 시작 | experiment={experiment_name} | trial={best_trial_number}")
+        
         if best_trial_number is None:
             raise ValueError("phase=2 실행 시 best_trial_number 필요")
         if trial_res_file_phase2 is None:
@@ -1459,18 +1490,50 @@ def main(
         )
         torch.save(best_model.state_dict(), save_model_path)
         logger.info(f"모델 저장: {save_model_path}")
+        
+        phase_end = time.time()
+        mem_after = process.memory_info().rss / 1024**3
+        elapsed = phase_end - phase_start
+        hours, rem = divmod(elapsed, 3600)
+        minutes, seconds = divmod(rem, 60)
+
+        logger.info(f"\n[Resource] Phase {phase} 종료")
+        logger.info(f"[Resource] 종료 시각: {time.strftime('%Y-%m-%d %H:%M:%S')}")
+        logger.info(f"[Resource] 소요 시간: {int(hours)}h {int(minutes)}m {int(seconds)}s")
+        logger.info(f"[Resource] 종료 메모리: {mem_after:.2f} GB")
+        logger.info(f"[Resource] 메모리 증가: {mem_after - mem_before:.2f} GB")
+        logger.info(f"[Resource] OMP_NUM_THREADS: {os.environ.get('OMP_NUM_THREADS')}")
+
+        
         return
 
     else:
         raise ValueError(f"phase는 1 또는 2여야 함. 현재: {phase}")
-
+    
+    
 
 if __name__ == "__main__":
     # Phase 1: Optuna tuning
+    # main(
+    #     experiment_name="df1",
+    #     phase=1
+    # )
+    
+    # main(
+    #     experiment_name="df3",
+    #     phase=1
+    # )
+    
+    # main(
+    #     experiment_name="df4",
+    #     phase=1
+    # )
     main(
-        experiment_name="df1",
+        experiment_name="df5",
+        # experiment_name="df6",
         phase=1
     )
+
 
     # Phase 2 예시
     # main(

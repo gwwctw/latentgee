@@ -83,13 +83,13 @@ search_space:
     - eom
     - leaf
 tuning:
-  n_trials: 5000
+  n_trials: 2000
   n_jobs: 8
   pruner: false
   pruner_startup_trials: 20
   pruner_warmup_steps: 0
   pruner_interval_steps: 1
-  storage: sqlite:///latentgee_optuna.db
+  storage: sqlite:////DATA/WGS_study/YSL/projects/latentgee/examples/latentgee_optuna.db
   load_if_exists: true
   seed: 42
   study_name: latentgee_optuna
