@@ -22,10 +22,10 @@ env/
 # Optuna
 *.db
 
-# Logs & results
+# folders
 logs/
-#results/
 archive/
+src/
 
 # Model checkpoints
 #*.pt
