@@ -34,8 +34,10 @@ logs/
 #*.json
 
 # Data
-/examples/data/
-/experiments
+/DATA/WGS_study/YSL/projects/latentgee/examples/data/
+/DATA/WGS_study/YSL/projects/latentgee/examples/logs
+
+/DATA/WGS_study/YSL/projects/latentgee/experiments
 *.txt
 #*.xlsx
 
@@ -49,9 +51,9 @@ Thumbs.db
 *.swp
 
 # script
-core.py
-setup.py
+/DATA/WGS_study/YSL/projects/latentgee/core.py
+/DATA/WGS_study/YSL/projects/latentgee/setup.py
 
 #packages
-*.tar.gz
-*.tar.gz.*
+/DATA/WGS_study/YSL/projects/latentgee/*.tar.gz
+/DATA/WGS_study/YSL/projects/latentgee/*.tar.gz.*
