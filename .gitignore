@@ -52,3 +52,8 @@ Thumbs.db
 #packages
 *.tar.gz
 *.tar.gz.*
+
+
+# R
+.Rhistory
+.RData
